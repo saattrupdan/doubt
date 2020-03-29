@@ -47,7 +47,6 @@ class DecisionTree(BaseEstimator):
         >>> tree.fit(data)
         >>> tree(80)
         300
-        >>> 
     '''
     raise NotImplementedError
 
