@@ -1,3 +1,3 @@
 # Doubt
 
-Uncertainty utilities for machine learning models.
+Bringing back uncertainty to machine learning.
