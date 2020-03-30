@@ -1,4 +1,4 @@
-from _basedataset import BaseDataset
+from dataset import BaseDataset
 import pandas as pd
 
 class AirfoilSelfNoise(BaseDataset):
