@@ -1,4 +1,5 @@
-from dataset import BaseDataset
+from ._dataset import BaseDataset
+
 import pandas as pd
 
 class AirfoilSelfNoise(BaseDataset):
@@ -7,7 +8,16 @@ class AirfoilSelfNoise(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00291/airfoil_self_noise.dat'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class BikeSharing(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset '''
@@ -15,7 +25,16 @@ class BikeSharing(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00275/Bike-Sharing-Dataset.zip'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class BlogFeedback(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/BlogFeedback '''
@@ -23,7 +42,16 @@ class BlogFeedback(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00304/BlogFeedback.zip'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class CarbonNanotubes(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Carbon+Nanotubes '''
@@ -31,7 +59,16 @@ class CarbonNanotubes(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00448/carbon_nanotubes.csv'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class ConcreteCompressive(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength '''
@@ -39,7 +76,16 @@ class ConcreteCompressive(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'concrete/compressive/Concrete_Data.xls'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class CPUPerformance(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Computer+Hardware '''
@@ -47,7 +93,16 @@ class CPUPerformance(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'cpu-performance/machine.data'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class CyclePowerPlant(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Combined+Cycle+Power+Plant '''
@@ -55,7 +110,16 @@ class CyclePowerPlant(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00294/CCPP.zip'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class FacebookComments(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Facebook+Comment+Volume+Dataset '''
@@ -63,7 +127,16 @@ class FacebookComments(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00363/Dataset.zip'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class FacebookMetrics(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Facebook+metrics '''
@@ -71,7 +144,16 @@ class FacebookMetrics(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00368/Facebook_metrics.zip'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class FishBioconcentration(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/QSAR+fish+bioconcentration+factor+%28BCF%29 '''
@@ -79,7 +161,16 @@ class FishBioconcentration(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00511/QSAR_fish_BCF.zip'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class FishToxicity(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/QSAR+fish+toxicity '''
@@ -87,15 +178,76 @@ class FishToxicity(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00504/qsar_fish_toxicity.csv'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class ForestFires(BaseDataset):
-    ''' https://archive.ics.uci.edu/ml/datasets/Forest+Fires '''
+    ''' 
+    This is a difficult regression task, where the aim is to predict the 
+    burned area of forest fires, in the northeast region of Portugal, by 
+    using meteorological and other data.
+
+    Features:
+        X (float): 
+            The x-axis spatial coordinate within the Montesinho park map.
+            Ranges from 1 to 9.
+        Y (float): 
+            The y-axis spatial coordinate within the Montesinho park map
+            Ranges from 2 to 9.
+        month (str):
+            Month of the year. Ranges from 'jan' to 'dec'
+        day (str):
+            Day of the year. Ranges from 'mon' to 'sun'
+        FFMC (float):
+            FFMC index from the FWI system. Ranges from 18.7 to 96.20
+        DMC (float):
+            DMC index from the FWI system. Ranges from 1.1 to 291.3
+        DC (float):
+            DC index from the FWI system. Ranges from 7.9 to 860.6
+        ISI (float):
+            ISI index from the FWI system. Ranges from 0.0 to 56.1
+        temp (float):
+            Temperature in Celsius degrees. Ranges from 2.2 to 33.3
+        RH (float):
+            Relative humidity in %. Ranges from 15.0 to 100.0
+        wind (float):
+            Wind speed in km/h. Ranges from 0.4 to 9.4
+        rain (float):
+            Outside rain in mm/m2. Ranges from 0.0 to 6.4
+    
+    Targets:
+        area (float):
+            The burned area of the forest (in ha). Ranges from 0.00 to 1090.84
+
+    Notes:
+        The target variable is very skewed towards 0.0, thus it may make
+        sense to model with the logarithm transform.
+
+    Source:
+        https://archive.ics.uci.edu/ml/datasets/Forest+Fires 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'forest-fires/forestfires.csv'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class GasTurbine(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Condition+Based+Maintenance+of+Naval+Propulsion+Plants '''
@@ -103,7 +255,16 @@ class GasTurbine(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00316/UCI%20CBM%20Dataset.zip'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class NewTaipeiHousing(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set '''
@@ -111,7 +272,16 @@ class NewTaipeiHousing(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00477/Real%20estate%20valuation%20data%20set.xlsx'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class Parkinsons(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Parkinsons+Telemonitoring '''
@@ -119,7 +289,16 @@ class Parkinsons(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'parkinsons/telemonitoring/parkinsons_updrs.data'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class Protein(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Physicochemical+Properties+of+Protein+Tertiary+Structure '''
@@ -127,7 +306,16 @@ class Protein(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00265/CASP.csv'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class Servo(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Servo '''
@@ -135,7 +323,16 @@ class Servo(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'servo/servo.data'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class SolarFlare(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Solar+Flare '''
@@ -143,7 +340,16 @@ class SolarFlare(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'solar-flare/flare.data2'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class SpaceShuttle(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring '''
@@ -151,7 +357,16 @@ class SpaceShuttle(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'space-shuttle/o-ring-erosion-only.data'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class StockPortfolio(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Stock+portfolio+performance '''
@@ -159,7 +374,16 @@ class StockPortfolio(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00390/stock%20portfolio%20performance%20data%20set.xlsx'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class Superconduct(BaseDataset):
     ''' https://archive.ics.uci.edu/ml/datasets/Superconductivty+Data '''
@@ -167,13 +391,30 @@ class Superconduct(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00464/superconduct.zip'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
 
 class TehranHousing(BaseDataset):
     ''' 
     Data set includes construction cost, sale prices, project variables, and 
     economic variables corresponding to real estate single-family residential 
     apartments in Tehran, Iran.
+
+    Features:
+        float: 8 project physical and financial variables
+        float: 19 economic variables and indices in 5 time lag numbers
+
+    Targets:
+        float: Construction cost
+        float: Sale price
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Residential+Building+Data+Set 
@@ -182,7 +423,18 @@ class TehranHousing(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00437/Residential-Building-Data-Set.xlsx'
 
-    def prep_data(self, data: bytes) -> pd.DataFrame:
+    feats = range(105)
+    trgts = [105, 106]
+
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
         df = pd.read_excel(data, dtype = float, header = [0, 1])
         return df
 
@@ -192,4 +444,18 @@ class Yacht(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00243/yacht_hydrodynamics.data'
 
-    raise NotImplementedError
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
+        ''' Prepare the data set.
+
+        Args:
+            data (bytes): The raw data
+
+        Returns:
+            Pandas dataframe: The prepared data
+        '''
+        raise NotImplementedError
+
+if __name__ == '__main__':
+    tehran = TehranHousing()
+    print(tehran.columns)
+    print(tehran.head())
