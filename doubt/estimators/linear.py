@@ -1,10 +1,7 @@
 ''' Linear models '''
 
-from _estimator import BaseQuantileEstimator
-from _estimator import BaseBootstrapEstimator
+from ._estimator import BaseEstimator
 
-class QuantileLinearRegression(BaseQuantileEstimator):
-    raise NotImplementedError
-
-class BootstrapLinearRegression(BaseBootstrapEstimator):
-    raise NotImplementedError
+class QuantileLinearRegression(BaseEstimator):
+    def __init__(self):
+        raise NotImplementedError
