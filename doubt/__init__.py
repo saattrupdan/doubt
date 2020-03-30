@@ -1,11 +1,6 @@
-from .estimators import DecisionTree
-from .estimators import QuantileRandomForest
-from .estimators import BootstrapRandomForest
-from .estimators import QuantileLinearRegression
-from .estimators import BootstrapLinearRegression
-from .estimators import QuantileNetwork
-from .estimators import BootstrapNetwork
+from .estimators.forest import DecisionTree
+from .estimators.forest import QuantileRandomForest
+from .estimators.linear import QuantileLinearRegression
+from .estimators.nn import QuantileNetwork
 
-from .datasets import AutoInsurance
-from .datasets import BostonHousing
-from .datasets import WineQuality
+from .datasets import datasets
