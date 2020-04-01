@@ -1,4 +1,4 @@
-''' Quantile Regression Forests '''
+''' Quantile Random Forests '''
 
 from ._estimator import BaseEstimator
 from ._forest import _branch
