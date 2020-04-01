@@ -1,20 +1,26 @@
 ''' Quantile Regression Forests '''
 
 from ._estimator import BaseEstimator
+from ._forest import _branch
+from ._forest import _predict
 
-from typing import Union, Optional
+from typing import Union
+from typing import Optional
+
 import numpy as np
+import pandas as pd
+import scipy.optimize as opt
 
 from anytree import Node
 from anytree.exporter import DotExporter
 
 from functools import partial
-import scipy.optimize as opt
 from collections import defaultdict
-import pandas as pd
-from joblib import Parallel, delayed
 
-Number = Union[float, int]
+from joblib import Parallel
+from joblib import delayed
+
+from tqdm.auto import tqdm
 
 class DecisionTree(BaseEstimator):
     ''' A decision tree for regression.
@@ -29,9 +35,6 @@ class DecisionTree(BaseEstimator):
         min_samples_leaf (int):
             The minimum number of unique target values in a leaf. Defaults
             to 5.
-        n_jobs (int):
-            The number of parallel processes to run at a time. Defaults
-            to the total amount of CPU cores available.
 
     Attributes:
         peeling_ratio (float): 
@@ -82,114 +85,16 @@ class DecisionTree(BaseEstimator):
         >>> tree(X[0:3]).shape
         (3,)
     '''
-    def __init__(self, method: str = 'cart', min_samples_leaf: int = 5, 
-                 n_jobs: int = -1):
+    def __init__(self, method: str = 'cart', min_samples_leaf: int = 5):
         self._root: Node
+        self.method = method
         self.min_samples_leaf = min_samples_leaf
-        self.n_jobs = n_jobs
-
-    @staticmethod
-    def _splitting_loss(thres: float, X, y, feat: int):
-        ''' Calculate the mean squared loss of a split. '''
-
-        # Get the indices of the features below and above the threshold,
-        # which corresponds to the left and right child of the current node
-        left = (X[:, feat] <= thres)
-        right = ~left
-
-        # If all feature values are below or above the threshold
-        # then output infinite loss
-        if left.all() or right.all(): return float('inf')
-
-        # Calculate the means of the target values in each child node
-        left_mean = y[left].mean()
-        right_mean = y[right].mean()
-
-        # Calculate mean squared loss on both child nodes, so that
-        # minimising these corresponds to ensuring that the target
-        # values within each child are as similar as possible
-        left_val = np.mean((y[left] - left_mean) ** 2)
-        right_val = np.mean((y[right] - right_mean) ** 2)
-
-        return left_val + right_val
-
-    def _find_threshold(self, X, y, feat_idx):
-        ''' Given a feature, find the optimal split threshold for it. '''
-
-        # Initial guess for the optimal threshold, which is required by
-        # `scipy.opt.minimize`
-        initial_guess = X[:, feat_idx].mean()
-
-        # Find the threshold that minimises the splitting loss
-        result = opt.minimize(self._splitting_loss, x0 = initial_guess, 
-                              args = (X, y, feat_idx))
-
-        # Get the resulting threshold and the associated loss, the latter
-        # of which is used to compare thresholds across multiple features
-        threshold = result.x[0]
-        loss = result.fun
-
-        return [feat_idx, threshold, loss]
-
-    def _branch(self, X, y, parent: Optional[Node] = None):
-        ''' Recursive function that computes the next two child nodes. '''
-
-        # Get the number of rows and features in the data set
-        nrows, nfeats = X.shape
-
-        # Compute the best thresholds for all the features in parallel
-        result = Parallel(n_jobs = self.n_jobs)(
-            delayed(self._find_threshold)(X, y, idx) for idx in range(nfeats)
-        )
-
-        # Pull out the feature and threshold with the smallest loss
-        arr = np.array(result)
-        feat, thres = arr[arr[:, 2].argmin(), 0:2].astype(tuple)
-        feat = np.uint16(feat)
-
-        # Define the indices for the two child nodes
-        left = X[:, feat] <= thres
-        right = X[:, feat] > thres
-
-        # If we have reached a leaf node then store information about
-        # the target values and stop the recursion
-        if len(np.unique(y[left])) < self.min_samples_leaf or \
-            len(np.unique(y[right])) < self.min_samples_leaf:
-
-            name = (f'[{y.min():,.0f}; {y.max():,.0f}]\n'
-                    f'n = {nrows}\n'
-                    f'n_unique = {len(np.unique(y))}')
-
-            node = Node(name, n = nrows, parent = parent, vals = y)
-            return None
-
-        # Define the current node, which by the above conditional can't
-        # be a leaf node
-        name = f'Is feature {feat} < {thres:.0f}?'
-        node = Node(name, n = nrows, parent = parent, feat = feat,
-                    thres = thres)
-
-        # If we're at the first step of the recursion then set self._root
-        # to be the current node
-        if parent is None: self._root = node
-
-        # Define the dataset splittings for the child nodes
-        X0 = X[left, :]
-        y0 = y[left]
-        X1 = X[right, :]
-        y1 = y[right]
-
-        # Continue the recursion on the child nodes
-        return self._branch(X0, y0, node), self._branch(X1, y1, node)
 
     def fit(self, X, y):
         ''' Fit a decision tree to the data. '''
 
-        # Call the branching function recursively, which will store all
-        # information about the tree structure as well as target values
-        # in the leaf nodes
-        self._branch(X, y)
-
+        # Call the branching function recursively
+        self._root = _branch(X, y, min_samples_leaf = self.min_samples_leaf)
         return self
 
     def export_graph(self, path: str):
@@ -202,26 +107,55 @@ class DecisionTree(BaseEstimator):
         DotExporter(self._root).to_picture(path)
         return self
 
-    def _predict_one(self, x, quantile: Optional[float] = None):
-        ''' Perform a prediction for a single input. '''
-        node = self._root
-        while not node.is_leaf:
-            left, right = node.children
-            node = left if x[node.feat] <= node.thres else right
-
-        if quantile is None:
-            return np.mean(node.vals)
-        else:
-            return np.quantile(node.vals, quantile)
-
     def predict(self, X, quantile: Optional[float] = None):
         ''' Predict the response values of a given feature matrix. '''
-        onedim = (len(X.shape) == 1)
-        if onedim: X = np.expand_dims(X, 0)
-        jobs = (delayed(self._predict_one)(x, quantile) for x in X)
-        result = np.array(Parallel(n_jobs = self.n_jobs)(jobs))
-        return result[0] if onedim else result
+
+        if self._root is None:
+            raise RuntimeError('No tree found. You might need to fit it '\
+                               'to a data set first?')
+
+        if quantile is None: 
+            quantile = -1.
+        elif quantile < 0. or quantile > 1.:
+            raise RuntimeError('Quantiles must be between 0 and 1 inclusive')
+
+        return _predict(self._root, X, quantile = quantile)
 
 class QuantileRandomForest(BaseEstimator):
-    def __init__(self):
-        raise NotImplementedError
+    def __init__(self, 
+        n_estimators: int = 10, 
+        method: str = 'cart',
+        min_samples_leaf: int = 5, 
+        n_jobs: int = -1):
+
+        self.n_estimators = n_estimators
+        self.method = method
+        self.min_samples_leaf = min_samples_leaf
+        self.n_jobs = n_jobs
+
+        self._estimators = n_estimators * [
+            DecisionTree(method = method, min_samples_leaf = min_samples_leaf)
+        ]
+
+    def fit(self, X, y):
+        ''' Fit decision trees in parallel. '''
+        nrows = X.shape[0]
+
+        # Get bootstrap resamples of the data set
+        bidxs = np.random.choice(nrows, size = (self.n_estimators, nrows), 
+                                 replace = True)
+
+        # Fit trees in parallel on the bootstrapped resamples
+        pbar = tqdm(self._estimators, desc = 'Growing trees')
+        Parallel(n_jobs = self.n_jobs, backend = 'threading')(
+            delayed(estimator.fit)(X[bidxs[b, :], :], y[bidxs[b, :]])
+            for b, estimator in enumerate(pbar)
+        )
+        return self
+
+    def predict(self, X, quantile: Optional[float] = None):
+        predictions = Parallel(n_jobs = self.n_jobs, backend = 'threading')(
+            delayed(estimator.predict)(X, quantile)
+            for estimator in self._estimators
+        )
+        return np.mean(predictions, axis = 0)
