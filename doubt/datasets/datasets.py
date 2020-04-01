@@ -1,5 +1,7 @@
 ''' 
-Collection of data sets for regression tasks, with data preparation pipelines. All data sets are from the UCI data set archive, with all the descriptions being the original descriptions verbatim.
+Collection of data sets for regression tasks, with data preparation pipelines. 
+All data sets are from the UCI data set archive, with all the descriptions 
+being the original descriptions verbatim.
 '''
 
 from ._dataset import BaseDataset
