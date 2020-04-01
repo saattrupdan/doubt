@@ -1,3 +1,5 @@
+''' Base class for data sets '''
+
 from pathlib import Path
 import requests
 import abc

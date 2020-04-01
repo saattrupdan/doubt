@@ -1,3 +1,5 @@
+''' Base class for estimators '''
+
 import abc
 from typing import Sequence, Union
 

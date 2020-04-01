@@ -1,4 +1,4 @@
-''' Neural networks '''
+''' Quantile neural networks '''
 
 from ._estimator import BaseEstimator
 
