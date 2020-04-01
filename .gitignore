@@ -3,3 +3,4 @@
 **/.mypy_cache/*
 **.swp
 **.cache.h5
+test.py
