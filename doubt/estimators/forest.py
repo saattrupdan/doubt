@@ -164,6 +164,9 @@ class QuantileRandomForest(BaseEstimator):
         if uncertainty is not None and quantile is not None:
             raise RuntimeError('Both uncertainty and quantile can not be set')
 
+        # Ensure that X is two-dimensional
+        if len(X.shape) == 1: X = np.expand_dims(X, 0)
+
         with Parallel(n_jobs = self.n_jobs, backend = 'threading') as parallel:
 
             predictions = parallel(delayed(estimator.predict)(X, quantile)
