@@ -4217,7 +4217,7 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_15, 1, (PyObject *(*)(char *)) __
  *         name = (f'[{np.min(y):,.0f}; {np.max(y):,.0f}]\n'
  *                 f'n = {nrows}\n'             # <<<<<<<<<<<<<<
  *                 f'n_unique = {len(np.unique(y))}')
- *         Node(name, n = nrows, parent = parent, vals = y, pos = pos)
+ *         node = Node(name, n = nrows, parent = parent, vals = y, pos = pos)
  */
     __pyx_t_1 = __Pyx_PyUnicode_From_Py_ssize_t(__pyx_v_nrows, 0, ' ', 'd'); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 118, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
@@ -4234,8 +4234,8 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_15, 1, (PyObject *(*)(char *)) __
  *         name = (f'[{np.min(y):,.0f}; {np.max(y):,.0f}]\n'
  *                 f'n = {nrows}\n'
  *                 f'n_unique = {len(np.unique(y))}')             # <<<<<<<<<<<<<<
- *         Node(name, n = nrows, parent = parent, vals = y, pos = pos)
- *         return 0
+ *         node = Node(name, n = nrows, parent = parent, vals = y, pos = pos)
+ * 
  */
     __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 119, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
@@ -4285,9 +4285,9 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_15, 1, (PyObject *(*)(char *)) __
     /* "doubt/estimators/_forest.pyx":120
  *                 f'n = {nrows}\n'
  *                 f'n_unique = {len(np.unique(y))}')
- *         Node(name, n = nrows, parent = parent, vals = y, pos = pos)             # <<<<<<<<<<<<<<
- *         return 0
+ *         node = Node(name, n = nrows, parent = parent, vals = y, pos = pos)             # <<<<<<<<<<<<<<
  * 
+ *     else:
  */
     __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_Node); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 120, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
@@ -4316,19 +4316,8 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_15, 1, (PyObject *(*)(char *)) __
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-
-    /* "doubt/estimators/_forest.pyx":121
- *                 f'n_unique = {len(np.unique(y))}')
- *         Node(name, n = nrows, parent = parent, vals = y, pos = pos)
- *         return 0             # <<<<<<<<<<<<<<
- * 
- *     # Define the current node, which by the above conditional can't
- */
-    __Pyx_XDECREF(__pyx_r);
-    __Pyx_INCREF(__pyx_int_0);
-    __pyx_r = __pyx_int_0;
-    goto __pyx_L0;
+    __pyx_v_node = __pyx_t_6;
+    __pyx_t_6 = 0;
 
     /* "doubt/estimators/_forest.pyx":114
  *     # If we have reached a leaf node then store information about
@@ -4337,217 +4326,221 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_15, 1, (PyObject *(*)(char *)) __
  *         len(np.unique(y1)) < min_samples_leaf:
  * 
  */
+    goto __pyx_L17;
   }
 
   /* "doubt/estimators/_forest.pyx":125
- *     # Define the current node, which by the above conditional can't
- *     # be a leaf node
- *     name = f'Is feature {feat} < {thres:.2f}?'             # <<<<<<<<<<<<<<
- *     node = Node(name, n = nrows, parent = parent, feat = feat,
- *                 thres = thres, pos = pos)
+ *         # Define the current node, which by the above conditional can't
+ *         # be a leaf node
+ *         name = f'Is feature {feat} < {thres:.2f}?'             # <<<<<<<<<<<<<<
+ *         node = Node(name, n = nrows, parent = parent, feat = feat,
+ *                     thres = thres, pos = pos)
  */
-  __pyx_t_6 = PyTuple_New(5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_3 = 0;
-  __pyx_t_30 = 127;
-  __Pyx_INCREF(__pyx_kp_u_Is_feature);
-  __pyx_t_3 += 11;
-  __Pyx_GIVEREF(__pyx_kp_u_Is_feature);
-  PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_kp_u_Is_feature);
-  __pyx_t_7 = __Pyx_PyUnicode_From_int(__pyx_v_feat, 0, ' ', 'd'); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 125, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_7);
-  __Pyx_GIVEREF(__pyx_t_7);
-  PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_7);
-  __pyx_t_7 = 0;
-  __Pyx_INCREF(__pyx_kp_u__3);
-  __pyx_t_3 += 3;
-  __Pyx_GIVEREF(__pyx_kp_u__3);
-  PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_kp_u__3);
-  __pyx_t_7 = PyFloat_FromDouble(__pyx_v_thres); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 125, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_2 = __Pyx_PyObject_Format(__pyx_t_7, __pyx_kp_u_2f); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_30 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_30) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_30;
-  __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_2);
-  __pyx_t_2 = 0;
-  __Pyx_INCREF(__pyx_kp_u__4);
-  __pyx_t_3 += 1;
-  __Pyx_GIVEREF(__pyx_kp_u__4);
-  PyTuple_SET_ITEM(__pyx_t_6, 4, __pyx_kp_u__4);
-  __pyx_t_2 = __Pyx_PyUnicode_Join(__pyx_t_6, 5, __pyx_t_3, __pyx_t_30); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_v_name = ((PyObject*)__pyx_t_2);
-  __pyx_t_2 = 0;
+  /*else*/ {
+    __pyx_t_6 = PyTuple_New(5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_3 = 0;
+    __pyx_t_30 = 127;
+    __Pyx_INCREF(__pyx_kp_u_Is_feature);
+    __pyx_t_3 += 11;
+    __Pyx_GIVEREF(__pyx_kp_u_Is_feature);
+    PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_kp_u_Is_feature);
+    __pyx_t_7 = __Pyx_PyUnicode_From_int(__pyx_v_feat, 0, ' ', 'd'); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_7);
+    __Pyx_GIVEREF(__pyx_t_7);
+    PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_t_7);
+    __pyx_t_7 = 0;
+    __Pyx_INCREF(__pyx_kp_u__3);
+    __pyx_t_3 += 3;
+    __Pyx_GIVEREF(__pyx_kp_u__3);
+    PyTuple_SET_ITEM(__pyx_t_6, 2, __pyx_kp_u__3);
+    __pyx_t_7 = PyFloat_FromDouble(__pyx_v_thres); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_2 = __Pyx_PyObject_Format(__pyx_t_7, __pyx_kp_u_2f); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __pyx_t_30 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) > __pyx_t_30) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_2) : __pyx_t_30;
+    __pyx_t_3 += __Pyx_PyUnicode_GET_LENGTH(__pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_6, 3, __pyx_t_2);
+    __pyx_t_2 = 0;
+    __Pyx_INCREF(__pyx_kp_u__4);
+    __pyx_t_3 += 1;
+    __Pyx_GIVEREF(__pyx_kp_u__4);
+    PyTuple_SET_ITEM(__pyx_t_6, 4, __pyx_kp_u__4);
+    __pyx_t_2 = __Pyx_PyUnicode_Join(__pyx_t_6, 5, __pyx_t_3, __pyx_t_30); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __pyx_v_name = ((PyObject*)__pyx_t_2);
+    __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":126
- *     # be a leaf node
- *     name = f'Is feature {feat} < {thres:.2f}?'
- *     node = Node(name, n = nrows, parent = parent, feat = feat,             # <<<<<<<<<<<<<<
- *                 thres = thres, pos = pos)
+    /* "doubt/estimators/_forest.pyx":126
+ *         # be a leaf node
+ *         name = f'Is feature {feat} < {thres:.2f}?'
+ *         node = Node(name, n = nrows, parent = parent, feat = feat,             # <<<<<<<<<<<<<<
+ *                     thres = thres, pos = pos)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_Node); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_INCREF(__pyx_v_name);
-  __Pyx_GIVEREF(__pyx_v_name);
-  PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_name);
-  __pyx_t_7 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_nrows); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_n_2, __pyx_t_1) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_parent, __pyx_v_parent) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_feat); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_feat, __pyx_t_1) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_Node); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_6 = PyTuple_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_INCREF(__pyx_v_name);
+    __Pyx_GIVEREF(__pyx_v_name);
+    PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_name);
+    __pyx_t_7 = __Pyx_PyDict_NewPresized(5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_1 = PyInt_FromSsize_t(__pyx_v_nrows); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_n_2, __pyx_t_1) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_parent, __pyx_v_parent) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_feat); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_feat, __pyx_t_1) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":127
- *     name = f'Is feature {feat} < {thres:.2f}?'
- *     node = Node(name, n = nrows, parent = parent, feat = feat,
- *                 thres = thres, pos = pos)             # <<<<<<<<<<<<<<
+    /* "doubt/estimators/_forest.pyx":127
+ *         name = f'Is feature {feat} < {thres:.2f}?'
+ *         node = Node(name, n = nrows, parent = parent, feat = feat,
+ *                     thres = thres, pos = pos)             # <<<<<<<<<<<<<<
  * 
- *     # Continue the recursion on the child nodes
+ *         # Continue the recursion on the child nodes
  */
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_thres); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_thres, __pyx_t_1) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_pos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_pos, __pyx_t_1) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_1 = PyFloat_FromDouble(__pyx_v_thres); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_thres, __pyx_t_1) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_pos); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_pos, __pyx_t_1) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":126
- *     # be a leaf node
- *     name = f'Is feature {feat} < {thres:.2f}?'
- *     node = Node(name, n = nrows, parent = parent, feat = feat,             # <<<<<<<<<<<<<<
- *                 thres = thres, pos = pos)
- * 
- */
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_v_node = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "doubt/estimators/_forest.pyx":130
- * 
- *     # Continue the recursion on the child nodes
- *     _branch(X0, y0, pos = 0, parent = node,             # <<<<<<<<<<<<<<
- *             min_samples_leaf = min_samples_leaf)
- *     _branch(X1, y1, pos = 1, parent = node,
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_branch); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_7 = __pyx_memoryview_fromslice(__pyx_v_X0, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 130, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_y0, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 130, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 130, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_7);
-  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_7);
-  __Pyx_GIVEREF(__pyx_t_6);
-  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_6);
-  __pyx_t_7 = 0;
-  __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 130, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_pos, __pyx_int_0) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_parent, __pyx_v_node) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
-
-  /* "doubt/estimators/_forest.pyx":131
- *     # Continue the recursion on the child nodes
- *     _branch(X0, y0, pos = 0, parent = node,
- *             min_samples_leaf = min_samples_leaf)             # <<<<<<<<<<<<<<
- *     _branch(X1, y1, pos = 1, parent = node,
- *             min_samples_leaf = min_samples_leaf)
- */
-  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_min_samples_leaf); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 131, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_min_samples_leaf, __pyx_t_7) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-  /* "doubt/estimators/_forest.pyx":130
- * 
- *     # Continue the recursion on the child nodes
- *     _branch(X0, y0, pos = 0, parent = node,             # <<<<<<<<<<<<<<
- *             min_samples_leaf = min_samples_leaf)
- *     _branch(X1, y1, pos = 1, parent = node,
- */
-  __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 130, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-
-  /* "doubt/estimators/_forest.pyx":132
- *     _branch(X0, y0, pos = 0, parent = node,
- *             min_samples_leaf = min_samples_leaf)
- *     _branch(X1, y1, pos = 1, parent = node,             # <<<<<<<<<<<<<<
- *             min_samples_leaf = min_samples_leaf)
+    /* "doubt/estimators/_forest.pyx":126
+ *         # be a leaf node
+ *         name = f'Is feature {feat} < {thres:.2f}?'
+ *         node = Node(name, n = nrows, parent = parent, feat = feat,             # <<<<<<<<<<<<<<
+ *                     thres = thres, pos = pos)
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_branch); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 132, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_X1, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 132, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_y1, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GIVEREF(__pyx_t_6);
-  PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_6);
-  __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_2);
-  __pyx_t_6 = 0;
-  __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_pos, __pyx_int_1) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_parent, __pyx_v_node) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __pyx_v_node = __pyx_t_1;
+    __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":133
- *             min_samples_leaf = min_samples_leaf)
- *     _branch(X1, y1, pos = 1, parent = node,
- *             min_samples_leaf = min_samples_leaf)             # <<<<<<<<<<<<<<
+    /* "doubt/estimators/_forest.pyx":130
  * 
- *     # Return and recursive call, and also return the node if we're at the root
+ *         # Continue the recursion on the child nodes
+ *         _branch(X0, y0, pos = 0, parent = node,             # <<<<<<<<<<<<<<
+ *                 min_samples_leaf = min_samples_leaf)
+ *         _branch(X1, y1, pos = 1, parent = node,
  */
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_min_samples_leaf); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 133, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_min_samples_leaf, __pyx_t_6) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_branch); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 130, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_7 = __pyx_memoryview_fromslice(__pyx_v_X0, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 130, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_y0, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 130, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 130, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_7);
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_7);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_6);
+    __pyx_t_7 = 0;
+    __pyx_t_6 = 0;
+    __pyx_t_6 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 130, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_pos, __pyx_int_0) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_parent, __pyx_v_node) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
 
-  /* "doubt/estimators/_forest.pyx":132
- *     _branch(X0, y0, pos = 0, parent = node,
- *             min_samples_leaf = min_samples_leaf)
- *     _branch(X1, y1, pos = 1, parent = node,             # <<<<<<<<<<<<<<
- *             min_samples_leaf = min_samples_leaf)
+    /* "doubt/estimators/_forest.pyx":131
+ *         # Continue the recursion on the child nodes
+ *         _branch(X0, y0, pos = 0, parent = node,
+ *                 min_samples_leaf = min_samples_leaf)             # <<<<<<<<<<<<<<
+ *         _branch(X1, y1, pos = 1, parent = node,
+ *                 min_samples_leaf = min_samples_leaf)
+ */
+    __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_min_samples_leaf); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_min_samples_leaf, __pyx_t_7) < 0) __PYX_ERR(0, 130, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+
+    /* "doubt/estimators/_forest.pyx":130
+ * 
+ *         # Continue the recursion on the child nodes
+ *         _branch(X0, y0, pos = 0, parent = node,             # <<<<<<<<<<<<<<
+ *                 min_samples_leaf = min_samples_leaf)
+ *         _branch(X1, y1, pos = 1, parent = node,
+ */
+    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 130, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+
+    /* "doubt/estimators/_forest.pyx":132
+ *         _branch(X0, y0, pos = 0, parent = node,
+ *                 min_samples_leaf = min_samples_leaf)
+ *         _branch(X1, y1, pos = 1, parent = node,             # <<<<<<<<<<<<<<
+ *                 min_samples_leaf = min_samples_leaf)
  * 
  */
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 132, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_6);
-  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_branch); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_6 = __pyx_memoryview_fromslice(__pyx_v_X1, 2, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __pyx_t_2 = __pyx_memoryview_fromslice(__pyx_v_y1, 1, (PyObject *(*)(char *)) __pyx_memview_get_double, (int (*)(char *, PyObject *)) __pyx_memview_set_double, 0);; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_GIVEREF(__pyx_t_6);
+    PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_6);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_1, 1, __pyx_t_2);
+    __pyx_t_6 = 0;
+    __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_pos, __pyx_int_1) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_parent, __pyx_v_node) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
+
+    /* "doubt/estimators/_forest.pyx":133
+ *                 min_samples_leaf = min_samples_leaf)
+ *         _branch(X1, y1, pos = 1, parent = node,
+ *                 min_samples_leaf = min_samples_leaf)             # <<<<<<<<<<<<<<
+ * 
+ *     # Return the node if we're at the root
+ */
+    __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_min_samples_leaf); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 133, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_min_samples_leaf, __pyx_t_6) < 0) __PYX_ERR(0, 132, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+
+    /* "doubt/estimators/_forest.pyx":132
+ *         _branch(X0, y0, pos = 0, parent = node,
+ *                 min_samples_leaf = min_samples_leaf)
+ *         _branch(X1, y1, pos = 1, parent = node,             # <<<<<<<<<<<<<<
+ *                 min_samples_leaf = min_samples_leaf)
+ * 
+ */
+    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 132, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  }
+  __pyx_L17:;
 
   /* "doubt/estimators/_forest.pyx":136
  * 
- *     # Return and recursive call, and also return the node if we're at the root
+ *     # Return the node if we're at the root
  *     if parent is None:             # <<<<<<<<<<<<<<
  *         return node
  * 
@@ -4557,7 +4550,7 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_15, 1, (PyObject *(*)(char *)) __
   if (__pyx_t_29) {
 
     /* "doubt/estimators/_forest.pyx":137
- *     # Return and recursive call, and also return the node if we're at the root
+ *     # Return the node if we're at the root
  *     if parent is None:
  *         return node             # <<<<<<<<<<<<<<
  * 
@@ -4570,7 +4563,7 @@ __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_t_15, 1, (PyObject *(*)(char *)) __
 
     /* "doubt/estimators/_forest.pyx":136
  * 
- *     # Return and recursive call, and also return the node if we're at the root
+ *     # Return the node if we're at the root
  *     if parent is None:             # <<<<<<<<<<<<<<
  *         return node
  * 

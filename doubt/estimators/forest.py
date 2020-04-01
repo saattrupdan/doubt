@@ -114,6 +114,9 @@ class DecisionTree(BaseEstimator):
             raise RuntimeError('No tree found. You might need to fit it '\
                                'to a data set first?')
 
+        # Ensure that the input is two-dimensional
+        if len(X.shape) == 1: X = np.expand_dims(X, 0)
+
         if quantile is None: 
             quantile = -1.
         elif quantile < 0. or quantile > 1.:
@@ -147,15 +150,35 @@ class QuantileRandomForest(BaseEstimator):
 
         # Fit trees in parallel on the bootstrapped resamples
         pbar = tqdm(self._estimators, desc = 'Growing trees')
-        Parallel(n_jobs = self.n_jobs, backend = 'threading')(
-            delayed(estimator.fit)(X[bidxs[b, :], :], y[bidxs[b, :]])
-            for b, estimator in enumerate(pbar)
-        )
+        with Parallel(n_jobs = self.n_jobs, backend = 'threading') as parallel:
+            self._estimators = parallel(
+                delayed(estimator.fit)(X[bidxs[b, :], :], y[bidxs[b, :]])
+                for b, estimator in enumerate(pbar)
+            )
         return self
 
-    def predict(self, X, quantile: Optional[float] = None):
-        predictions = Parallel(n_jobs = self.n_jobs, backend = 'threading')(
-            delayed(estimator.predict)(X, quantile)
-            for estimator in self._estimators
-        )
+    def predict(self, X, uncertainty: Optional[float] = None,
+                quantile: Optional[float] = None):
+        ''' Perform predictions. '''
+
+        if uncertainty is not None and quantile is not None:
+            raise RuntimeError('Both uncertainty and quantile can not be set')
+
+        with Parallel(n_jobs = self.n_jobs, backend = 'threading') as parallel:
+
+            predictions = parallel(delayed(estimator.predict)(X, quantile)
+                                   for estimator in self._estimators)
+
+            if uncertainty is not None:
+                lower_quantile = (1 - uncertainty) / 2
+                lower = parallel(delayed(estimator.predict)(X, lower_quantile)
+                                 for estimator in self._estimators)
+                upper_quantile = (1 + uncertainty) / 2
+                upper = parallel(delayed(estimator.predict)(X, upper_quantile)
+                                 for estimator in self._estimators)
+
+                return (np.mean(predictions, axis = 0), 
+                        np.mean(lower, axis = 0),
+                        np.mean(upper, axis = 0))
+
         return np.mean(predictions, axis = 0)

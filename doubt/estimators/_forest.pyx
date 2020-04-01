@@ -117,22 +117,22 @@ def _branch(double[:, :] X, double[:] y, int min_samples_leaf,
         name = (f'[{np.min(y):,.0f}; {np.max(y):,.0f}]\n'
                 f'n = {nrows}\n'
                 f'n_unique = {len(np.unique(y))}')
-        Node(name, n = nrows, parent = parent, vals = y, pos = pos)
-        return 0
+        node = Node(name, n = nrows, parent = parent, vals = y, pos = pos)
 
-    # Define the current node, which by the above conditional can't
-    # be a leaf node
-    name = f'Is feature {feat} < {thres:.2f}?'
-    node = Node(name, n = nrows, parent = parent, feat = feat,
-                thres = thres, pos = pos)
+    else:
+        # Define the current node, which by the above conditional can't
+        # be a leaf node
+        name = f'Is feature {feat} < {thres:.2f}?'
+        node = Node(name, n = nrows, parent = parent, feat = feat,
+                    thres = thres, pos = pos)
 
-    # Continue the recursion on the child nodes
-    _branch(X0, y0, pos = 0, parent = node, 
-            min_samples_leaf = min_samples_leaf)
-    _branch(X1, y1, pos = 1, parent = node, 
-            min_samples_leaf = min_samples_leaf)
+        # Continue the recursion on the child nodes
+        _branch(X0, y0, pos = 0, parent = node, 
+                min_samples_leaf = min_samples_leaf)
+        _branch(X1, y1, pos = 1, parent = node, 
+                min_samples_leaf = min_samples_leaf)
 
-    # Return and recursive call, and also return the node if we're at the root
+    # Return the node if we're at the root
     if parent is None:
         return node
 
