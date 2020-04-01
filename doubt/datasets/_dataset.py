@@ -1,10 +1,14 @@
-import requests
-import pandas as pd
-from typing import Optional, Iterable, Tuple
-import abc
 from pathlib import Path
+import requests
+import abc
 import re
+
 import numpy as np
+import pandas as pd
+
+from typing import Optional
+from typing import Iterable
+from typing import Tuple
 
 class BaseDataset(object, metaclass = abc.ABCMeta):
 
@@ -12,14 +16,14 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
     feats: Iterable
     trgts: Iterable
 
-    def __init__(self, use_cache: bool = True):
-        self.cache = pd.HDFStore('.cache.h5') if use_cache else {}
+    def __init__(self, use_cache: bool = True, cache_name: str = '.cache'):
+        self.cache = pd.HDFStore(f'{cache_name}.h5') if use_cache else {}
         self.data = self.get_data()
         self.shape = self.data.shape
         self.columns = self.data.columns
 
     @abc.abstractmethod
-    def _prep_data(self, data: str) -> pd.DataFrame:
+    def _prep_data(self, data: bytes) -> pd.DataFrame:
         return 
 
     def get_data(self) -> pd.DataFrame:
@@ -52,7 +56,8 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
         return self.data.head()
 
     def close(self):
-        self.data.close()
+        if self.cache != {}:
+            self.cache.close()
         del self
 
     def __exit__(self):
