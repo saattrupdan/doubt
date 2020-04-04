@@ -1,7 +1,8 @@
 ''' 
-Collection of data sets for regression tasks, with data preparation pipelines. 
+Collection of data sets for regression tasks, with data preparation pipelines.
 All data sets are from the UCI data set archive, with all the descriptions 
-being the original descriptions verbatim.
+being the original descriptions verbatim. Some feature names were constructed
+from their descriptions and were not part of the original data set.
 '''
 
 from ._dataset import BaseDataset
@@ -9,9 +10,8 @@ from ._dataset import BaseDataset
 import pandas as pd
 import zipfile
 import io
-import re
 
-class AirfoilSelfNoise(BaseDataset):
+class Airfoil(BaseDataset):
     '''
     The NASA data set comprises different size NACA 0012 airfoils at various 
     wind tunnel speeds and angles of attack. The span of the airfoil and the 
@@ -46,10 +46,14 @@ class AirfoilSelfNoise(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        df = pd.read_csv(data, sep = '\t')
+        # Convert the bytes into a file-like object
+        csv_file = io.BytesIO(data)
+
+        # Read the file-like object into a data frame
+        df = pd.read_csv(csv_file, sep = '\t', header = None)
         return df
 
-class DailyBikeSharing(BaseDataset):
+class BikeSharingDaily(BaseDataset):
     '''
     Bike sharing systems are new generation of traditional bike rentals where 
     whole process from membership, rental and return back has become automatic.
@@ -134,11 +138,7 @@ class DailyBikeSharing(BaseDataset):
 
         # Unzip the file and pull out day.csv as a string
         with zipfile.ZipFile(buffer, 'r') as zip_file:
-            csv = str(zip_file.read('day.csv'))
-
-        # Fix a few quirks that arise when reading the data as a string
-        csv = re.sub(r'\\r\\n', '\r\n', csv)
-        csv = re.sub(r"b'|'", '', csv)
+            csv = zip_file.read('day.csv').decode('utf-8')
 
         # Convert the string into a file-like object
         csv_file = io.StringIO(csv)
@@ -147,7 +147,7 @@ class DailyBikeSharing(BaseDataset):
         df = pd.read_csv(csv_file)
         return df
 
-class HourlyBikeSharing(BaseDataset):
+class BikeSharingHourly(BaseDataset):
     '''
     Bike sharing systems are new generation of traditional bike rentals where 
     whole process from membership, rental and return back has become automatic.
@@ -234,11 +234,7 @@ class HourlyBikeSharing(BaseDataset):
 
         # Unzip the file and pull out hour.csv as a string
         with zipfile.ZipFile(buffer, 'r') as zip_file:
-            csv = str(zip_file.read('hour.csv'))
-
-        # Fix a few quirks that arise when reading the data as a string
-        csv = re.sub(r'\\r\\n', '\r\n', csv)
-        csv = re.sub(r"b'|'", '', csv)
+            csv = zip_file.read('hour.csv').decode('utf-8')
 
         # Convert the string into a file-like object
         csv_file = io.StringIO(csv)
@@ -247,17 +243,80 @@ class HourlyBikeSharing(BaseDataset):
         df = pd.read_csv(csv_file)
         return df
 
-class BlogFeedback(BaseDataset):
+class Blog(BaseDataset):
     '''
-    Description
+    This data originates from blog posts. The raw HTML-documents
+    of the blog posts were crawled and processed.
+    The prediction task associated with the data is the prediction
+    of the number of comments in the upcoming 24 hours. In order
+    to simulate this situation, we choose a basetime (in the past)
+    and select the blog posts that were published at most
+    72 hours before the selected base date/time. Then, we calculate
+    all the features of the selected blog posts from the information
+    that was available at the basetime, therefore each instance
+    corresponds to a blog post. The target is the number of
+    comments that the blog post received in the next 24 hours
+    relative to the basetime.
+
+    In the train data, the basetimes were in the years
+    2010 and 2011. In the test data the basetimes were
+    in February and March 2012. This simulates the real-world
+    situtation in which training data from the past is available
+    to predict events in the future.
+
+    The train data was generated from different basetimes that may
+    temporally overlap. Therefore, if you simply split the train
+    into disjoint partitions, the underlying time intervals may
+    overlap. Therefore, the you should use the provided, temporally
+    disjoint train and test splits in order to ensure that the
+    evaluation is fair.
 
     Features:
-        name (type): 
-            Description
+        Features 0-49 (float):
+            50 features containing the average, standard deviation,
+            minimum, maximum and median of feature 50-59 for the source
+            of the current blog post, by which we mean the blog on which
+            the post appeared. For example, myblog.blog.org would be the
+            source of the post myblog.blog.org/post_2010_09_10
+        Feature 50 (int):
+            Total number of comments before basetime
+        Feature 51 (int):
+            Number of comments in the last 24 hours before the basetime
+        Feature 52 (int):
+            If T1 is the datetime 48 hours before basetime and T2 is the
+            datetime 24 hours before basetime, then this is the number of
+            comments in the time period between T1 and T2
+        Feature 53 (int):
+            Number of comments in the first 24 hours after the publication
+            of the blog post, but before basetime
+        Feature 54 (int):
+            The difference between Feature 51 and Feature 52
+        Features 55-59 (int):
+            The same thing as Features 50-51, but for links (trackbacks)
+            instead of comments
+        Feature 60 (float):
+            The length of time between the publication of the blog post
+            and basetime
+        Feature 61 (int):
+            The length of the blog post
+        Features 62-261 (int):
+            The 200 bag of words features for 200 frequent words of the
+            text of the blog post
+        Features 262-268 (int):
+            Binary indicators for the weekday (Monday-Sunday) of the basetime
+        Features 269-275 (int):
+            Binary indicators for the weekday (Monday-Sunday) of the date
+            of publication of the blog post
+        Feature 276 (int):
+            Number of parent pages: we consider a blog post P as a parent
+            of blog post B if B is a reply (trackback) to P
+        Features 277-279 (float):
+            Minimum, maximum and average of the number of comments the
+            parents received
 
     Targets:
-        name (type): 
-            Description
+        int: The number of comments in the next 24 hours (relative to
+             baseline)
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/BlogFeedback 
@@ -266,8 +325,8 @@ class BlogFeedback(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00304/BlogFeedback.zip'
 
-    feats = []
-    trgts = []
+    feats = range(279)
+    trgts = [279]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -278,29 +337,78 @@ class BlogFeedback(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        buffer = io.BytesIO(data)
 
-class CarbonNanotubes(BaseDataset):
+        # Unzip the file and pull out blogData_train.csv as a string
+        with zipfile.ZipFile(buffer, 'r') as zip_file:
+            csv = zip_file.read('blogData_train.csv').decode('utf-8')
+
+        # Convert the string into a file-like object
+        csv_file = io.StringIO(csv)
+
+        # Read the file-like object into a dataframe
+        df = pd.read_csv(csv_file, header = None)
+        return df
+
+class Nanotube(BaseDataset):
     '''
-    Description
+    CASTEP can simulate a wide range of properties of materials proprieties 
+    using density functional theory (DFT). DFT is the most successful method 
+    calculates atomic coordinates faster than other mathematical approaches, 
+    and it also reaches more accurate results. The dataset is generated with 
+    CASTEP using CNT geometry optimization. Many CNTs are simulated in CASTEP, 
+    then geometry optimizations are calculated. Initial coordinates of all 
+    carbon atoms are generated randomly. Different chiral vectors are used for 
+    each CNT simulation. 
+    
+    The atom type is selected as carbon, bond length is used as 1.42 AÂ° 
+    (default value). CNT calculation parameters are used as default 
+    parameters. To finalize the computation, CASTEP uses a parameter named 
+    as elec_energy_tol (electrical energy tolerance) (default 1x10-5 eV) 
+    which represents that the change in the total energy from one iteration to 
+    the next remains below some tolerance value per atom for a few 
+    self-consistent field steps. Initial atomic coordinates (u, v, w), chiral 
+    vector (n, m) and calculated atomic coordinates (u, v, w) are 
+    obtained from the output files.
 
     Features:
-        name (type): 
-            Description
+        Chiral indice n (int): 
+            n parameter of the selected chiral vector
+        Chiral indice m (int): 
+            m parameter of the selected chiral vector
+        Initial atomic coordinate u (float): 
+            Randomly generated u parameter of the initial atomic coordinates 
+            of all carbon atoms. 
+        Initial atomic coordinate v (float): 
+            Randomly generated v parameter of the initial atomic coordinates 
+            of all carbon atoms. 
+        Initial atomic coordinate w (float): 
+            Randomly generated w parameter of the initial atomic coordinates 
+            of all carbon atoms. 
 
     Targets:
-        name (type): 
-            Description
+        Calculated atomic coordinates u (float): 
+           Calculated u parameter of the atomic coordinates of all 
+           carbon atoms 
+        Calculated atomic coordinates v (float): 
+           Calculated v parameter of the atomic coordinates of all 
+           carbon atoms 
+        Calculated atomic coordinates w (float): 
+           Calculated w parameter of the atomic coordinates of all 
+           carbon atoms 
     
-    Source:
-        https://archive.ics.uci.edu/ml/datasets/Carbon+Nanotubes 
+    Sources:
+        https://archive.ics.uci.edu/ml/datasets/Carbon+Nanotubes
+        https://doi.org/10.1007/s00339-016-0153-1
+        https://doi.org/10.17341/gazimmfd.337642
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00448/carbon_nanotubes.csv'
 
-    feats = []
-    trgts = []
+    feats = range(5)
+    trgts = [5, 6, 7]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -311,29 +419,50 @@ class CarbonNanotubes(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        csv_file = io.BytesIO(data)
 
-class ConcreteCompressive(BaseDataset):
+        # Read the file-like object into a dataframe
+        df = pd.read_csv(csv_file, sep = ';', decimal = ',')
+        return df
+
+class Concrete(BaseDataset):
     '''
-    Description
+    Concrete is the most important material in civil engineering. The concrete 
+    compressive strength is a highly nonlinear function of age and 
+    ingredients. 
 
     Features:
-        name (type): 
-            Description
+        Cement (float): 
+            Kg of cement in an m3 mixture
+        Blast Furnace Slag (float): 
+            Kg of blast furnace slag in an m3 mixture
+        Fly Ash (float): 
+            Kg of fly ash in an m3 mixture
+        Water (float): 
+            Kg of water in an m3 mixture
+        Superplasticiser (float): 
+            Kg of superplasticiser in an m3 mixture
+        Coarse Aggregate (float): 
+            Kg of coarse aggregate in an m3 mixture
+        Fine Aggregate (float): 
+            Kg of fine aggregate in an m3 mixture
+        Age (int): 
+            Age in days, between 1 and 365 inclusive
 
     Targets:
-        name (type): 
-            Description
+        Concrete Compressive Strength (float): 
+            Concrete compressive strength in megapascals
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength 
+        https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'concrete/compressive/Concrete_Data.xls'
 
-    feats = []
-    trgts = []
+    feats = range(8)
+    trgts = [8]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -344,29 +473,50 @@ class ConcreteCompressive(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
 
-class CPUPerformance(BaseDataset):
+        # Convert the bytes into a file-like object
+        xls_file = io.BytesIO(data)
+
+        # Load the file-like object into a data frame
+        df = pd.read_excel(xls_file)
+        return df
+
+class CPU(BaseDataset):
     '''
-    Description
+    Relative CPU Performance Data, described in terms of its cycle time, 
+    memory size, etc. 
 
     Features:
-        name (type): 
-            Description
+        vendor_name (string): 
+            Name of the vendor, 30 unique values
+        model_name (string):
+            Name of the model
+        myct (int):
+            Machine cycle time in nanoseconds
+        mmin (int):
+            Minimum main memory in kilobytes
+        mmax (int):
+            Maximum main memory in kilobytes
+        cach (int):
+            Cache memory in kilobytes
+        chmin (int):
+            Minimum channels in units
+        chmax (int):
+            Maximum channels in units
 
     Targets:
-        name (type): 
-            Description
+        prp (int):
+            Published relative performance
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Computer+Hardware 
+        https://archive.ics.uci.edu/ml/datasets/Computer+Hardware
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'cpu-performance/machine.data'
 
-    feats = []
-    trgts = []
+    feats = range(8)
+    trgts = [8]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -377,29 +527,66 @@ class CPUPerformance(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
 
-class CyclePowerPlant(BaseDataset):
+        # Convert the bytes into a file-like object
+        csv_file = io.BytesIO(data)
+
+        # Name the columns
+        cols = ['vendor_name', 'model_name', 'myct', 'mmin', 'mmax',
+                'cach', 'chmin', 'chmax', 'prp']
+
+        # Load the file-like object into a data frame
+        df = pd.read_csv(csv_file, header = None, usecols = range(9),
+                         names = cols)
+        return df
+
+class PowerPlant(BaseDataset):
     '''
-    Description
+    The dataset contains 9568 data points collected from a Combined Cycle 
+    Power Plant over 6 years (2006-2011), when the power plant was set to 
+    work with full load. Features consist of hourly average ambient variables 
+    Temperature (T), Ambient Pressure (AP), Relative Humidity (RH) and Exhaust 
+    Vacuum (V) to predict the net hourly electrical energy output (EP) of the 
+    plant.
+
+    A combined cycle power plant (CCPP) is composed of gas turbines (GT), 
+    steam turbines (ST) and heat recovery steam generators. In a CCPP, the 
+    electricity is generated by gas and steam turbines, which are combined in 
+    one cycle, and is transferred from one turbine to another. While the 
+    Vacuum is colected from and has effect on the Steam Turbine, he other 
+    three of the ambient variables effect the GT performance.
+
+    For comparability with our baseline studies, and to allow 5x2 fold 
+    statistical tests be carried out, we provide the data shuffled five times. 
+    For each shuffling 2-fold CV is carried out and the resulting 10 
+    measurements are used for statistical testing.
 
     Features:
-        name (type): 
-            Description
+        AT (float): 
+            Hourly average temperature in Celsius, ranges from 1.81 to 37.11
+        V (float): 
+            Hourly average exhaust vacuum in cm Hg, ranges from 25.36 to 81.56
+        AP (float): 
+            Hourly average ambient pressure in millibar, ranges from 992.89 
+            to 1033.30
+        RH (float): 
+            Hourly average relative humidity in percent, ranges from 25.56
+            to 100.16
 
     Targets:
-        name (type): 
-            Description
+        PE (float): 
+            Net hourly electrical energy output in MW, ranges from 420.26
+            to 495.76
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Combined+Cycle+Power+Plant 
+        https://archive.ics.uci.edu/ml/datasets/Combined+Cycle+Power+Plant
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00294/CCPP.zip'
 
-    feats = []
-    trgts = []
+    feats = range(4)
+    trgts = [4]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -410,29 +597,92 @@ class CyclePowerPlant(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+
+        # Convert the bytes into a file-like object
+        buffer = io.BytesIO(data)
+
+        # Unzip the file and pull out the xlsx file
+        with zipfile.ZipFile(buffer, 'r') as zip_file:
+            xlsx = zip_file.read('CCPP/Folds5x2_pp.xlsx')
+
+        # Convert the xlsx bytes into a file-like object
+        xlsx_file = io.BytesIO(xlsx)
+
+        # Read the file-like object into a dataframe
+        df = pd.read_excel(xlsx_file)
+        return df
 
 class FacebookComments(BaseDataset):
     '''
-    Description
+    Instances in this dataset contain features extracted from Facebook posts. 
+    The task associated with the data is to predict how many comments the 
+    post will receive.
 
     Features:
-        name (type): 
-            Description
+        page_popularity (int):
+            Defines the popularity of support for the source of the document
+        page_checkins (int): 
+            Describes how many individuals so far visited this place. This
+            feature is only associated with places; e.g., some institution,
+            place, theater, etc.
+        page_talking_about (int):
+            Defines the daily interest of individuals towards source of the
+            document/post. The people who actually come back to the page,
+            after liking the page. This include activities such as comments, 
+            likes to a post, shares etc., by visitors to the page
+        page_category (int):
+            Defines the category of the source of the document; e.g., place,
+            institution, branch etc.
+        agg{n} for n=0..24 (float):
+            These features are aggreagted by page, by calculating min, max,
+            average, median and standard deviation of essential features
+        cc1 (int):
+            The total number of comments before selected base date/time
+        cc2 (int):
+            The number of comments in the last 24 hours, relative to base
+            date/time
+        cc3 (int):
+            The number of comments in the last 48 to last 24 hours relative
+            to base date/time
+        cc4 (int):
+            The number of comments in the first 24 hours after the publication
+            of post but before base date/time
+        cc5 (int):
+            The difference between cc2 and cc3
+        base_time (int):
+            Selected time in order to simulate the scenario, ranges from 0
+            to 71
+        post_length (int):
+            Character count in the post
+        post_share_count (int):
+            This feature counts the number of shares of the post, how many 
+            people had shared this post onto their timeline
+        post_promotion_status (int):
+            Binary feature. To reach more people with posts in News Feed,
+            individuals can promote their post and this feature indicates
+            whether the post is promoted or not
+        h_local (int):
+            This describes the hours for which we have received the target 
+            variable/comments. Ranges from 0 to 23
+        day_published{n} for n=0..6 (int):
+            Binary feature. This represents the day (Sunday-Saturday) on
+            which the post was published
+        day{n} for n=0..6 (int):
+            Binary feature. This represents the day (Sunday-Saturday) on
+            selected base date/time
 
     Targets:
-        name (type): 
-            Description
+        ncomments (int): The number of comments in the next `h_local` hours
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Facebook+Comment+Volume+Dataset 
+        https://archive.ics.uci.edu/ml/datasets/Facebook+Comment+Volume+Dataset
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00363/Dataset.zip'
 
-    feats = []
-    trgts = []
+    feats = range(54)
+    trgts = [53]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -443,7 +693,30 @@ class FacebookComments(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+
+        # Convert the bytes into a file-like object
+        buffer = io.BytesIO(data)
+
+        # Unzip the file and pull out the csv file
+        with zipfile.ZipFile(buffer, 'r') as zip_file:
+            csv = zip_file.read('Dataset/Training/Features_Variant_5.csv')
+
+        # Convert the string into a file-like object
+        csv_file = io.BytesIO(csv)
+
+        # Name the columns
+        cols = ['page_popularity', 'page_checkins', 'page_talking_about',
+                'page_category'] + \
+               [f'agg{n}' for n in range(25)] + \
+               ['cc1', 'cc2', 'cc3', 'cc4', 'cc5', 'base_time', 'post_length',
+                'post_share_count', 'post_promotion_status', 'h_local'] + \
+               [f'day_published{n}' for n in range(7)] + \
+               [f'day{n}' for n in range(7)] + \
+               ['ncomments']
+
+        # Read the file-like object into a dataframe
+        df = pd.read_csv(csv_file, header = None, names = cols)
+        return df
 
 class FacebookMetrics(BaseDataset):
     '''
@@ -545,7 +818,7 @@ class FishToxicity(BaseDataset):
         '''
         raise NotImplementedError
 
-class ForestFires(BaseDataset):
+class ForestFire(BaseDataset):
     ''' 
     This is a difficult regression task, where the aim is to predict the 
     burned area of forest fires, in the northeast region of Portugal, by 
@@ -978,6 +1251,6 @@ class Yacht(BaseDataset):
         raise NotImplementedError
 
 if __name__ == '__main__':
-    dataset = DailyBikeSharing(use_cache = False)
+    dataset = FacebookComments(use_cache = False)
     print(dataset.columns)
     print(dataset.head())
