@@ -19,11 +19,11 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
     feats: Iterable
     trgts: Iterable
 
-    def __init__(self, use_cache: bool = True, cache_name: str = '.cache'):
-        self.cache = pd.HDFStore(f'{cache_name}.h5') if use_cache else {}
-        self.data = self.get_data()
-        self.shape = self.data.shape
-        self.columns = self.data.columns
+    def __init__(self, cache: Optional[str] = '.cache'):
+        self._cache = pd.HDFStore(f'{cache}.h5') if cache is not None else {}
+        self._data = self.get_data()
+        self.shape = self._data.shape
+        self.columns = self._data.columns
 
     @abc.abstractmethod
     def _prep_data(self, data: bytes) -> pd.DataFrame:
@@ -41,37 +41,39 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
         name = name.lower().strip('_')
 
         try:
-            data = self.cache[name]
+            data = self._cache[name]
         except KeyError:
             with warnings.catch_warnings():
                 warnings.simplefilter('ignore')
                 response = requests.get(self.url, verify = False)
             data = self._prep_data(response.content)
-            if self.cache != {}:
-                data.to_hdf(self.cache, name)
+            if self._cache != {}:
+                data.to_hdf(self._cache, name)
         return data
 
     def to_pandas(self):
-        return self.data
+        return self._data
 
     def __len__(self):
-        return len(self.data)
+        return len(self._data)
 
-    def head(self):
-        return self.data.head()
+    def head(self, n: int = 5):
+        return self._data.head(n)
 
     def close(self):
-        if self.cache != {}:
-            self.cache.close()
+        if self._cache != {}:
+            self._cache.close()
+        del self._data
         del self
 
     def __exit__(self):
         self.close()
 
     def __str__(self):
-        return str(self.data)
+        return str(self._data)
 
-    def split(self, test_size: Optional[float] = None) -> Tuple[np.ndarray]:
+    def split(self, test_size: Optional[float] = None, 
+              seed: Optional[float] = None) -> Tuple[np.ndarray]:
         ''' 
         Split dataset into features and targets and optionally also train/test.
 
@@ -80,31 +82,32 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
                 The fraction of the dataset that will constitute the test
                 set. If None then no train/test split will happen. Defaults
                 to None.
-            random_seed (float or None):
+            seed (float or None):
                 The random seed used for the train/test split. If None then
                 a random number will be chosen. Defaults to None.
 
         Returns:
             If ``test_size`` is not `None` then a tuple of numpy arrays
             (X_train, y_train, X_test, y_test) is returned, and otherwise 
-            the tuple (X, y) is returned.
+            the tuple (X, y) of numpy arrays is returned.
         '''
-        nrows = len(self.data)
+        nrows = len(self._data)
         feats = type(self).feats
         trgts = type(self).trgts
 
         if test_size is not None:
-            test_idxs = np.random.choice(nrows, p = test_size, size = (nrows,))
-            train_idxs = np.isin(test_idxs, np.arange(nrows), invert = True)
+            if seed is not None: np.random.seed(seed)
+            test_idxs = np.random.random(size = (nrows,)) < test_size
+            train_idxs = ~test_idxs
 
-            X_train = self.data.iloc[train_idxs, feats]
-            y_train = self.data.iloc[train_idxs, trgts]
-            X_test = self.data.iloc[test_idxs, feats]
-            y_test = self.data.iloc[test_idxs, trgts]
+            X_train = self._data.iloc[train_idxs, feats].values
+            y_train = self._data.iloc[train_idxs, trgts].values
+            X_test = self._data.iloc[test_idxs, feats].values
+            y_test = self._data.iloc[test_idxs, trgts].values
             
             return X_train, y_train, X_test, y_test
 
         else:
-            X = self.data.iloc[:, feats].values
-            y = self.data.iloc[:, trgts].values
+            X = self._data.iloc[:, feats].values
+            y = self._data.iloc[:, trgts].values
             return X, y

@@ -11,11 +11,42 @@ import pandas as pd
 import zipfile
 import io
 
+BASE_DATASET_DESCRIPTION = '''
+    Parameters:
+        cache (str or None):
+            The name of the cache. It will be saved to ``cache``.h5 in the
+            current working directory. If None then no cache will be saved.
+            Defaults to '.cache'.
+
+    Attributes:
+        shape (tuple of integers): 
+            Dimensions of the data set
+        columns (list of strings): 
+            List of column names in the data set
+
+    Class attributes:
+        url (string):
+            The url where the raw data files can be downloaded
+        feats (iterable):
+            The column indices of the feature variables
+        trgts (iterable):
+            The column indices of the target variables
+
+    Methods:
+        head(n: int = 5) -> pd.DataFrame: 
+        to_pandas() -> pandas.DataFrame: 
+        close() -> None:
+        split(test_size: float or None = None, 
+              seed: float or None = None) -> Tuple of Numpy arrays
+'''
+
 class Airfoil(BaseDataset):
-    '''
+    f'''
     The NASA data set comprises different size NACA 0012 airfoils at various 
     wind tunnel speeds and angles of attack. The span of the airfoil and the 
     observer position were the same in all of the experiments.   
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         int: Frequency, in Hertzs
@@ -29,13 +60,35 @@ class Airfoil(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise 
-     '''
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Airfoil()
+        >>> dataset.shape
+        (1503, 6)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (1503, 5) (1503, 1)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (1179, 5) (1179, 1) (324, 5) (324, 1)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00291/airfoil_self_noise.dat'
 
     feats = range(5)
-    trgts = [6]
+    trgts = [5]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -54,7 +107,7 @@ class Airfoil(BaseDataset):
         return df
 
 class BikeSharingDaily(BaseDataset):
-    '''
+    f'''
     Bike sharing systems are new generation of traditional bike rentals where 
     whole process from membership, rental and return back has become automatic.
     Through these systems, user is able to easily rent a bike from a 
@@ -72,6 +125,8 @@ class BikeSharingDaily(BaseDataset):
     system into a virtual sensor network that can be used for sensing mobility 
     in the city. Hence, it is expected that most of important events in the 
     city could be detected via monitoring these data. 
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         instant (int): 
@@ -116,6 +171,28 @@ class BikeSharingDaily(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset
+
+    Examples:
+        Load in the data set:
+        >>> dataset = BikeSharingDaily()
+        >>> dataset.shape
+        (731, 16)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (731, 13) (731, 3)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (562, 13) (562, 3) (169, 13) (169, 3)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -148,7 +225,7 @@ class BikeSharingDaily(BaseDataset):
         return df
 
 class BikeSharingHourly(BaseDataset):
-    '''
+    f'''
     Bike sharing systems are new generation of traditional bike rentals where 
     whole process from membership, rental and return back has become automatic.
     Through these systems, user is able to easily rent a bike from a 
@@ -166,6 +243,8 @@ class BikeSharingHourly(BaseDataset):
     system into a virtual sensor network that can be used for sensing mobility 
     in the city. Hence, it is expected that most of important events in the 
     city could be detected via monitoring these data. 
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         instant (int): 
@@ -212,6 +291,28 @@ class BikeSharingHourly(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Bike+Sharing+Dataset
+
+    Examples:
+        Load in the data set:
+        >>> dataset = BikeSharingHourly()
+        >>> dataset.shape
+        (17379, 17)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (17379, 14) (17379, 3)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (13878, 14) (13878, 3) (3501, 14) (3501, 3)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -244,7 +345,7 @@ class BikeSharingHourly(BaseDataset):
         return df
 
 class Blog(BaseDataset):
-    '''
+    f'''
     This data originates from blog posts. The raw HTML-documents
     of the blog posts were crawled and processed.
     The prediction task associated with the data is the prediction
@@ -270,6 +371,8 @@ class Blog(BaseDataset):
     overlap. Therefore, the you should use the provided, temporally
     disjoint train and test splits in order to ensure that the
     evaluation is fair.
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         Features 0-49 (float):
@@ -320,6 +423,28 @@ class Blog(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/BlogFeedback 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Blog()
+        >>> dataset.shape
+        (52397, 281)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (52397, 279) (52397, 1)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (41932, 279) (41932, 1) (10465, 279) (10465, 1)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -352,7 +477,7 @@ class Blog(BaseDataset):
         return df
 
 class Nanotube(BaseDataset):
-    '''
+    f'''
     CASTEP can simulate a wide range of properties of materials proprieties 
     using density functional theory (DFT). DFT is the most successful method 
     calculates atomic coordinates faster than other mathematical approaches, 
@@ -371,6 +496,8 @@ class Nanotube(BaseDataset):
     self-consistent field steps. Initial atomic coordinates (u, v, w), chiral 
     vector (n, m) and calculated atomic coordinates (u, v, w) are 
     obtained from the output files.
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         Chiral indice n (int): 
@@ -402,6 +529,28 @@ class Nanotube(BaseDataset):
         https://archive.ics.uci.edu/ml/datasets/Carbon+Nanotubes
         https://doi.org/10.1007/s00339-016-0153-1
         https://doi.org/10.17341/gazimmfd.337642
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Nanotube()
+        >>> dataset.shape
+        (10721, 8)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (10721, 5) (10721, 3)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (8542, 5) (8542, 3) (2179, 5) (2179, 3)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -427,10 +576,12 @@ class Nanotube(BaseDataset):
         return df
 
 class Concrete(BaseDataset):
-    '''
+    f'''
     Concrete is the most important material in civil engineering. The concrete 
     compressive strength is a highly nonlinear function of age and 
     ingredients. 
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         Cement (float): 
@@ -456,6 +607,28 @@ class Concrete(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Concrete()
+        >>> dataset.shape
+        (1030, 9)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (1030, 8) (1030, 1)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (801, 8) (801, 1) (229, 8) (229, 1)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -482,9 +655,11 @@ class Concrete(BaseDataset):
         return df
 
 class CPU(BaseDataset):
-    '''
+    f'''
     Relative CPU Performance Data, described in terms of its cycle time, 
     memory size, etc. 
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         vendor_name (string): 
@@ -510,6 +685,28 @@ class CPU(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Computer+Hardware
+
+    Examples:
+        Load in the data set:
+        >>> dataset = CPU()
+        >>> dataset.shape
+        (209, 9)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (209, 8) (209, 1)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (158, 8) (158, 1) (51, 8) (51, 1)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -541,7 +738,7 @@ class CPU(BaseDataset):
         return df
 
 class PowerPlant(BaseDataset):
-    '''
+    f'''
     The dataset contains 9568 data points collected from a Combined Cycle 
     Power Plant over 6 years (2006-2011), when the power plant was set to 
     work with full load. Features consist of hourly average ambient variables 
@@ -560,6 +757,8 @@ class PowerPlant(BaseDataset):
     statistical tests be carried out, we provide the data shuffled five times. 
     For each shuffling 2-fold CV is carried out and the resulting 10 
     measurements are used for statistical testing.
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         AT (float): 
@@ -580,6 +779,28 @@ class PowerPlant(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Combined+Cycle+Power+Plant
+
+    Examples:
+        Load in the data set:
+        >>> dataset = PowerPlant()
+        >>> dataset.shape
+        (9568, 5)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (9568, 4) (9568, 1)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (7615, 4) (7615, 1) (1953, 4) (1953, 1)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -613,10 +834,12 @@ class PowerPlant(BaseDataset):
         return df
 
 class FacebookComments(BaseDataset):
-    '''
+    f'''
     Instances in this dataset contain features extracted from Facebook posts. 
     The task associated with the data is to predict how many comments the 
     post will receive.
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         page_popularity (int):
@@ -676,6 +899,28 @@ class FacebookComments(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Facebook+Comment+Volume+Dataset
+
+    Examples:
+        Load in the data set:
+        >>> dataset = FacebookComments()
+        >>> dataset.shape
+        (199030, 54)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (199030, 54) (199030, 1)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (159288, 54) (159288, 1) (39742, 54) (39742, 1)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -719,8 +964,10 @@ class FacebookComments(BaseDataset):
         return df
 
 class FacebookMetrics(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -732,6 +979,28 @@ class FacebookMetrics(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Facebook+metrics 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = FacebookMetrics()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -752,8 +1021,10 @@ class FacebookMetrics(BaseDataset):
         raise NotImplementedError
 
 class FishBioconcentration(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -764,8 +1035,29 @@ class FishBioconcentration(BaseDataset):
             Description
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/QSAR+fish+bioconcentration
-        +factor+%28BCF%29 
+        https://archive.ics.uci.edu/ml/datasets/QSAR+fish+bioconcentration+factor+%28BCF%29 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = FishBioconcentration()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -786,8 +1078,10 @@ class FishBioconcentration(BaseDataset):
         raise NotImplementedError
 
 class FishToxicity(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -799,6 +1093,28 @@ class FishToxicity(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/QSAR+fish+toxicity 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = FishToxicity()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -819,10 +1135,12 @@ class FishToxicity(BaseDataset):
         raise NotImplementedError
 
 class ForestFire(BaseDataset):
-    ''' 
+    f''' 
     This is a difficult regression task, where the aim is to predict the 
     burned area of forest fires, in the northeast region of Portugal, by 
     using meteorological and other data.
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         X (float): 
@@ -862,6 +1180,28 @@ class ForestFire(BaseDataset):
 
     Source:
         https://archive.ics.uci.edu/ml/datasets/Forest+Fires 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = ForestFire()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -882,8 +1222,10 @@ class ForestFire(BaseDataset):
         raise NotImplementedError
 
 class GasTurbine(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -894,8 +1236,29 @@ class GasTurbine(BaseDataset):
             Description
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Condition+Based+Maintenance
-        +of+Naval+Propulsion+Plants 
+        https://archive.ics.uci.edu/ml/datasets/Condition+Based+Maintenance+of+Naval+Propulsion+Plants 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = GasTurbine()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -916,8 +1279,10 @@ class GasTurbine(BaseDataset):
         raise NotImplementedError
 
 class NewTaipeiHousing(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -929,6 +1294,28 @@ class NewTaipeiHousing(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = NewTaipeiHousing()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -949,8 +1336,10 @@ class NewTaipeiHousing(BaseDataset):
         raise NotImplementedError
 
 class Parkinsons(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -962,6 +1351,28 @@ class Parkinsons(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Parkinsons+Telemonitoring 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Parkinsons()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -982,8 +1393,10 @@ class Parkinsons(BaseDataset):
         raise NotImplementedError
 
 class Protein(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -994,8 +1407,29 @@ class Protein(BaseDataset):
             Description
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Physicochemical+Properties
-        +of+Protein+Tertiary+Structure 
+        https://archive.ics.uci.edu/ml/datasets/Physicochemical+Properties+of+Protein+Tertiary+Structure 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Protein()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1016,8 +1450,10 @@ class Protein(BaseDataset):
         raise NotImplementedError
 
 class Servo(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -1029,6 +1465,28 @@ class Servo(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Servo 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Servo()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1049,8 +1507,10 @@ class Servo(BaseDataset):
         raise NotImplementedError
 
 class SolarFlare(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -1062,6 +1522,28 @@ class SolarFlare(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Solar+Flare 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Solar()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1082,8 +1564,10 @@ class SolarFlare(BaseDataset):
         raise NotImplementedError
 
 class SpaceShuttle(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -1094,8 +1578,29 @@ class SpaceShuttle(BaseDataset):
             Description
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space
-        +Shuttle+O-Ring 
+        https://archive.ics.uci.edu/ml/datasets/Challenger+USA+Space+Shuttle+O-Ring 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = SpaceShuttle()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1115,9 +1620,11 @@ class SpaceShuttle(BaseDataset):
         '''
         raise NotImplementedError
 
-class StockPortfolio(BaseDataset):
-    '''
+class Stocks(BaseDataset):
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -1129,6 +1636,28 @@ class StockPortfolio(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Stock+portfolio+performance 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Stocks()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1148,9 +1677,11 @@ class StockPortfolio(BaseDataset):
         '''
         raise NotImplementedError
 
-class Superconduct(BaseDataset):
-    '''
+class Superconductivity(BaseDataset):
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -1162,6 +1693,28 @@ class Superconduct(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Superconductivty+Data 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Superconductivity()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1182,10 +1735,12 @@ class Superconduct(BaseDataset):
         raise NotImplementedError
 
 class TehranHousing(BaseDataset):
-    ''' 
+    f''' 
     Data set includes construction cost, sale prices, project variables, and 
     economic variables corresponding to real estate single-family residential 
     apartments in Tehran, Iran.
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         float: 8 project physical and financial variables
@@ -1197,6 +1752,28 @@ class TehranHousing(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Residential+Building+Data+Set 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = TehranHousing()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1218,8 +1795,10 @@ class TehranHousing(BaseDataset):
         return df
 
 class Yacht(BaseDataset):
-    '''
+    f'''
     Description
+
+    {BASE_DATASET_DESCRIPTION}
 
     Features:
         name (type): 
@@ -1231,6 +1810,28 @@ class Yacht(BaseDataset):
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Yacht+Hydrodynamics 
+
+    Examples:
+        Load in the data set:
+        >>> dataset = Yacht()
+        >>> dataset.shape
+        (?, ?)
+
+        Split the data set into features and targets, as NumPy arrays:
+        >>> X, y = dataset.split()
+        >>> X.shape, y.shape
+        (?, ?) (?, ?)
+
+        Perform a train/test split, also outputting NumPy arrays:
+        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+        (?, ?) (?, ?) (?, ?) (?, ?)
+
+        Output the underlying Pandas DataFrame:
+        >>> df = dataset.to_pandas()
+        >>> type(df)
+        <class 'pandas.core.frame.DataFrame'>
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1251,6 +1852,15 @@ class Yacht(BaseDataset):
         raise NotImplementedError
 
 if __name__ == '__main__':
-    dataset = FacebookComments(use_cache = False)
-    print(dataset.columns)
-    print(dataset.head())
+    dataset = FacebookComments(cache = None)
+    print(dataset.shape)
+
+    X, y = dataset.split()
+    print(X.shape, y.shape)
+
+    train_test_split = dataset.split(test_size = 0.2, seed = 42)
+    X_train, y_train, X_test, y_test = train_test_split
+    print(X_train.shape, y_train.shape, X_test.shape, y_test.shape)
+
+    df = dataset.to_pandas()
+    print(type(df))
