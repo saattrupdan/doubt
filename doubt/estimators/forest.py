@@ -1,6 +1,7 @@
 ''' Quantile random forests '''
 
 from ._estimator import BaseEstimator
+
 from ._forest import _branch
 from ._forest import _predict
 
