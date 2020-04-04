@@ -1,6 +1,7 @@
 ''' Base class for data sets '''
 
 from pathlib import Path
+import warnings
 import requests
 import abc
 import re
@@ -42,7 +43,9 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
         try:
             data = self.cache[name]
         except KeyError:
-            response = requests.get(self.url)
+            with warnings.catch_warnings():
+                warnings.simplefilter('ignore')
+                response = requests.get(self.url, verify = False)
             data = self._prep_data(response.content)
             if self.cache != {}:
                 data.to_hdf(self.cache, name)
