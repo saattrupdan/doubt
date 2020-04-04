@@ -3,13 +3,19 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
-        "depends": [],
-        "name": "doubt.estimators._forest",
+        "depends": [
+            "/home/dan/gitsky/doubt/.env/lib/python3.7/site-packages/numpy/core/include/numpy/arrayobject.h",
+            "/home/dan/gitsky/doubt/.env/lib/python3.7/site-packages/numpy/core/include/numpy/ufuncobject.h"
+        ],
+        "include_dirs": [
+            "/home/dan/gitsky/doubt/.env/lib/python3.7/site-packages/numpy/core/include"
+        ],
+        "name": "_forest",
         "sources": [
-            "/home/leidem/gitsky/doubt/doubt/estimators/_forest.pyx"
+            "doubt/estimators/_forest.pyx"
         ]
     },
-    "module_name": "doubt.estimators._forest"
+    "module_name": "_forest"
 }
 END: Cython Metadata */
 
@@ -605,8 +611,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__doubt__estimators___forest
-#define __PYX_HAVE_API__doubt__estimators___forest
+#define __PYX_HAVE___forest
+#define __PYX_HAVE_API___forest
 /* Early includes */
 #include <string.h>
 #include <stdio.h>
@@ -1072,14 +1078,14 @@ typedef npy_double __pyx_t_5numpy_double_t;
  */
 typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
 
-/* "doubt/estimators/_forest.pyx":15
+/* "_forest.pyx":15
  * 
  * # Assign corresponding compile-time type
  * ctypedef np.float64_t DTYPE_t             # <<<<<<<<<<<<<<
  * 
  * def _splitting_loss(double thres, np.ndarray[DTYPE_t, ndim = 2] X,
  */
-typedef __pyx_t_5numpy_float64_t __pyx_t_5doubt_10estimators_7_forest_DTYPE_t;
+typedef __pyx_t_5numpy_float64_t __pyx_t_7_forest_DTYPE_t;
 /* Declarations.proto */
 #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -1819,13 +1825,13 @@ static PyTypeObject *__pyx_ptype_5numpy_ufunc = 0;
 static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *, char *, char *, int *); /*proto*/
 static CYTHON_INLINE int __pyx_f_5numpy_import_array(void); /*proto*/
 
-/* Module declarations from 'doubt.estimators._forest' */
-static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t = { "DTYPE_t", NULL, sizeof(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t), { 0 }, 0, 'R', 0, 0 };
-#define __Pyx_MODULE_NAME "doubt.estimators._forest"
-extern int __pyx_module_is_main_doubt__estimators___forest;
-int __pyx_module_is_main_doubt__estimators___forest = 0;
+/* Module declarations from '_forest' */
+static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t = { "DTYPE_t", NULL, sizeof(__pyx_t_7_forest_DTYPE_t), { 0 }, 0, 'R', 0, 0 };
+#define __Pyx_MODULE_NAME "_forest"
+extern int __pyx_module_is_main__forest;
+int __pyx_module_is_main__forest = 0;
 
-/* Implementation of 'doubt.estimators._forest' */
+/* Implementation of '_forest' */
 static PyObject *__pyx_builtin_sum;
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_min;
@@ -1883,6 +1889,7 @@ static const char __pyx_k_right[] = "right";
 static const char __pyx_k_thres[] = "thres";
 static const char __pyx_k_yleft[] = "yleft";
 static const char __pyx_k_branch[] = "_branch";
+static const char __pyx_k_forest[] = "_forest";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_name_2[] = "name";
 static const char __pyx_k_nfeats[] = "nfeats";
@@ -1923,7 +1930,6 @@ static const char __pyx_k_scipy_optimize[] = "scipy.optimize";
 static const char __pyx_k_splitting_loss[] = "_splitting_loss";
 static const char __pyx_k_min_samples_leaf[] = "min_samples_leaf";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
-static const char __pyx_k_doubt_estimators__forest[] = "doubt.estimators._forest";
 static const char __pyx_k_predict_one_locals_lambda[] = "_predict_one.<locals>.<lambda>";
 static const char __pyx_k_ndarray_is_not_C_contiguous[] = "ndarray is not C contiguous";
 static const char __pyx_k_doubt_estimators__forest_pyx[] = "doubt/estimators/_forest.pyx";
@@ -1959,13 +1965,13 @@ static PyObject *__pyx_n_s_array;
 static PyObject *__pyx_n_s_branch;
 static PyObject *__pyx_n_s_children;
 static PyObject *__pyx_n_s_cline_in_traceback;
-static PyObject *__pyx_n_s_doubt_estimators__forest;
 static PyObject *__pyx_kp_s_doubt_estimators__forest_pyx;
 static PyObject *__pyx_n_s_dtype;
 static PyObject *__pyx_n_s_feat;
 static PyObject *__pyx_n_s_feat_idx;
 static PyObject *__pyx_n_s_find_threshold;
 static PyObject *__pyx_n_s_float64;
+static PyObject *__pyx_n_s_forest;
 static PyObject *__pyx_n_s_fun;
 static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_import;
@@ -2034,12 +2040,12 @@ static PyObject *__pyx_n_s_yleft;
 static PyObject *__pyx_n_s_yleft_mean;
 static PyObject *__pyx_n_s_yright;
 static PyObject *__pyx_n_s_yright_mean;
-static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_thres, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_feat); /* proto */
-static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_feat_idx); /* proto */
-static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_min_samples_leaf, int __pyx_v_pos, PyObject *__pyx_v_parent); /* proto */
+static PyObject *__pyx_pf_7_forest__splitting_loss(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_thres, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_feat); /* proto */
+static PyObject *__pyx_pf_7_forest_2_find_threshold(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_feat_idx); /* proto */
+static PyObject *__pyx_pf_7_forest_4_branch(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_min_samples_leaf, int __pyx_v_pos, PyObject *__pyx_v_parent); /* proto */
 static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_x); /* proto */
-static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_root, PyArrayObject *__pyx_v_x, double __pyx_v_quantile); /* proto */
-static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_root, PyArrayObject *__pyx_v_X, double __pyx_v_quantile); /* proto */
+static PyObject *__pyx_pf_7_forest_6_predict_one(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_root, PyArrayObject *__pyx_v_x, double __pyx_v_quantile); /* proto */
+static PyObject *__pyx_pf_7_forest_8_predict(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_root, PyArrayObject *__pyx_v_X, double __pyx_v_quantile); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_int_0;
@@ -2066,7 +2072,7 @@ static PyObject *__pyx_codeobj__22;
 static PyObject *__pyx_codeobj__24;
 /* Late includes */
 
-/* "doubt/estimators/_forest.pyx":17
+/* "_forest.pyx":17
  * ctypedef np.float64_t DTYPE_t
  * 
  * def _splitting_loss(double thres, np.ndarray[DTYPE_t, ndim = 2] X,             # <<<<<<<<<<<<<<
@@ -2075,10 +2081,10 @@ static PyObject *__pyx_codeobj__24;
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_1_splitting_loss(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5doubt_10estimators_7_forest__splitting_loss[] = " Calculate the mean squared loss of a split. ";
-static PyMethodDef __pyx_mdef_5doubt_10estimators_7_forest_1_splitting_loss = {"_splitting_loss", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5doubt_10estimators_7_forest_1_splitting_loss, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5doubt_10estimators_7_forest__splitting_loss};
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_1_splitting_loss(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7_forest_1_splitting_loss(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7_forest__splitting_loss[] = " Calculate the mean squared loss of a split. ";
+static PyMethodDef __pyx_mdef_7_forest_1_splitting_loss = {"_splitting_loss", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7_forest_1_splitting_loss, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7_forest__splitting_loss};
+static PyObject *__pyx_pw_7_forest_1_splitting_loss(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   double __pyx_v_thres;
   PyArrayObject *__pyx_v_X = 0;
   PyArrayObject *__pyx_v_y = 0;
@@ -2148,13 +2154,13 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_1_splitting_loss(PyObject
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("_splitting_loss", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 17, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("doubt.estimators._forest._splitting_loss", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._splitting_loss", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_X), __pyx_ptype_5numpy_ndarray, 1, "X", 0))) __PYX_ERR(0, 17, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_y), __pyx_ptype_5numpy_ndarray, 1, "y", 0))) __PYX_ERR(0, 18, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5doubt_10estimators_7_forest__splitting_loss(__pyx_self, __pyx_v_thres, __pyx_v_X, __pyx_v_y, __pyx_v_feat);
+  __pyx_r = __pyx_pf_7_forest__splitting_loss(__pyx_self, __pyx_v_thres, __pyx_v_X, __pyx_v_y, __pyx_v_feat);
 
   /* function exit code */
   goto __pyx_L0;
@@ -2165,7 +2171,7 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_1_splitting_loss(PyObject
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_thres, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_feat) {
+static PyObject *__pyx_pf_7_forest__splitting_loss(CYTHON_UNUSED PyObject *__pyx_self, double __pyx_v_thres, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_feat) {
   Py_ssize_t __pyx_v_nrows;
   PyArrayObject *__pyx_v_yleft = 0;
   PyArrayObject *__pyx_v_yright = 0;
@@ -2229,16 +2235,16 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   __pyx_pybuffernd_y.rcbuffer = &__pyx_pybuffer_y;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X.rcbuffer->pybuffer, (PyObject*)__pyx_v_X, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 17, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X.rcbuffer->pybuffer, (PyObject*)__pyx_v_X, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 17, __pyx_L1_error)
   }
   __pyx_pybuffernd_X.diminfo[0].strides = __pyx_pybuffernd_X.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_X.diminfo[0].shape = __pyx_pybuffernd_X.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_X.diminfo[1].strides = __pyx_pybuffernd_X.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_X.diminfo[1].shape = __pyx_pybuffernd_X.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y.rcbuffer->pybuffer, (PyObject*)__pyx_v_y, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 17, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y.rcbuffer->pybuffer, (PyObject*)__pyx_v_y, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 17, __pyx_L1_error)
   }
   __pyx_pybuffernd_y.diminfo[0].strides = __pyx_pybuffernd_y.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_y.diminfo[0].shape = __pyx_pybuffernd_y.rcbuffer->pybuffer.shape[0];
 
-  /* "doubt/estimators/_forest.pyx":22
+  /* "_forest.pyx":22
  * 
  *     # Get the number of rows
  *     cdef Py_ssize_t nrows = X.shape[0]             # <<<<<<<<<<<<<<
@@ -2247,7 +2253,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
  */
   __pyx_v_nrows = (__pyx_v_X->dimensions[0]);
 
-  /* "doubt/estimators/_forest.pyx":28
+  /* "_forest.pyx":28
  *     cdef np.ndarray[DTYPE_t] yright
  * 
  *     cdef float left_val = 0.             # <<<<<<<<<<<<<<
@@ -2256,7 +2262,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
  */
   __pyx_v_left_val = 0.;
 
-  /* "doubt/estimators/_forest.pyx":29
+  /* "_forest.pyx":29
  * 
  *     cdef float left_val = 0.
  *     cdef float right_val = 0.             # <<<<<<<<<<<<<<
@@ -2265,7 +2271,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
  */
   __pyx_v_right_val = 0.;
 
-  /* "doubt/estimators/_forest.pyx":34
+  /* "_forest.pyx":34
  *     cdef int i
  * 
  *     yleft = np.array([y[i] for i in range(nrows) if X[i, feat] <= thres],             # <<<<<<<<<<<<<<
@@ -2299,7 +2305,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
         __Pyx_RaiseBufferIndexError(__pyx_t_8);
         __PYX_ERR(0, 34, __pyx_L1_error)
       }
-      __pyx_t_9 = (((*__Pyx_BufPtrStrided2d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_6, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_7, __pyx_pybuffernd_X.diminfo[1].strides)) <= __pyx_v_thres) != 0);
+      __pyx_t_9 = (((*__Pyx_BufPtrStrided2d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_6, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_7, __pyx_pybuffernd_X.diminfo[1].strides)) <= __pyx_v_thres) != 0);
       if (__pyx_t_9) {
         __pyx_t_10 = __pyx_7genexpr__pyx_v_i;
         __pyx_t_8 = -1;
@@ -2311,7 +2317,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
           __Pyx_RaiseBufferIndexError(__pyx_t_8);
           __PYX_ERR(0, 34, __pyx_L1_error)
         }
-        __pyx_t_11 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_y.rcbuffer->pybuffer.buf, __pyx_t_10, __pyx_pybuffernd_y.diminfo[0].strides))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 34, __pyx_L1_error)
+        __pyx_t_11 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_y.rcbuffer->pybuffer.buf, __pyx_t_10, __pyx_pybuffernd_y.diminfo[0].strides))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 34, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_11))) __PYX_ERR(0, 34, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -2324,7 +2330,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":35
+  /* "_forest.pyx":35
  * 
  *     yleft = np.array([y[i] for i in range(nrows) if X[i, feat] <= thres],
  *                      dtype = DTYPE)             # <<<<<<<<<<<<<<
@@ -2338,7 +2344,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_12) < 0) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
 
-  /* "doubt/estimators/_forest.pyx":34
+  /* "_forest.pyx":34
  *     cdef int i
  * 
  *     yleft = np.array([y[i] for i in range(nrows) if X[i, feat] <= thres],             # <<<<<<<<<<<<<<
@@ -2355,10 +2361,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_yleft.rcbuffer->pybuffer);
-    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_yleft.rcbuffer->pybuffer, (PyObject*)__pyx_t_13, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_yleft.rcbuffer->pybuffer, (PyObject*)__pyx_t_13, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
     if (unlikely(__pyx_t_5 < 0)) {
       PyErr_Fetch(&__pyx_t_14, &__pyx_t_15, &__pyx_t_16);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_yleft.rcbuffer->pybuffer, (PyObject*)__pyx_v_yleft, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_yleft.rcbuffer->pybuffer, (PyObject*)__pyx_v_yleft, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
         Py_XDECREF(__pyx_t_14); Py_XDECREF(__pyx_t_15); Py_XDECREF(__pyx_t_16);
         __Pyx_RaiseBufferFallbackError();
       } else {
@@ -2373,7 +2379,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   __pyx_v_yleft = ((PyArrayObject *)__pyx_t_12);
   __pyx_t_12 = 0;
 
-  /* "doubt/estimators/_forest.pyx":36
+  /* "_forest.pyx":36
  *     yleft = np.array([y[i] for i in range(nrows) if X[i, feat] <= thres],
  *                      dtype = DTYPE)
  *     yright = np.array([y[i] for i in range(nrows) if X[i, feat] > thres],             # <<<<<<<<<<<<<<
@@ -2407,7 +2413,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
         __Pyx_RaiseBufferIndexError(__pyx_t_8);
         __PYX_ERR(0, 36, __pyx_L1_error)
       }
-      __pyx_t_9 = (((*__Pyx_BufPtrStrided2d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_18, __pyx_pybuffernd_X.diminfo[1].strides)) > __pyx_v_thres) != 0);
+      __pyx_t_9 = (((*__Pyx_BufPtrStrided2d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_18, __pyx_pybuffernd_X.diminfo[1].strides)) > __pyx_v_thres) != 0);
       if (__pyx_t_9) {
         __pyx_t_19 = __pyx_8genexpr1__pyx_v_i;
         __pyx_t_8 = -1;
@@ -2419,7 +2425,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
           __Pyx_RaiseBufferIndexError(__pyx_t_8);
           __PYX_ERR(0, 36, __pyx_L1_error)
         }
-        __pyx_t_11 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_y.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_y.diminfo[0].strides))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 36, __pyx_L1_error)
+        __pyx_t_11 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_y.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_y.diminfo[0].strides))); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 36, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_11);
         if (unlikely(__Pyx_ListComp_Append(__pyx_t_12, (PyObject*)__pyx_t_11))) __PYX_ERR(0, 36, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -2432,7 +2438,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_12);
   __pyx_t_12 = 0;
 
-  /* "doubt/estimators/_forest.pyx":37
+  /* "_forest.pyx":37
  *                      dtype = DTYPE)
  *     yright = np.array([y[i] for i in range(nrows) if X[i, feat] > thres],
  *                       dtype = DTYPE)             # <<<<<<<<<<<<<<
@@ -2446,7 +2452,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   if (PyDict_SetItem(__pyx_t_12, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 37, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":36
+  /* "_forest.pyx":36
  *     yleft = np.array([y[i] for i in range(nrows) if X[i, feat] <= thres],
  *                      dtype = DTYPE)
  *     yright = np.array([y[i] for i in range(nrows) if X[i, feat] > thres],             # <<<<<<<<<<<<<<
@@ -2463,10 +2469,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_yright.rcbuffer->pybuffer);
-    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_yright.rcbuffer->pybuffer, (PyObject*)__pyx_t_20, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_yright.rcbuffer->pybuffer, (PyObject*)__pyx_t_20, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
     if (unlikely(__pyx_t_5 < 0)) {
       PyErr_Fetch(&__pyx_t_16, &__pyx_t_15, &__pyx_t_14);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_yright.rcbuffer->pybuffer, (PyObject*)__pyx_v_yright, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_yright.rcbuffer->pybuffer, (PyObject*)__pyx_v_yright, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
         Py_XDECREF(__pyx_t_16); Py_XDECREF(__pyx_t_15); Py_XDECREF(__pyx_t_14);
         __Pyx_RaiseBufferFallbackError();
       } else {
@@ -2481,7 +2487,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   __pyx_v_yright = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":41
+  /* "_forest.pyx":41
  *     # If all feature values are below or above the threshold
  *     # then output infinite loss
  *     if yleft.size == 0 or yright.size == 0: return float('inf')             # <<<<<<<<<<<<<<
@@ -2518,7 +2524,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
     goto __pyx_L0;
   }
 
-  /* "doubt/estimators/_forest.pyx":44
+  /* "_forest.pyx":44
  * 
  *     # Calculate the means of yleft and yright
  *     yleft_mean = sum(yleft) / yleft.size             # <<<<<<<<<<<<<<
@@ -2537,7 +2543,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
   __pyx_v_yleft_mean = __pyx_t_22;
 
-  /* "doubt/estimators/_forest.pyx":45
+  /* "_forest.pyx":45
  *     # Calculate the means of yleft and yright
  *     yleft_mean = sum(yleft) / yleft.size
  *     yright_mean = sum(yright) / yright.size             # <<<<<<<<<<<<<<
@@ -2556,7 +2562,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_yright_mean = __pyx_t_22;
 
-  /* "doubt/estimators/_forest.pyx":50
+  /* "_forest.pyx":50
  *     # minimising these corresponds to ensuring that the target
  *     # values within each child are as similar as possible
  *     for i in range(nrows):             # <<<<<<<<<<<<<<
@@ -2568,7 +2574,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "doubt/estimators/_forest.pyx":51
+    /* "_forest.pyx":51
  *     # values within each child are as similar as possible
  *     for i in range(nrows):
  *         left_val += (yleft[i] - yleft_mean) ** 2             # <<<<<<<<<<<<<<
@@ -2585,9 +2591,9 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
       __Pyx_RaiseBufferIndexError(__pyx_t_8);
       __PYX_ERR(0, 51, __pyx_L1_error)
     }
-    __pyx_v_left_val = (__pyx_v_left_val + pow(((*__Pyx_BufPtrStrided1d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_yleft.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_yleft.diminfo[0].strides)) - __pyx_v_yleft_mean), 2.0));
+    __pyx_v_left_val = (__pyx_v_left_val + pow(((*__Pyx_BufPtrStrided1d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_yleft.rcbuffer->pybuffer.buf, __pyx_t_23, __pyx_pybuffernd_yleft.diminfo[0].strides)) - __pyx_v_yleft_mean), 2.0));
 
-    /* "doubt/estimators/_forest.pyx":52
+    /* "_forest.pyx":52
  *     for i in range(nrows):
  *         left_val += (yleft[i] - yleft_mean) ** 2
  *         right_val += (yright[i] - yright_mean) ** 2             # <<<<<<<<<<<<<<
@@ -2604,10 +2610,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
       __Pyx_RaiseBufferIndexError(__pyx_t_8);
       __PYX_ERR(0, 52, __pyx_L1_error)
     }
-    __pyx_v_right_val = (__pyx_v_right_val + pow(((*__Pyx_BufPtrStrided1d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_yright.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_yright.diminfo[0].strides)) - __pyx_v_yright_mean), 2.0));
+    __pyx_v_right_val = (__pyx_v_right_val + pow(((*__Pyx_BufPtrStrided1d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_yright.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_yright.diminfo[0].strides)) - __pyx_v_yright_mean), 2.0));
   }
 
-  /* "doubt/estimators/_forest.pyx":53
+  /* "_forest.pyx":53
  *         left_val += (yleft[i] - yleft_mean) ** 2
  *         right_val += (yright[i] - yright_mean) ** 2
  *     left_val /= yleft.size             # <<<<<<<<<<<<<<
@@ -2626,7 +2632,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
   __pyx_v_left_val = __pyx_t_22;
 
-  /* "doubt/estimators/_forest.pyx":54
+  /* "_forest.pyx":54
  *         right_val += (yright[i] - yright_mean) ** 2
  *     left_val /= yleft.size
  *     right_val /= yright.size             # <<<<<<<<<<<<<<
@@ -2645,7 +2651,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_right_val = __pyx_t_22;
 
-  /* "doubt/estimators/_forest.pyx":56
+  /* "_forest.pyx":56
  *     right_val /= yright.size
  * 
  *     return left_val + right_val             # <<<<<<<<<<<<<<
@@ -2659,7 +2665,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "doubt/estimators/_forest.pyx":17
+  /* "_forest.pyx":17
  * ctypedef np.float64_t DTYPE_t
  * 
  * def _splitting_loss(double thres, np.ndarray[DTYPE_t, ndim = 2] X,             # <<<<<<<<<<<<<<
@@ -2682,7 +2688,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_yleft.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_yright.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("doubt.estimators._forest._splitting_loss", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._splitting_loss", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -2698,7 +2704,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
   return __pyx_r;
 }
 
-/* "doubt/estimators/_forest.pyx":58
+/* "_forest.pyx":58
  *     return left_val + right_val
  * 
  * def _find_threshold(np.ndarray[DTYPE_t, ndim = 2] X, np.ndarray[DTYPE_t] y,             # <<<<<<<<<<<<<<
@@ -2707,10 +2713,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest__splitting_loss(CYTHON_UN
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_3_find_threshold(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5doubt_10estimators_7_forest_2_find_threshold[] = " Given a feature, find the optimal split threshold for it. ";
-static PyMethodDef __pyx_mdef_5doubt_10estimators_7_forest_3_find_threshold = {"_find_threshold", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5doubt_10estimators_7_forest_3_find_threshold, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5doubt_10estimators_7_forest_2_find_threshold};
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_3_find_threshold(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7_forest_3_find_threshold(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7_forest_2_find_threshold[] = " Given a feature, find the optimal split threshold for it. ";
+static PyMethodDef __pyx_mdef_7_forest_3_find_threshold = {"_find_threshold", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7_forest_3_find_threshold, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7_forest_2_find_threshold};
+static PyObject *__pyx_pw_7_forest_3_find_threshold(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_X = 0;
   PyArrayObject *__pyx_v_y = 0;
   int __pyx_v_feat_idx;
@@ -2769,13 +2775,13 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_3_find_threshold(PyObject
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("_find_threshold", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 58, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("doubt.estimators._forest._find_threshold", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._find_threshold", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_X), __pyx_ptype_5numpy_ndarray, 1, "X", 0))) __PYX_ERR(0, 58, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_y), __pyx_ptype_5numpy_ndarray, 1, "y", 0))) __PYX_ERR(0, 58, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(__pyx_self, __pyx_v_X, __pyx_v_y, __pyx_v_feat_idx);
+  __pyx_r = __pyx_pf_7_forest_2_find_threshold(__pyx_self, __pyx_v_X, __pyx_v_y, __pyx_v_feat_idx);
 
   /* function exit code */
   goto __pyx_L0;
@@ -2786,7 +2792,7 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_3_find_threshold(PyObject
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_feat_idx) {
+static PyObject *__pyx_pf_7_forest_2_find_threshold(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_feat_idx) {
   Py_ssize_t __pyx_v_nrows;
   double __pyx_v_initial_guess;
   double __pyx_v_threshold;
@@ -2815,16 +2821,16 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
   __pyx_pybuffernd_y.rcbuffer = &__pyx_pybuffer_y;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X.rcbuffer->pybuffer, (PyObject*)__pyx_v_X, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 58, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X.rcbuffer->pybuffer, (PyObject*)__pyx_v_X, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 58, __pyx_L1_error)
   }
   __pyx_pybuffernd_X.diminfo[0].strides = __pyx_pybuffernd_X.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_X.diminfo[0].shape = __pyx_pybuffernd_X.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_X.diminfo[1].strides = __pyx_pybuffernd_X.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_X.diminfo[1].shape = __pyx_pybuffernd_X.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y.rcbuffer->pybuffer, (PyObject*)__pyx_v_y, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 58, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y.rcbuffer->pybuffer, (PyObject*)__pyx_v_y, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 58, __pyx_L1_error)
   }
   __pyx_pybuffernd_y.diminfo[0].strides = __pyx_pybuffernd_y.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_y.diminfo[0].shape = __pyx_pybuffernd_y.rcbuffer->pybuffer.shape[0];
 
-  /* "doubt/estimators/_forest.pyx":62
+  /* "_forest.pyx":62
  *     ''' Given a feature, find the optimal split threshold for it. '''
  * 
  *     cdef Py_ssize_t nrows = X.shape[0]             # <<<<<<<<<<<<<<
@@ -2833,7 +2839,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
  */
   __pyx_v_nrows = (__pyx_v_X->dimensions[0]);
 
-  /* "doubt/estimators/_forest.pyx":69
+  /* "_forest.pyx":69
  *     # Initial guess for the optimal threshold, which is required by
  *     # `scipy.opt.minimize`
  *     initial_guess = sum(X[:, feat_idx]) / nrows             # <<<<<<<<<<<<<<
@@ -2866,7 +2872,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_initial_guess = __pyx_t_4;
 
-  /* "doubt/estimators/_forest.pyx":72
+  /* "_forest.pyx":72
  * 
  *     # Find the threshold that minimises the splitting loss
  *     result = opt.minimize(_splitting_loss, x0 = initial_guess,             # <<<<<<<<<<<<<<
@@ -2892,7 +2898,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
   if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_x0, __pyx_t_5) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "doubt/estimators/_forest.pyx":73
+  /* "_forest.pyx":73
  *     # Find the threshold that minimises the splitting loss
  *     result = opt.minimize(_splitting_loss, x0 = initial_guess,
  *                           args = (X, y, feat_idx))             # <<<<<<<<<<<<<<
@@ -2915,7 +2921,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
   if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_args, __pyx_t_6) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-  /* "doubt/estimators/_forest.pyx":72
+  /* "_forest.pyx":72
  * 
  *     # Find the threshold that minimises the splitting loss
  *     result = opt.minimize(_splitting_loss, x0 = initial_guess,             # <<<<<<<<<<<<<<
@@ -2930,7 +2936,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
   __pyx_v_result = __pyx_t_6;
   __pyx_t_6 = 0;
 
-  /* "doubt/estimators/_forest.pyx":77
+  /* "_forest.pyx":77
  *     # Get the resulting threshold and the associated loss, the latter
  *     # of which is used to compare thresholds across multiple features
  *     threshold = result.x[0]             # <<<<<<<<<<<<<<
@@ -2946,7 +2952,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_threshold = __pyx_t_4;
 
-  /* "doubt/estimators/_forest.pyx":78
+  /* "_forest.pyx":78
  *     # of which is used to compare thresholds across multiple features
  *     threshold = result.x[0]
  *     loss = result.fun             # <<<<<<<<<<<<<<
@@ -2959,7 +2965,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_loss = __pyx_t_4;
 
-  /* "doubt/estimators/_forest.pyx":80
+  /* "_forest.pyx":80
  *     loss = result.fun
  * 
  *     return [feat_idx, threshold, loss]             # <<<<<<<<<<<<<<
@@ -2988,7 +2994,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "doubt/estimators/_forest.pyx":58
+  /* "_forest.pyx":58
  *     return left_val + right_val
  * 
  * def _find_threshold(np.ndarray[DTYPE_t, ndim = 2] X, np.ndarray[DTYPE_t] y,             # <<<<<<<<<<<<<<
@@ -3010,7 +3016,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_X.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_y.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("doubt.estimators._forest._find_threshold", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._find_threshold", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -3023,7 +3029,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
   return __pyx_r;
 }
 
-/* "doubt/estimators/_forest.pyx":82
+/* "_forest.pyx":82
  *     return [feat_idx, threshold, loss]
  * 
  * def _branch(np.ndarray[DTYPE_t, ndim = 2] X, np.ndarray[DTYPE_t] y,             # <<<<<<<<<<<<<<
@@ -3032,10 +3038,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_2_find_threshold(CYTHON_U
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_5_branch(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5doubt_10estimators_7_forest_4_branch[] = " Recursive function that computes the next two child nodes. ";
-static PyMethodDef __pyx_mdef_5doubt_10estimators_7_forest_5_branch = {"_branch", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5doubt_10estimators_7_forest_5_branch, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5doubt_10estimators_7_forest_4_branch};
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_5_branch(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7_forest_5_branch(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7_forest_4_branch[] = " Recursive function that computes the next two child nodes. ";
+static PyMethodDef __pyx_mdef_7_forest_5_branch = {"_branch", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7_forest_5_branch, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7_forest_4_branch};
+static PyObject *__pyx_pw_7_forest_5_branch(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyArrayObject *__pyx_v_X = 0;
   PyArrayObject *__pyx_v_y = 0;
   int __pyx_v_min_samples_leaf;
@@ -3048,7 +3054,7 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_5_branch(PyObject *__pyx_
     static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_X,&__pyx_n_s_y,&__pyx_n_s_min_samples_leaf,&__pyx_n_s_pos,&__pyx_n_s_parent,0};
     PyObject* values[5] = {0,0,0,0,0};
 
-    /* "doubt/estimators/_forest.pyx":83
+    /* "_forest.pyx":83
  * 
  * def _branch(np.ndarray[DTYPE_t, ndim = 2] X, np.ndarray[DTYPE_t] y,
  *             int min_samples_leaf, int pos = -1, parent = None):             # <<<<<<<<<<<<<<
@@ -3133,15 +3139,15 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_5_branch(PyObject *__pyx_
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("_branch", 0, 3, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 82, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("doubt.estimators._forest._branch", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._branch", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_X), __pyx_ptype_5numpy_ndarray, 1, "X", 0))) __PYX_ERR(0, 82, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_y), __pyx_ptype_5numpy_ndarray, 1, "y", 0))) __PYX_ERR(0, 82, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5doubt_10estimators_7_forest_4_branch(__pyx_self, __pyx_v_X, __pyx_v_y, __pyx_v_min_samples_leaf, __pyx_v_pos, __pyx_v_parent);
+  __pyx_r = __pyx_pf_7_forest_4_branch(__pyx_self, __pyx_v_X, __pyx_v_y, __pyx_v_min_samples_leaf, __pyx_v_pos, __pyx_v_parent);
 
-  /* "doubt/estimators/_forest.pyx":82
+  /* "_forest.pyx":82
  *     return [feat_idx, threshold, loss]
  * 
  * def _branch(np.ndarray[DTYPE_t, ndim = 2] X, np.ndarray[DTYPE_t] y,             # <<<<<<<<<<<<<<
@@ -3158,7 +3164,7 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_5_branch(PyObject *__pyx_
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_min_samples_leaf, int __pyx_v_pos, PyObject *__pyx_v_parent) {
+static PyObject *__pyx_pf_7_forest_4_branch(CYTHON_UNUSED PyObject *__pyx_self, PyArrayObject *__pyx_v_X, PyArrayObject *__pyx_v_y, int __pyx_v_min_samples_leaf, int __pyx_v_pos, PyObject *__pyx_v_parent) {
   Py_ssize_t __pyx_v_nrows;
   Py_ssize_t __pyx_v_nfeats;
   PyArrayObject *__pyx_v_X0 = 0;
@@ -3263,16 +3269,16 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   __pyx_pybuffernd_y.rcbuffer = &__pyx_pybuffer_y;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X.rcbuffer->pybuffer, (PyObject*)__pyx_v_X, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 82, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X.rcbuffer->pybuffer, (PyObject*)__pyx_v_X, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 82, __pyx_L1_error)
   }
   __pyx_pybuffernd_X.diminfo[0].strides = __pyx_pybuffernd_X.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_X.diminfo[0].shape = __pyx_pybuffernd_X.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_X.diminfo[1].strides = __pyx_pybuffernd_X.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_X.diminfo[1].shape = __pyx_pybuffernd_X.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y.rcbuffer->pybuffer, (PyObject*)__pyx_v_y, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 82, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y.rcbuffer->pybuffer, (PyObject*)__pyx_v_y, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 82, __pyx_L1_error)
   }
   __pyx_pybuffernd_y.diminfo[0].strides = __pyx_pybuffernd_y.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_y.diminfo[0].shape = __pyx_pybuffernd_y.rcbuffer->pybuffer.shape[0];
 
-  /* "doubt/estimators/_forest.pyx":87
+  /* "_forest.pyx":87
  * 
  *     # Get the number of rows and features in the data set
  *     cdef Py_ssize_t nrows = X.shape[0]             # <<<<<<<<<<<<<<
@@ -3281,7 +3287,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
  */
   __pyx_v_nrows = (__pyx_v_X->dimensions[0]);
 
-  /* "doubt/estimators/_forest.pyx":88
+  /* "_forest.pyx":88
  *     # Get the number of rows and features in the data set
  *     cdef Py_ssize_t nrows = X.shape[0]
  *     cdef Py_ssize_t nfeats = X.shape[1]             # <<<<<<<<<<<<<<
@@ -3290,7 +3296,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
  */
   __pyx_v_nfeats = (__pyx_v_X->dimensions[1]);
 
-  /* "doubt/estimators/_forest.pyx":107
+  /* "_forest.pyx":107
  * 
  *     # Compute the best thresholds for all the features
  *     result_array = np.array([_find_threshold(X, y, i) for i in range(nfeats)],             # <<<<<<<<<<<<<<
@@ -3373,7 +3379,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":108
+  /* "_forest.pyx":108
  *     # Compute the best thresholds for all the features
  *     result_array = np.array([_find_threshold(X, y, i) for i in range(nfeats)],
  *                             dtype = DTYPE)             # <<<<<<<<<<<<<<
@@ -3387,7 +3393,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_7) < 0) __PYX_ERR(0, 108, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "doubt/estimators/_forest.pyx":107
+  /* "_forest.pyx":107
  * 
  *     # Compute the best thresholds for all the features
  *     result_array = np.array([_find_threshold(X, y, i) for i in range(nfeats)],             # <<<<<<<<<<<<<<
@@ -3404,10 +3410,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_result_array.rcbuffer->pybuffer);
-    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_result_array.rcbuffer->pybuffer, (PyObject*)__pyx_t_12, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
+    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_result_array.rcbuffer->pybuffer, (PyObject*)__pyx_t_12, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
     if (unlikely(__pyx_t_5 < 0)) {
       PyErr_Fetch(&__pyx_t_13, &__pyx_t_14, &__pyx_t_15);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_result_array.rcbuffer->pybuffer, (PyObject*)__pyx_v_result_array, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
+      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_result_array.rcbuffer->pybuffer, (PyObject*)__pyx_v_result_array, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
         Py_XDECREF(__pyx_t_13); Py_XDECREF(__pyx_t_14); Py_XDECREF(__pyx_t_15);
         __Pyx_RaiseBufferFallbackError();
       } else {
@@ -3422,7 +3428,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   __pyx_v_result_array = ((PyArrayObject *)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "doubt/estimators/_forest.pyx":111
+  /* "_forest.pyx":111
  * 
  *     # Pull out the feature and threshold with the smallest loss
  *     loss = min(result_array[:, 2])             # <<<<<<<<<<<<<<
@@ -3438,7 +3444,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_loss = __pyx_t_16;
 
-  /* "doubt/estimators/_forest.pyx":112
+  /* "_forest.pyx":112
  *     # Pull out the feature and threshold with the smallest loss
  *     loss = min(result_array[:, 2])
  *     for i in range(nfeats):             # <<<<<<<<<<<<<<
@@ -3450,7 +3456,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "doubt/estimators/_forest.pyx":113
+    /* "_forest.pyx":113
  *     loss = min(result_array[:, 2])
  *     for i in range(nfeats):
  *         if result_array[i, 2] == loss:             # <<<<<<<<<<<<<<
@@ -3472,10 +3478,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
       __Pyx_RaiseBufferIndexError(__pyx_t_10);
       __PYX_ERR(0, 113, __pyx_L1_error)
     }
-    __pyx_t_19 = (((*__Pyx_BufPtrStrided2d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_result_array.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_result_array.diminfo[0].strides, __pyx_t_18, __pyx_pybuffernd_result_array.diminfo[1].strides)) == __pyx_v_loss) != 0);
+    __pyx_t_19 = (((*__Pyx_BufPtrStrided2d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_result_array.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_result_array.diminfo[0].strides, __pyx_t_18, __pyx_pybuffernd_result_array.diminfo[1].strides)) == __pyx_v_loss) != 0);
     if (__pyx_t_19) {
 
-      /* "doubt/estimators/_forest.pyx":114
+      /* "_forest.pyx":114
  *     for i in range(nfeats):
  *         if result_array[i, 2] == loss:
  *             feat = int(result_array[i, 0])             # <<<<<<<<<<<<<<
@@ -3497,9 +3503,9 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
         __Pyx_RaiseBufferIndexError(__pyx_t_10);
         __PYX_ERR(0, 114, __pyx_L1_error)
       }
-      __pyx_v_feat = ((int)(*__Pyx_BufPtrStrided2d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_result_array.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_result_array.diminfo[0].strides, __pyx_t_21, __pyx_pybuffernd_result_array.diminfo[1].strides)));
+      __pyx_v_feat = ((int)(*__Pyx_BufPtrStrided2d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_result_array.rcbuffer->pybuffer.buf, __pyx_t_20, __pyx_pybuffernd_result_array.diminfo[0].strides, __pyx_t_21, __pyx_pybuffernd_result_array.diminfo[1].strides)));
 
-      /* "doubt/estimators/_forest.pyx":115
+      /* "_forest.pyx":115
  *         if result_array[i, 2] == loss:
  *             feat = int(result_array[i, 0])
  *             thres = result_array[i, 1]             # <<<<<<<<<<<<<<
@@ -3521,9 +3527,9 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
         __Pyx_RaiseBufferIndexError(__pyx_t_10);
         __PYX_ERR(0, 115, __pyx_L1_error)
       }
-      __pyx_v_thres = (*__Pyx_BufPtrStrided2d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_result_array.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_result_array.diminfo[0].strides, __pyx_t_23, __pyx_pybuffernd_result_array.diminfo[1].strides));
+      __pyx_v_thres = (*__Pyx_BufPtrStrided2d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_result_array.rcbuffer->pybuffer.buf, __pyx_t_22, __pyx_pybuffernd_result_array.diminfo[0].strides, __pyx_t_23, __pyx_pybuffernd_result_array.diminfo[1].strides));
 
-      /* "doubt/estimators/_forest.pyx":113
+      /* "_forest.pyx":113
  *     loss = min(result_array[:, 2])
  *     for i in range(nfeats):
  *         if result_array[i, 2] == loss:             # <<<<<<<<<<<<<<
@@ -3533,7 +3539,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     }
   }
 
-  /* "doubt/estimators/_forest.pyx":118
+  /* "_forest.pyx":118
  * 
  *     # Get the target values of the left and right split
  *     y0 = np.array([y[i] for i in range(nrows) if X[i, feat] <= thres],             # <<<<<<<<<<<<<<
@@ -3567,7 +3573,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
         __Pyx_RaiseBufferIndexError(__pyx_t_10);
         __PYX_ERR(0, 118, __pyx_L1_error)
       }
-      __pyx_t_19 = (((*__Pyx_BufPtrStrided2d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_25, __pyx_pybuffernd_X.diminfo[1].strides)) <= __pyx_v_thres) != 0);
+      __pyx_t_19 = (((*__Pyx_BufPtrStrided2d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_24, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_25, __pyx_pybuffernd_X.diminfo[1].strides)) <= __pyx_v_thres) != 0);
       if (__pyx_t_19) {
         __pyx_t_26 = __pyx_8genexpr3__pyx_v_i;
         __pyx_t_10 = -1;
@@ -3579,7 +3585,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
           __Pyx_RaiseBufferIndexError(__pyx_t_10);
           __PYX_ERR(0, 118, __pyx_L1_error)
         }
-        __pyx_t_6 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_y.rcbuffer->pybuffer.buf, __pyx_t_26, __pyx_pybuffernd_y.diminfo[0].strides))); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 118, __pyx_L1_error)
+        __pyx_t_6 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_y.rcbuffer->pybuffer.buf, __pyx_t_26, __pyx_pybuffernd_y.diminfo[0].strides))); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 118, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         if (unlikely(__Pyx_ListComp_Append(__pyx_t_1, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 118, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -3592,7 +3598,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":119
+  /* "_forest.pyx":119
  *     # Get the target values of the left and right split
  *     y0 = np.array([y[i] for i in range(nrows) if X[i, feat] <= thres],
  *                   dtype = DTYPE)             # <<<<<<<<<<<<<<
@@ -3606,7 +3612,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":118
+  /* "_forest.pyx":118
  * 
  *     # Get the target values of the left and right split
  *     y0 = np.array([y[i] for i in range(nrows) if X[i, feat] <= thres],             # <<<<<<<<<<<<<<
@@ -3623,10 +3629,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_y0.rcbuffer->pybuffer);
-    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y0.rcbuffer->pybuffer, (PyObject*)__pyx_t_27, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y0.rcbuffer->pybuffer, (PyObject*)__pyx_t_27, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
     if (unlikely(__pyx_t_5 < 0)) {
       PyErr_Fetch(&__pyx_t_15, &__pyx_t_14, &__pyx_t_13);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y0.rcbuffer->pybuffer, (PyObject*)__pyx_v_y0, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y0.rcbuffer->pybuffer, (PyObject*)__pyx_v_y0, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
         Py_XDECREF(__pyx_t_15); Py_XDECREF(__pyx_t_14); Py_XDECREF(__pyx_t_13);
         __Pyx_RaiseBufferFallbackError();
       } else {
@@ -3641,7 +3647,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   __pyx_v_y0 = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":120
+  /* "_forest.pyx":120
  *     y0 = np.array([y[i] for i in range(nrows) if X[i, feat] <= thres],
  *                   dtype = DTYPE)
  *     y1 = np.array([y[i] for i in range(nrows) if X[i, feat] > thres],             # <<<<<<<<<<<<<<
@@ -3675,7 +3681,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
         __Pyx_RaiseBufferIndexError(__pyx_t_10);
         __PYX_ERR(0, 120, __pyx_L1_error)
       }
-      __pyx_t_19 = (((*__Pyx_BufPtrStrided2d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_28, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_29, __pyx_pybuffernd_X.diminfo[1].strides)) > __pyx_v_thres) != 0);
+      __pyx_t_19 = (((*__Pyx_BufPtrStrided2d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_28, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_29, __pyx_pybuffernd_X.diminfo[1].strides)) > __pyx_v_thres) != 0);
       if (__pyx_t_19) {
         __pyx_t_30 = __pyx_8genexpr4__pyx_v_i;
         __pyx_t_10 = -1;
@@ -3687,7 +3693,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
           __Pyx_RaiseBufferIndexError(__pyx_t_10);
           __PYX_ERR(0, 120, __pyx_L1_error)
         }
-        __pyx_t_6 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_y.rcbuffer->pybuffer.buf, __pyx_t_30, __pyx_pybuffernd_y.diminfo[0].strides))); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 120, __pyx_L1_error)
+        __pyx_t_6 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_y.rcbuffer->pybuffer.buf, __pyx_t_30, __pyx_pybuffernd_y.diminfo[0].strides))); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 120, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 120, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -3700,7 +3706,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":121
+  /* "_forest.pyx":121
  *                   dtype = DTYPE)
  *     y1 = np.array([y[i] for i in range(nrows) if X[i, feat] > thres],
  *                   dtype = DTYPE)             # <<<<<<<<<<<<<<
@@ -3714,7 +3720,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_dtype, __pyx_t_7) < 0) __PYX_ERR(0, 121, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "doubt/estimators/_forest.pyx":120
+  /* "_forest.pyx":120
  *     y0 = np.array([y[i] for i in range(nrows) if X[i, feat] <= thres],
  *                   dtype = DTYPE)
  *     y1 = np.array([y[i] for i in range(nrows) if X[i, feat] > thres],             # <<<<<<<<<<<<<<
@@ -3731,10 +3737,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_y1.rcbuffer->pybuffer);
-    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y1.rcbuffer->pybuffer, (PyObject*)__pyx_t_31, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y1.rcbuffer->pybuffer, (PyObject*)__pyx_t_31, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
     if (unlikely(__pyx_t_5 < 0)) {
       PyErr_Fetch(&__pyx_t_13, &__pyx_t_14, &__pyx_t_15);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y1.rcbuffer->pybuffer, (PyObject*)__pyx_v_y1, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_y1.rcbuffer->pybuffer, (PyObject*)__pyx_v_y1, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
         Py_XDECREF(__pyx_t_13); Py_XDECREF(__pyx_t_14); Py_XDECREF(__pyx_t_15);
         __Pyx_RaiseBufferFallbackError();
       } else {
@@ -3749,7 +3755,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   __pyx_v_y1 = ((PyArrayObject *)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "doubt/estimators/_forest.pyx":124
+  /* "_forest.pyx":124
  * 
  *     # Get the feature values of the left and right split
  *     X0 = np.array([X[i, :] for i in range(nrows) if X[i, feat] <= thres],             # <<<<<<<<<<<<<<
@@ -3783,7 +3789,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
         __Pyx_RaiseBufferIndexError(__pyx_t_10);
         __PYX_ERR(0, 124, __pyx_L1_error)
       }
-      __pyx_t_19 = (((*__Pyx_BufPtrStrided2d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_32, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_33, __pyx_pybuffernd_X.diminfo[1].strides)) <= __pyx_v_thres) != 0);
+      __pyx_t_19 = (((*__Pyx_BufPtrStrided2d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_32, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_33, __pyx_pybuffernd_X.diminfo[1].strides)) <= __pyx_v_thres) != 0);
       if (__pyx_t_19) {
         __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_8genexpr5__pyx_v_i); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
@@ -3809,7 +3815,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "doubt/estimators/_forest.pyx":125
+  /* "_forest.pyx":125
  *     # Get the feature values of the left and right split
  *     X0 = np.array([X[i, :] for i in range(nrows) if X[i, feat] <= thres],
  *                   dtype = DTYPE)             # <<<<<<<<<<<<<<
@@ -3823,7 +3829,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":124
+  /* "_forest.pyx":124
  * 
  *     # Get the feature values of the left and right split
  *     X0 = np.array([X[i, :] for i in range(nrows) if X[i, feat] <= thres],             # <<<<<<<<<<<<<<
@@ -3840,10 +3846,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_X0.rcbuffer->pybuffer);
-    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X0.rcbuffer->pybuffer, (PyObject*)__pyx_t_34, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
+    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X0.rcbuffer->pybuffer, (PyObject*)__pyx_t_34, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
     if (unlikely(__pyx_t_5 < 0)) {
       PyErr_Fetch(&__pyx_t_15, &__pyx_t_14, &__pyx_t_13);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X0.rcbuffer->pybuffer, (PyObject*)__pyx_v_X0, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
+      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X0.rcbuffer->pybuffer, (PyObject*)__pyx_v_X0, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
         Py_XDECREF(__pyx_t_15); Py_XDECREF(__pyx_t_14); Py_XDECREF(__pyx_t_13);
         __Pyx_RaiseBufferFallbackError();
       } else {
@@ -3858,7 +3864,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   __pyx_v_X0 = ((PyArrayObject *)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":126
+  /* "_forest.pyx":126
  *     X0 = np.array([X[i, :] for i in range(nrows) if X[i, feat] <= thres],
  *                   dtype = DTYPE)
  *     X1 = np.array([X[i, :] for i in range(nrows) if X[i, feat] > thres],             # <<<<<<<<<<<<<<
@@ -3892,7 +3898,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
         __Pyx_RaiseBufferIndexError(__pyx_t_10);
         __PYX_ERR(0, 126, __pyx_L1_error)
       }
-      __pyx_t_19 = (((*__Pyx_BufPtrStrided2d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_35, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_36, __pyx_pybuffernd_X.diminfo[1].strides)) > __pyx_v_thres) != 0);
+      __pyx_t_19 = (((*__Pyx_BufPtrStrided2d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_X.rcbuffer->pybuffer.buf, __pyx_t_35, __pyx_pybuffernd_X.diminfo[0].strides, __pyx_t_36, __pyx_pybuffernd_X.diminfo[1].strides)) > __pyx_v_thres) != 0);
       if (__pyx_t_19) {
         __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_8genexpr6__pyx_v_i); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
@@ -3918,7 +3924,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":127
+  /* "_forest.pyx":127
  *                   dtype = DTYPE)
  *     X1 = np.array([X[i, :] for i in range(nrows) if X[i, feat] > thres],
  *                   dtype = DTYPE)             # <<<<<<<<<<<<<<
@@ -3932,7 +3938,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":126
+  /* "_forest.pyx":126
  *     X0 = np.array([X[i, :] for i in range(nrows) if X[i, feat] <= thres],
  *                   dtype = DTYPE)
  *     X1 = np.array([X[i, :] for i in range(nrows) if X[i, feat] > thres],             # <<<<<<<<<<<<<<
@@ -3949,10 +3955,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_X1.rcbuffer->pybuffer);
-    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X1.rcbuffer->pybuffer, (PyObject*)__pyx_t_37, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
+    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X1.rcbuffer->pybuffer, (PyObject*)__pyx_t_37, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack);
     if (unlikely(__pyx_t_5 < 0)) {
       PyErr_Fetch(&__pyx_t_13, &__pyx_t_14, &__pyx_t_15);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X1.rcbuffer->pybuffer, (PyObject*)__pyx_v_X1, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
+      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X1.rcbuffer->pybuffer, (PyObject*)__pyx_v_X1, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) {
         Py_XDECREF(__pyx_t_13); Py_XDECREF(__pyx_t_14); Py_XDECREF(__pyx_t_15);
         __Pyx_RaiseBufferFallbackError();
       } else {
@@ -3967,7 +3973,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   __pyx_v_X1 = ((PyArrayObject *)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":131
+  /* "_forest.pyx":131
  *     # If we have reached a leaf node then store information about
  *     # the target values and stop the recursion
  *     if len(set(y0)) < min_samples_leaf or len(set(y1)) < min_samples_leaf:             # <<<<<<<<<<<<<<
@@ -3993,7 +3999,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   __pyx_L21_bool_binop_done:;
   if (__pyx_t_19) {
 
-    /* "doubt/estimators/_forest.pyx":133
+    /* "_forest.pyx":133
  *     if len(set(y0)) < min_samples_leaf or len(set(y1)) < min_samples_leaf:
  * 
  *         name = (f'[{min(y):,.0f}; {max(y):,.0f}]\n'             # <<<<<<<<<<<<<<
@@ -4037,7 +4043,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     __Pyx_GIVEREF(__pyx_kp_u_n);
     PyTuple_SET_ITEM(__pyx_t_2, 4, __pyx_kp_u_n);
 
-    /* "doubt/estimators/_forest.pyx":134
+    /* "_forest.pyx":134
  * 
  *         name = (f'[{min(y):,.0f}; {max(y):,.0f}]\n'
  *                 f'n = {nrows}\n'             # <<<<<<<<<<<<<<
@@ -4055,7 +4061,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     __Pyx_GIVEREF(__pyx_kp_u_n_unique);
     PyTuple_SET_ITEM(__pyx_t_2, 6, __pyx_kp_u_n_unique);
 
-    /* "doubt/estimators/_forest.pyx":135
+    /* "_forest.pyx":135
  *         name = (f'[{min(y):,.0f}; {max(y):,.0f}]\n'
  *                 f'n = {nrows}\n'
  *                 f'n_unique = {len(set(y))}')             # <<<<<<<<<<<<<<
@@ -4073,7 +4079,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     PyTuple_SET_ITEM(__pyx_t_2, 7, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "doubt/estimators/_forest.pyx":133
+    /* "_forest.pyx":133
  *     if len(set(y0)) < min_samples_leaf or len(set(y1)) < min_samples_leaf:
  * 
  *         name = (f'[{min(y):,.0f}; {max(y):,.0f}]\n'             # <<<<<<<<<<<<<<
@@ -4086,7 +4092,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     __pyx_v_name = ((PyObject*)__pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "doubt/estimators/_forest.pyx":136
+    /* "_forest.pyx":136
  *                 f'n = {nrows}\n'
  *                 f'n_unique = {len(set(y))}')
  *         node = Node(name, n = nrows, parent = parent, vals = y, pos = pos)             # <<<<<<<<<<<<<<
@@ -4120,7 +4126,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     __pyx_v_node = __pyx_t_7;
     __pyx_t_7 = 0;
 
-    /* "doubt/estimators/_forest.pyx":131
+    /* "_forest.pyx":131
  *     # If we have reached a leaf node then store information about
  *     # the target values and stop the recursion
  *     if len(set(y0)) < min_samples_leaf or len(set(y1)) < min_samples_leaf:             # <<<<<<<<<<<<<<
@@ -4130,7 +4136,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     goto __pyx_L20;
   }
 
-  /* "doubt/estimators/_forest.pyx":141
+  /* "_forest.pyx":141
  *         # Define the current node, which by the above conditional can't
  *         # be a leaf node
  *         name = f'Is feature {feat} < {thres:.2f}?'             # <<<<<<<<<<<<<<
@@ -4176,7 +4182,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     __pyx_v_name = ((PyObject*)__pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "doubt/estimators/_forest.pyx":142
+    /* "_forest.pyx":142
  *         # be a leaf node
  *         name = f'Is feature {feat} < {thres:.2f}?'
  *         node = Node(name, n = nrows, parent = parent, feat = feat,             # <<<<<<<<<<<<<<
@@ -4202,7 +4208,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_feat, __pyx_t_1) < 0) __PYX_ERR(0, 142, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "doubt/estimators/_forest.pyx":143
+    /* "_forest.pyx":143
  *         name = f'Is feature {feat} < {thres:.2f}?'
  *         node = Node(name, n = nrows, parent = parent, feat = feat,
  *                     thres = thres, pos = pos)             # <<<<<<<<<<<<<<
@@ -4218,7 +4224,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_pos, __pyx_t_1) < 0) __PYX_ERR(0, 142, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "doubt/estimators/_forest.pyx":142
+    /* "_forest.pyx":142
  *         # be a leaf node
  *         name = f'Is feature {feat} < {thres:.2f}?'
  *         node = Node(name, n = nrows, parent = parent, feat = feat,             # <<<<<<<<<<<<<<
@@ -4233,7 +4239,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     __pyx_v_node = __pyx_t_1;
     __pyx_t_1 = 0;
 
-    /* "doubt/estimators/_forest.pyx":146
+    /* "_forest.pyx":146
  * 
  *         # Continue the recursion on the child nodes
  *         _branch(X0, y0, pos = 0, parent = node,             # <<<<<<<<<<<<<<
@@ -4255,7 +4261,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_pos, __pyx_int_0) < 0) __PYX_ERR(0, 146, __pyx_L1_error)
     if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_parent, __pyx_v_node) < 0) __PYX_ERR(0, 146, __pyx_L1_error)
 
-    /* "doubt/estimators/_forest.pyx":147
+    /* "_forest.pyx":147
  *         # Continue the recursion on the child nodes
  *         _branch(X0, y0, pos = 0, parent = node,
  *                 min_samples_leaf = min_samples_leaf)             # <<<<<<<<<<<<<<
@@ -4267,7 +4273,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_min_samples_leaf, __pyx_t_2) < 0) __PYX_ERR(0, 146, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "doubt/estimators/_forest.pyx":146
+    /* "_forest.pyx":146
  * 
  *         # Continue the recursion on the child nodes
  *         _branch(X0, y0, pos = 0, parent = node,             # <<<<<<<<<<<<<<
@@ -4281,7 +4287,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "doubt/estimators/_forest.pyx":148
+    /* "_forest.pyx":148
  *         _branch(X0, y0, pos = 0, parent = node,
  *                 min_samples_leaf = min_samples_leaf)
  *         _branch(X1, y1, pos = 1, parent = node,             # <<<<<<<<<<<<<<
@@ -4303,7 +4309,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_pos, __pyx_int_1) < 0) __PYX_ERR(0, 148, __pyx_L1_error)
     if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_parent, __pyx_v_node) < 0) __PYX_ERR(0, 148, __pyx_L1_error)
 
-    /* "doubt/estimators/_forest.pyx":149
+    /* "_forest.pyx":149
  *                 min_samples_leaf = min_samples_leaf)
  *         _branch(X1, y1, pos = 1, parent = node,
  *                 min_samples_leaf = min_samples_leaf)             # <<<<<<<<<<<<<<
@@ -4315,7 +4321,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_min_samples_leaf, __pyx_t_1) < 0) __PYX_ERR(0, 148, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "doubt/estimators/_forest.pyx":148
+    /* "_forest.pyx":148
  *         _branch(X0, y0, pos = 0, parent = node,
  *                 min_samples_leaf = min_samples_leaf)
  *         _branch(X1, y1, pos = 1, parent = node,             # <<<<<<<<<<<<<<
@@ -4331,7 +4337,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   }
   __pyx_L20:;
 
-  /* "doubt/estimators/_forest.pyx":152
+  /* "_forest.pyx":152
  * 
  *     # Return the node if we're at the root
  *     if parent is None:             # <<<<<<<<<<<<<<
@@ -4342,7 +4348,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   __pyx_t_38 = (__pyx_t_19 != 0);
   if (__pyx_t_38) {
 
-    /* "doubt/estimators/_forest.pyx":153
+    /* "_forest.pyx":153
  *     # Return the node if we're at the root
  *     if parent is None:
  *         return node             # <<<<<<<<<<<<<<
@@ -4354,7 +4360,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     __pyx_r = __pyx_v_node;
     goto __pyx_L0;
 
-    /* "doubt/estimators/_forest.pyx":152
+    /* "_forest.pyx":152
  * 
  *     # Return the node if we're at the root
  *     if parent is None:             # <<<<<<<<<<<<<<
@@ -4363,7 +4369,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
  */
   }
 
-  /* "doubt/estimators/_forest.pyx":82
+  /* "_forest.pyx":82
  *     return [feat_idx, threshold, loss]
  * 
  * def _branch(np.ndarray[DTYPE_t, ndim = 2] X, np.ndarray[DTYPE_t] y,             # <<<<<<<<<<<<<<
@@ -4394,7 +4400,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_y0.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_y1.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("doubt.estimators._forest._branch", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._branch", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -4418,7 +4424,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
   return __pyx_r;
 }
 
-/* "doubt/estimators/_forest.pyx":155
+/* "_forest.pyx":155
  *         return node
  * 
  * def _predict_one(root, np.ndarray[DTYPE_t] x, double quantile = -1.):             # <<<<<<<<<<<<<<
@@ -4427,10 +4433,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_4_branch(CYTHON_UNUSED Py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_7_predict_one(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5doubt_10estimators_7_forest_6_predict_one[] = " Perform a prediction for a single input. ";
-static PyMethodDef __pyx_mdef_5doubt_10estimators_7_forest_7_predict_one = {"_predict_one", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5doubt_10estimators_7_forest_7_predict_one, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5doubt_10estimators_7_forest_6_predict_one};
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_7_predict_one(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7_forest_7_predict_one(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7_forest_6_predict_one[] = " Perform a prediction for a single input. ";
+static PyMethodDef __pyx_mdef_7_forest_7_predict_one = {"_predict_one", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7_forest_7_predict_one, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7_forest_6_predict_one};
+static PyObject *__pyx_pw_7_forest_7_predict_one(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_root = 0;
   PyArrayObject *__pyx_v_x = 0;
   double __pyx_v_quantile;
@@ -4496,12 +4502,12 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_7_predict_one(PyObject *_
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("_predict_one", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 155, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("doubt.estimators._forest._predict_one", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._predict_one", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_x), __pyx_ptype_5numpy_ndarray, 1, "x", 0))) __PYX_ERR(0, 155, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5doubt_10estimators_7_forest_6_predict_one(__pyx_self, __pyx_v_root, __pyx_v_x, __pyx_v_quantile);
+  __pyx_r = __pyx_pf_7_forest_6_predict_one(__pyx_self, __pyx_v_root, __pyx_v_x, __pyx_v_quantile);
 
   /* function exit code */
   goto __pyx_L0;
@@ -4512,7 +4518,7 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_7_predict_one(PyObject *_
   return __pyx_r;
 }
 
-/* "doubt/estimators/_forest.pyx":168
+/* "_forest.pyx":168
  *         node_feat = node.feat
  *         node_thres = node.thres
  *         left, right = sorted(node.children, key = lambda x: x.pos)             # <<<<<<<<<<<<<<
@@ -4521,9 +4527,9 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_7_predict_one(PyObject *_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_12_predict_one_lambda(PyObject *__pyx_self, PyObject *__pyx_v_x); /*proto*/
-static PyMethodDef __pyx_mdef_5doubt_10estimators_7_forest_12_predict_one_lambda = {"lambda", (PyCFunction)__pyx_pw_5doubt_10estimators_7_forest_12_predict_one_lambda, METH_O, 0};
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_12_predict_one_lambda(PyObject *__pyx_self, PyObject *__pyx_v_x) {
+static PyObject *__pyx_pw_7_forest_12_predict_one_lambda(PyObject *__pyx_self, PyObject *__pyx_v_x); /*proto*/
+static PyMethodDef __pyx_mdef_7_forest_12_predict_one_lambda = {"lambda", (PyCFunction)__pyx_pw_7_forest_12_predict_one_lambda, METH_O, 0};
+static PyObject *__pyx_pw_7_forest_12_predict_one_lambda(PyObject *__pyx_self, PyObject *__pyx_v_x) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("lambda (wrapper)", 0);
@@ -4549,7 +4555,7 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("doubt.estimators._forest._predict_one.lambda", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._predict_one.lambda", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -4557,7 +4563,7 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "doubt/estimators/_forest.pyx":155
+/* "_forest.pyx":155
  *         return node
  * 
  * def _predict_one(root, np.ndarray[DTYPE_t] x, double quantile = -1.):             # <<<<<<<<<<<<<<
@@ -4565,7 +4571,7 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
  * 
  */
 
-static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_root, PyArrayObject *__pyx_v_x, double __pyx_v_quantile) {
+static PyObject *__pyx_pf_7_forest_6_predict_one(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_root, PyArrayObject *__pyx_v_x, double __pyx_v_quantile) {
   int __pyx_v_node_feat;
   int __pyx_v_num_node_vals;
   int __pyx_v_node_val_idx;
@@ -4610,11 +4616,11 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
   __pyx_pybuffernd_x.rcbuffer = &__pyx_pybuffer_x;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 155, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_x.rcbuffer->pybuffer, (PyObject*)__pyx_v_x, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 155, __pyx_L1_error)
   }
   __pyx_pybuffernd_x.diminfo[0].strides = __pyx_pybuffernd_x.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_x.diminfo[0].shape = __pyx_pybuffernd_x.rcbuffer->pybuffer.shape[0];
 
-  /* "doubt/estimators/_forest.pyx":164
+  /* "_forest.pyx":164
  *     cdef np.ndarray[DTYPE_t] node_vals
  * 
  *     node = root             # <<<<<<<<<<<<<<
@@ -4624,7 +4630,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
   __Pyx_INCREF(__pyx_v_root);
   __pyx_v_node = __pyx_v_root;
 
-  /* "doubt/estimators/_forest.pyx":165
+  /* "_forest.pyx":165
  * 
  *     node = root
  *     while not node.is_leaf:             # <<<<<<<<<<<<<<
@@ -4639,7 +4645,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __pyx_t_3 = ((!__pyx_t_2) != 0);
     if (!__pyx_t_3) break;
 
-    /* "doubt/estimators/_forest.pyx":166
+    /* "_forest.pyx":166
  *     node = root
  *     while not node.is_leaf:
  *         node_feat = node.feat             # <<<<<<<<<<<<<<
@@ -4652,7 +4658,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_node_feat = __pyx_t_4;
 
-    /* "doubt/estimators/_forest.pyx":167
+    /* "_forest.pyx":167
  *     while not node.is_leaf:
  *         node_feat = node.feat
  *         node_thres = node.thres             # <<<<<<<<<<<<<<
@@ -4665,7 +4671,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_node_thres = __pyx_t_5;
 
-    /* "doubt/estimators/_forest.pyx":168
+    /* "_forest.pyx":168
  *         node_feat = node.feat
  *         node_thres = node.thres
  *         left, right = sorted(node.children, key = lambda x: x.pos)             # <<<<<<<<<<<<<<
@@ -4681,7 +4687,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __pyx_t_1 = 0;
     __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = __Pyx_CyFunction_NewEx(&__pyx_mdef_5doubt_10estimators_7_forest_12_predict_one_lambda, 0, __pyx_n_s_predict_one_locals_lambda, NULL, __pyx_n_s_doubt_estimators__forest, __pyx_d, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 168, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_CyFunction_NewEx(&__pyx_mdef_7_forest_12_predict_one_lambda, 0, __pyx_n_s_predict_one_locals_lambda, NULL, __pyx_n_s_forest, __pyx_d, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 168, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_key, __pyx_t_7) < 0) __PYX_ERR(0, 168, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -4740,7 +4746,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __Pyx_XDECREF_SET(__pyx_v_right, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "doubt/estimators/_forest.pyx":169
+    /* "_forest.pyx":169
  *         node_thres = node.thres
  *         left, right = sorted(node.children, key = lambda x: x.pos)
  *         node = left if x[node_feat] <= node_thres else right             # <<<<<<<<<<<<<<
@@ -4757,7 +4763,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
       __PYX_ERR(0, 169, __pyx_L1_error)
     }
-    if ((((*__Pyx_BufPtrStrided1d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_x.rcbuffer->pybuffer.buf, __pyx_t_10, __pyx_pybuffernd_x.diminfo[0].strides)) <= __pyx_v_node_thres) != 0)) {
+    if ((((*__Pyx_BufPtrStrided1d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_x.rcbuffer->pybuffer.buf, __pyx_t_10, __pyx_pybuffernd_x.diminfo[0].strides)) <= __pyx_v_node_thres) != 0)) {
       __Pyx_INCREF(__pyx_v_left);
       __pyx_t_7 = __pyx_v_left;
     } else {
@@ -4768,7 +4774,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __pyx_t_7 = 0;
   }
 
-  /* "doubt/estimators/_forest.pyx":171
+  /* "_forest.pyx":171
  *         node = left if x[node_feat] <= node_thres else right
  * 
  *     node_vals = node.vals             # <<<<<<<<<<<<<<
@@ -4782,10 +4788,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer);
-    __pyx_t_4 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer, (PyObject*)__pyx_t_11, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+    __pyx_t_4 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer, (PyObject*)__pyx_t_11, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
     if (unlikely(__pyx_t_4 < 0)) {
       PyErr_Fetch(&__pyx_t_12, &__pyx_t_13, &__pyx_t_14);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_node_vals, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_node_vals, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
         Py_XDECREF(__pyx_t_12); Py_XDECREF(__pyx_t_13); Py_XDECREF(__pyx_t_14);
         __Pyx_RaiseBufferFallbackError();
       } else {
@@ -4800,7 +4806,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
   __pyx_v_node_vals = ((PyArrayObject *)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "doubt/estimators/_forest.pyx":172
+  /* "_forest.pyx":172
  * 
  *     node_vals = node.vals
  *     if quantile == -1:             # <<<<<<<<<<<<<<
@@ -4810,7 +4816,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
   __pyx_t_3 = ((__pyx_v_quantile == -1.0) != 0);
   if (__pyx_t_3) {
 
-    /* "doubt/estimators/_forest.pyx":173
+    /* "_forest.pyx":173
  *     node_vals = node.vals
  *     if quantile == -1:
  *         return sum(node_vals) / len(node_vals)             # <<<<<<<<<<<<<<
@@ -4831,7 +4837,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "doubt/estimators/_forest.pyx":172
+    /* "_forest.pyx":172
  * 
  *     node_vals = node.vals
  *     if quantile == -1:             # <<<<<<<<<<<<<<
@@ -4840,7 +4846,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
  */
   }
 
-  /* "doubt/estimators/_forest.pyx":176
+  /* "_forest.pyx":176
  *     else:
  *         # Compute quantile
  *         node_vals = sorted(node_vals)             # <<<<<<<<<<<<<<
@@ -4858,10 +4864,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     {
       __Pyx_BufFmt_StackElem __pyx_stack[1];
       __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer);
-      __pyx_t_4 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer, (PyObject*)__pyx_t_11, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+      __pyx_t_4 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer, (PyObject*)__pyx_t_11, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
       if (unlikely(__pyx_t_4 < 0)) {
         PyErr_Fetch(&__pyx_t_14, &__pyx_t_13, &__pyx_t_12);
-        if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_node_vals, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+        if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer, (PyObject*)__pyx_v_node_vals, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
           Py_XDECREF(__pyx_t_14); Py_XDECREF(__pyx_t_13); Py_XDECREF(__pyx_t_12);
           __Pyx_RaiseBufferFallbackError();
         } else {
@@ -4876,7 +4882,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __Pyx_DECREF_SET(__pyx_v_node_vals, ((PyArrayObject *)__pyx_t_1));
     __pyx_t_1 = 0;
 
-    /* "doubt/estimators/_forest.pyx":177
+    /* "_forest.pyx":177
  *         # Compute quantile
  *         node_vals = sorted(node_vals)
  *         num_node_vals = len(node_vals)             # <<<<<<<<<<<<<<
@@ -4886,7 +4892,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __pyx_t_15 = PyObject_Length(((PyObject *)__pyx_v_node_vals)); if (unlikely(__pyx_t_15 == ((Py_ssize_t)-1))) __PYX_ERR(0, 177, __pyx_L1_error)
     __pyx_v_num_node_vals = __pyx_t_15;
 
-    /* "doubt/estimators/_forest.pyx":178
+    /* "_forest.pyx":178
  *         node_vals = sorted(node_vals)
  *         num_node_vals = len(node_vals)
  *         if num_node_vals % 2 == 0:             # <<<<<<<<<<<<<<
@@ -4896,7 +4902,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __pyx_t_3 = ((__Pyx_mod_long(__pyx_v_num_node_vals, 2) == 0) != 0);
     if (__pyx_t_3) {
 
-      /* "doubt/estimators/_forest.pyx":179
+      /* "_forest.pyx":179
  *         num_node_vals = len(node_vals)
  *         if num_node_vals % 2 == 0:
  *             node_val_idx = int(num_node_vals * quantile)             # <<<<<<<<<<<<<<
@@ -4905,7 +4911,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
  */
       __pyx_v_node_val_idx = ((int)(__pyx_v_num_node_vals * __pyx_v_quantile));
 
-      /* "doubt/estimators/_forest.pyx":180
+      /* "_forest.pyx":180
  *         if num_node_vals % 2 == 0:
  *             node_val_idx = int(num_node_vals * quantile)
  *             return (node_vals[node_val_idx] + node_vals[node_val_idx + 1]) / 2             # <<<<<<<<<<<<<<
@@ -4933,13 +4939,13 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
         __Pyx_RaiseBufferIndexError(__pyx_t_4);
         __PYX_ERR(0, 180, __pyx_L1_error)
       }
-      __pyx_t_1 = PyFloat_FromDouble((((*__Pyx_BufPtrStrided1d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_node_vals.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_node_vals.diminfo[0].strides)) + (*__Pyx_BufPtrStrided1d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_node_vals.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_node_vals.diminfo[0].strides))) / 2.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
+      __pyx_t_1 = PyFloat_FromDouble((((*__Pyx_BufPtrStrided1d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_node_vals.rcbuffer->pybuffer.buf, __pyx_t_17, __pyx_pybuffernd_node_vals.diminfo[0].strides)) + (*__Pyx_BufPtrStrided1d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_node_vals.rcbuffer->pybuffer.buf, __pyx_t_18, __pyx_pybuffernd_node_vals.diminfo[0].strides))) / 2.0)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_r = __pyx_t_1;
       __pyx_t_1 = 0;
       goto __pyx_L0;
 
-      /* "doubt/estimators/_forest.pyx":178
+      /* "_forest.pyx":178
  *         node_vals = sorted(node_vals)
  *         num_node_vals = len(node_vals)
  *         if num_node_vals % 2 == 0:             # <<<<<<<<<<<<<<
@@ -4948,7 +4954,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
  */
     }
 
-    /* "doubt/estimators/_forest.pyx":182
+    /* "_forest.pyx":182
  *             return (node_vals[node_val_idx] + node_vals[node_val_idx + 1]) / 2
  *         else:
  *             node_val_idx = int(num_node_vals * quantile)             # <<<<<<<<<<<<<<
@@ -4958,7 +4964,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     /*else*/ {
       __pyx_v_node_val_idx = ((int)(__pyx_v_num_node_vals * __pyx_v_quantile));
 
-      /* "doubt/estimators/_forest.pyx":183
+      /* "_forest.pyx":183
  *         else:
  *             node_val_idx = int(num_node_vals * quantile)
  *             return node_vals[node_val_idx]             # <<<<<<<<<<<<<<
@@ -4976,7 +4982,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
         __Pyx_RaiseBufferIndexError(__pyx_t_4);
         __PYX_ERR(0, 183, __pyx_L1_error)
       }
-      __pyx_t_1 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_5doubt_10estimators_7_forest_DTYPE_t *, __pyx_pybuffernd_node_vals.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_node_vals.diminfo[0].strides))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
+      __pyx_t_1 = PyFloat_FromDouble((*__Pyx_BufPtrStrided1d(__pyx_t_7_forest_DTYPE_t *, __pyx_pybuffernd_node_vals.rcbuffer->pybuffer.buf, __pyx_t_19, __pyx_pybuffernd_node_vals.diminfo[0].strides))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __pyx_r = __pyx_t_1;
       __pyx_t_1 = 0;
@@ -4984,7 +4990,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     }
   }
 
-  /* "doubt/estimators/_forest.pyx":155
+  /* "_forest.pyx":155
  *         return node
  * 
  * def _predict_one(root, np.ndarray[DTYPE_t] x, double quantile = -1.):             # <<<<<<<<<<<<<<
@@ -5005,7 +5011,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_node_vals.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_x.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("doubt.estimators._forest._predict_one", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._predict_one", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -5021,7 +5027,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
   return __pyx_r;
 }
 
-/* "doubt/estimators/_forest.pyx":185
+/* "_forest.pyx":185
  *             return node_vals[node_val_idx]
  * 
  * def _predict(root, np.ndarray[DTYPE_t, ndim = 2] X, double quantile = -1.):             # <<<<<<<<<<<<<<
@@ -5030,10 +5036,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_6_predict_one(CYTHON_UNUS
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_9_predict(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static char __pyx_doc_5doubt_10estimators_7_forest_8_predict[] = " Predict the response values of a given feature matrix. ";
-static PyMethodDef __pyx_mdef_5doubt_10estimators_7_forest_9_predict = {"_predict", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_5doubt_10estimators_7_forest_9_predict, METH_VARARGS|METH_KEYWORDS, __pyx_doc_5doubt_10estimators_7_forest_8_predict};
-static PyObject *__pyx_pw_5doubt_10estimators_7_forest_9_predict(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_7_forest_9_predict(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_7_forest_8_predict[] = " Predict the response values of a given feature matrix. ";
+static PyMethodDef __pyx_mdef_7_forest_9_predict = {"_predict", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_7_forest_9_predict, METH_VARARGS|METH_KEYWORDS, __pyx_doc_7_forest_8_predict};
+static PyObject *__pyx_pw_7_forest_9_predict(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_root = 0;
   PyArrayObject *__pyx_v_X = 0;
   double __pyx_v_quantile;
@@ -5099,12 +5105,12 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_9_predict(PyObject *__pyx
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("_predict", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 185, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("doubt.estimators._forest._predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_X), __pyx_ptype_5numpy_ndarray, 1, "X", 0))) __PYX_ERR(0, 185, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5doubt_10estimators_7_forest_8_predict(__pyx_self, __pyx_v_root, __pyx_v_X, __pyx_v_quantile);
+  __pyx_r = __pyx_pf_7_forest_8_predict(__pyx_self, __pyx_v_root, __pyx_v_X, __pyx_v_quantile);
 
   /* function exit code */
   goto __pyx_L0;
@@ -5115,7 +5121,7 @@ static PyObject *__pyx_pw_5doubt_10estimators_7_forest_9_predict(PyObject *__pyx
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_root, PyArrayObject *__pyx_v_X, double __pyx_v_quantile) {
+static PyObject *__pyx_pf_7_forest_8_predict(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_root, PyArrayObject *__pyx_v_X, double __pyx_v_quantile) {
   Py_ssize_t __pyx_v_nrows;
   PyArrayObject *__pyx_v_result = 0;
   int __pyx_8genexpr7__pyx_v_i;
@@ -5152,11 +5158,11 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED P
   __pyx_pybuffernd_X.rcbuffer = &__pyx_pybuffer_X;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X.rcbuffer->pybuffer, (PyObject*)__pyx_v_X, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 185, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_X.rcbuffer->pybuffer, (PyObject*)__pyx_v_X, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 185, __pyx_L1_error)
   }
   __pyx_pybuffernd_X.diminfo[0].strides = __pyx_pybuffernd_X.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_X.diminfo[0].shape = __pyx_pybuffernd_X.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_X.diminfo[1].strides = __pyx_pybuffernd_X.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_X.diminfo[1].shape = __pyx_pybuffernd_X.rcbuffer->pybuffer.shape[1];
 
-  /* "doubt/estimators/_forest.pyx":193
+  /* "_forest.pyx":193
  *     cdef np.ndarray[DTYPE_t] result
  * 
  *     nrows = X.shape[0]             # <<<<<<<<<<<<<<
@@ -5165,7 +5171,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED P
  */
   __pyx_v_nrows = (__pyx_v_X->dimensions[0]);
 
-  /* "doubt/estimators/_forest.pyx":194
+  /* "_forest.pyx":194
  * 
  *     nrows = X.shape[0]
  *     result = np.array(             # <<<<<<<<<<<<<<
@@ -5179,7 +5185,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED P
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   { /* enter inner scope */
 
-    /* "doubt/estimators/_forest.pyx":195
+    /* "_forest.pyx":195
  *     nrows = X.shape[0]
  *     result = np.array(
  *         [_predict_one(root, X[i, :], quantile) for i in range(nrows)],             # <<<<<<<<<<<<<<
@@ -5266,7 +5272,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED P
     }
   } /* exit inner scope */
 
-  /* "doubt/estimators/_forest.pyx":194
+  /* "_forest.pyx":194
  * 
  *     nrows = X.shape[0]
  *     result = np.array(             # <<<<<<<<<<<<<<
@@ -5279,7 +5285,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED P
   PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":196
+  /* "_forest.pyx":196
  *     result = np.array(
  *         [_predict_one(root, X[i, :], quantile) for i in range(nrows)],
  *         dtype = DTYPE             # <<<<<<<<<<<<<<
@@ -5293,7 +5299,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED P
   if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_7) < 0) __PYX_ERR(0, 196, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "doubt/estimators/_forest.pyx":194
+  /* "_forest.pyx":194
  * 
  *     nrows = X.shape[0]
  *     result = np.array(             # <<<<<<<<<<<<<<
@@ -5310,10 +5316,10 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED P
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_result.rcbuffer->pybuffer);
-    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_result.rcbuffer->pybuffer, (PyObject*)__pyx_t_13, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
+    __pyx_t_5 = __Pyx_GetBufferAndValidate(&__pyx_pybuffernd_result.rcbuffer->pybuffer, (PyObject*)__pyx_t_13, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack);
     if (unlikely(__pyx_t_5 < 0)) {
       PyErr_Fetch(&__pyx_t_14, &__pyx_t_15, &__pyx_t_16);
-      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_result.rcbuffer->pybuffer, (PyObject*)__pyx_v_result, &__Pyx_TypeInfo_nn___pyx_t_5doubt_10estimators_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
+      if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_result.rcbuffer->pybuffer, (PyObject*)__pyx_v_result, &__Pyx_TypeInfo_nn___pyx_t_7_forest_DTYPE_t, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) {
         Py_XDECREF(__pyx_t_14); Py_XDECREF(__pyx_t_15); Py_XDECREF(__pyx_t_16);
         __Pyx_RaiseBufferFallbackError();
       } else {
@@ -5328,7 +5334,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED P
   __pyx_v_result = ((PyArrayObject *)__pyx_t_7);
   __pyx_t_7 = 0;
 
-  /* "doubt/estimators/_forest.pyx":199
+  /* "_forest.pyx":199
  *     )
  * 
  *     return result             # <<<<<<<<<<<<<<
@@ -5338,7 +5344,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED P
   __pyx_r = ((PyObject *)__pyx_v_result);
   goto __pyx_L0;
 
-  /* "doubt/estimators/_forest.pyx":185
+  /* "_forest.pyx":185
  *             return node_vals[node_val_idx]
  * 
  * def _predict(root, np.ndarray[DTYPE_t, ndim = 2] X, double quantile = -1.):             # <<<<<<<<<<<<<<
@@ -5363,7 +5369,7 @@ static PyObject *__pyx_pf_5doubt_10estimators_7_forest_8_predict(CYTHON_UNUSED P
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_X.rcbuffer->pybuffer);
     __Pyx_SafeReleaseBuffer(&__pyx_pybuffernd_result.rcbuffer->pybuffer);
   __Pyx_ErrRestore(__pyx_type, __pyx_value, __pyx_tb);}
-  __Pyx_AddTraceback("doubt.estimators._forest._predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("_forest._predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   goto __pyx_L2;
   __pyx_L0:;
@@ -7865,13 +7871,13 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_branch, __pyx_k_branch, sizeof(__pyx_k_branch), 0, 0, 1, 1},
   {&__pyx_n_s_children, __pyx_k_children, sizeof(__pyx_k_children), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
-  {&__pyx_n_s_doubt_estimators__forest, __pyx_k_doubt_estimators__forest, sizeof(__pyx_k_doubt_estimators__forest), 0, 0, 1, 1},
   {&__pyx_kp_s_doubt_estimators__forest_pyx, __pyx_k_doubt_estimators__forest_pyx, sizeof(__pyx_k_doubt_estimators__forest_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_dtype, __pyx_k_dtype, sizeof(__pyx_k_dtype), 0, 0, 1, 1},
   {&__pyx_n_s_feat, __pyx_k_feat, sizeof(__pyx_k_feat), 0, 0, 1, 1},
   {&__pyx_n_s_feat_idx, __pyx_k_feat_idx, sizeof(__pyx_k_feat_idx), 0, 0, 1, 1},
   {&__pyx_n_s_find_threshold, __pyx_k_find_threshold, sizeof(__pyx_k_find_threshold), 0, 0, 1, 1},
   {&__pyx_n_s_float64, __pyx_k_float64, sizeof(__pyx_k_float64), 0, 0, 1, 1},
+  {&__pyx_n_s_forest, __pyx_k_forest, sizeof(__pyx_k_forest), 0, 0, 1, 1},
   {&__pyx_n_s_fun, __pyx_k_fun, sizeof(__pyx_k_fun), 0, 0, 1, 1},
   {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
@@ -7960,7 +7966,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "doubt/estimators/_forest.pyx":69
+  /* "_forest.pyx":69
  *     # Initial guess for the optimal threshold, which is required by
  *     # `scipy.opt.minimize`
  *     initial_guess = sum(X[:, feat_idx]) / nrows             # <<<<<<<<<<<<<<
@@ -7971,7 +7977,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_slice_);
   __Pyx_GIVEREF(__pyx_slice_);
 
-  /* "doubt/estimators/_forest.pyx":111
+  /* "_forest.pyx":111
  * 
  *     # Pull out the feature and threshold with the smallest loss
  *     loss = min(result_array[:, 2])             # <<<<<<<<<<<<<<
@@ -8059,7 +8065,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
 
-  /* "doubt/estimators/_forest.pyx":17
+  /* "_forest.pyx":17
  * ctypedef np.float64_t DTYPE_t
  * 
  * def _splitting_loss(double thres, np.ndarray[DTYPE_t, ndim = 2] X,             # <<<<<<<<<<<<<<
@@ -8071,7 +8077,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__15);
   __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(4, 0, 14, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_doubt_estimators__forest_pyx, __pyx_n_s_splitting_loss, 17, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 17, __pyx_L1_error)
 
-  /* "doubt/estimators/_forest.pyx":58
+  /* "_forest.pyx":58
  *     return left_val + right_val
  * 
  * def _find_threshold(np.ndarray[DTYPE_t, ndim = 2] X, np.ndarray[DTYPE_t] y,             # <<<<<<<<<<<<<<
@@ -8083,7 +8089,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__17);
   __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(3, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_doubt_estimators__forest_pyx, __pyx_n_s_find_threshold, 58, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 58, __pyx_L1_error)
 
-  /* "doubt/estimators/_forest.pyx":82
+  /* "_forest.pyx":82
  *     return [feat_idx, threshold, loss]
  * 
  * def _branch(np.ndarray[DTYPE_t, ndim = 2] X, np.ndarray[DTYPE_t] y,             # <<<<<<<<<<<<<<
@@ -8095,7 +8101,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__19);
   __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(5, 0, 24, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_doubt_estimators__forest_pyx, __pyx_n_s_branch, 82, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 82, __pyx_L1_error)
 
-  /* "doubt/estimators/_forest.pyx":155
+  /* "_forest.pyx":155
  *         return node
  * 
  * def _predict_one(root, np.ndarray[DTYPE_t] x, double quantile = -1.):             # <<<<<<<<<<<<<<
@@ -8107,7 +8113,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__21);
   __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(3, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_doubt_estimators__forest_pyx, __pyx_n_s_predict_one, 155, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 155, __pyx_L1_error)
 
-  /* "doubt/estimators/_forest.pyx":185
+  /* "_forest.pyx":185
  *             return node_vals[node_val_idx]
  * 
  * def _predict(root, np.ndarray[DTYPE_t, ndim = 2] X, double quantile = -1.):             # <<<<<<<<<<<<<<
@@ -8399,14 +8405,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_doubt__estimators___forest) {
+  if (__pyx_module_is_main__forest) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "doubt.estimators._forest")) {
-      if (unlikely(PyDict_SetItemString(modules, "doubt.estimators._forest", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "_forest")) {
+      if (unlikely(PyDict_SetItemString(modules, "_forest", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -8427,7 +8433,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "doubt/estimators/_forest.pyx":4
+  /* "_forest.pyx":4
  * # -*- coding: utf-8 -*-
  * 
  * import scipy.optimize as opt             # <<<<<<<<<<<<<<
@@ -8445,7 +8451,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_opt, __pyx_t_2) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":5
+  /* "_forest.pyx":5
  * 
  * import scipy.optimize as opt
  * from anytree import Node             # <<<<<<<<<<<<<<
@@ -8466,7 +8472,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":7
+  /* "_forest.pyx":7
  * from anytree import Node
  * 
  * import numpy as np             # <<<<<<<<<<<<<<
@@ -8478,7 +8484,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "doubt/estimators/_forest.pyx":9
+  /* "_forest.pyx":9
  * import numpy as np
  * cimport numpy as np
  * np.import_array()             # <<<<<<<<<<<<<<
@@ -8487,7 +8493,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_t_3 = __pyx_f_5numpy_import_array(); if (unlikely(__pyx_t_3 == ((int)-1))) __PYX_ERR(0, 9, __pyx_L1_error)
 
-  /* "doubt/estimators/_forest.pyx":12
+  /* "_forest.pyx":12
  * 
  * # Datatype to be used in numpy arrays
  * DTYPE = np.float64             # <<<<<<<<<<<<<<
@@ -8502,67 +8508,67 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_DTYPE, __pyx_t_2) < 0) __PYX_ERR(0, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":17
+  /* "_forest.pyx":17
  * ctypedef np.float64_t DTYPE_t
  * 
  * def _splitting_loss(double thres, np.ndarray[DTYPE_t, ndim = 2] X,             # <<<<<<<<<<<<<<
  *                     np.ndarray[DTYPE_t] y, int feat):
  *     ''' Calculate the mean squared loss of a split. '''
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_5doubt_10estimators_7_forest_1_splitting_loss, NULL, __pyx_n_s_doubt_estimators__forest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7_forest_1_splitting_loss, NULL, __pyx_n_s_forest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_splitting_loss, __pyx_t_2) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":58
+  /* "_forest.pyx":58
  *     return left_val + right_val
  * 
  * def _find_threshold(np.ndarray[DTYPE_t, ndim = 2] X, np.ndarray[DTYPE_t] y,             # <<<<<<<<<<<<<<
  *                     int feat_idx):
  *     ''' Given a feature, find the optimal split threshold for it. '''
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_5doubt_10estimators_7_forest_3_find_threshold, NULL, __pyx_n_s_doubt_estimators__forest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7_forest_3_find_threshold, NULL, __pyx_n_s_forest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_find_threshold, __pyx_t_2) < 0) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":82
+  /* "_forest.pyx":82
  *     return [feat_idx, threshold, loss]
  * 
  * def _branch(np.ndarray[DTYPE_t, ndim = 2] X, np.ndarray[DTYPE_t] y,             # <<<<<<<<<<<<<<
  *             int min_samples_leaf, int pos = -1, parent = None):
  *     ''' Recursive function that computes the next two child nodes. '''
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_5doubt_10estimators_7_forest_5_branch, NULL, __pyx_n_s_doubt_estimators__forest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7_forest_5_branch, NULL, __pyx_n_s_forest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_branch, __pyx_t_2) < 0) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":155
+  /* "_forest.pyx":155
  *         return node
  * 
  * def _predict_one(root, np.ndarray[DTYPE_t] x, double quantile = -1.):             # <<<<<<<<<<<<<<
  *     ''' Perform a prediction for a single input. '''
  * 
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_5doubt_10estimators_7_forest_7_predict_one, NULL, __pyx_n_s_doubt_estimators__forest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7_forest_7_predict_one, NULL, __pyx_n_s_forest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_predict_one, __pyx_t_2) < 0) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":185
+  /* "_forest.pyx":185
  *             return node_vals[node_val_idx]
  * 
  * def _predict(root, np.ndarray[DTYPE_t, ndim = 2] X, double quantile = -1.):             # <<<<<<<<<<<<<<
  *     ''' Predict the response values of a given feature matrix. '''
  * 
  */
-  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_5doubt_10estimators_7_forest_9_predict, NULL, __pyx_n_s_doubt_estimators__forest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_2 = PyCFunction_NewEx(&__pyx_mdef_7_forest_9_predict, NULL, __pyx_n_s_forest); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_predict, __pyx_t_2) < 0) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "doubt/estimators/_forest.pyx":1
+  /* "_forest.pyx":1
  * # cython: language_level=3             # <<<<<<<<<<<<<<
  * # -*- coding: utf-8 -*-
  * 
@@ -8588,11 +8594,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_2);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init doubt.estimators._forest", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init _forest", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init doubt.estimators._forest");
+    PyErr_SetString(PyExc_ImportError, "init _forest");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
