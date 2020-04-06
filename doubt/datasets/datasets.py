@@ -131,8 +131,6 @@ class BikeSharingDaily(BaseDataset):
     Features:
         instant (int): 
             Record index
-        dteday (str): 
-            The date
         season (int): 
             The season, with 1 = winter, 2 = spring, 3 = summer and 4 = autumn
         yr (int): 
@@ -176,18 +174,18 @@ class BikeSharingDaily(BaseDataset):
         Load in the data set:
         >>> dataset = BikeSharingDaily()
         >>> dataset.shape
-        (731, 16)
+        (731, 15)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (731, 13) (731, 3)
+        (731, 12) (731, 3)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (562, 13) (562, 3) (169, 13) (169, 3)
+        (562, 12) (562, 3) (169, 12) (169, 3)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -198,8 +196,8 @@ class BikeSharingDaily(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00275/Bike-Sharing-Dataset.zip'
 
-    feats = range(13)
-    trgts = [13, 14, 15]
+    feats = range(12)
+    trgts = [12, 13, 14]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -221,7 +219,7 @@ class BikeSharingDaily(BaseDataset):
         csv_file = io.StringIO(csv)
 
         # Read the file-like object into a dataframe
-        df = pd.read_csv(csv_file)
+        df = pd.read_csv(csv_file, usecols = [0] + list(range(2, 18)))
         return df
 
 class BikeSharingHourly(BaseDataset):
@@ -249,8 +247,6 @@ class BikeSharingHourly(BaseDataset):
     Features:
         instant (int): 
             Record index
-        dteday (str): 
-            The date
         season (int): 
             The season, with 1 = winter, 2 = spring, 3 = summer and 4 = autumn
         yr (int): 
@@ -296,18 +292,18 @@ class BikeSharingHourly(BaseDataset):
         Load in the data set:
         >>> dataset = BikeSharingHourly()
         >>> dataset.shape
-        (17379, 17)
+        (17379, 16)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (17379, 14) (17379, 3)
+        (17379, 13) (17379, 3)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (13878, 14) (13878, 3) (3501, 14) (3501, 3)
+        (13878, 13) (13878, 3) (3501, 13) (3501, 3)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -319,7 +315,7 @@ class BikeSharingHourly(BaseDataset):
           '00275/Bike-Sharing-Dataset.zip'
 
     feats = range(14)
-    trgts = [14, 15, 16]
+    trgts = [13, 14, 15]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -341,7 +337,7 @@ class BikeSharingHourly(BaseDataset):
         csv_file = io.StringIO(csv)
 
         # Read the file-like object into a dataframe
-        df = pd.read_csv(csv_file)
+        df = pd.read_csv(csv_file, usecols = [0] + list(range(2, 18)))
         return df
 
 class Blog(BaseDataset):
@@ -856,7 +852,7 @@ class FacebookComments(BaseDataset):
         page_category (int):
             Defines the category of the source of the document; e.g., place,
             institution, branch etc.
-        agg{n} for n=0..24 (float):
+        agg[n] for n=0..24 (float):
             These features are aggreagted by page, by calculating min, max,
             average, median and standard deviation of essential features
         cc1 (int):
@@ -887,10 +883,10 @@ class FacebookComments(BaseDataset):
         h_local (int):
             This describes the hours for which we have received the target 
             variable/comments. Ranges from 0 to 23
-        day_published{n} for n=0..6 (int):
+        day_published[n] for n=0..6 (int):
             Binary feature. This represents the day (Sunday-Saturday) on
             which the post was published
-        day{n} for n=0..6 (int):
+        day[n] for n=0..6 (int):
             Binary feature. This represents the day (Sunday-Saturday) on
             selected base date/time
 
