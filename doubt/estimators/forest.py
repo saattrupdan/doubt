@@ -1,4 +1,4 @@
-''' Quantile random forests '''
+''' Quantile regression forests '''
 
 from ._estimator import BaseEstimator
 
@@ -23,8 +23,8 @@ from joblib import delayed
 
 from tqdm.auto import tqdm
 
-class DecisionTree(BaseEstimator):
-    ''' A decision tree for regression.
+class QuantileRegressionTree(BaseEstimator):
+    ''' A decision tree for quantile regression.
 
     Args:
         method (str): 
@@ -125,7 +125,7 @@ class DecisionTree(BaseEstimator):
 
         return _predict(self._root, X, quantile = quantile)
 
-class QuantileRandomForest(BaseEstimator):
+class QuantileRegressionForest(BaseEstimator):
     def __init__(self, 
         n_estimators: int = 10, 
         method: str = 'cart',
