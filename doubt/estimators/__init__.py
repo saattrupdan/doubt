@@ -1,5 +1,5 @@
-from .forest import DecisionTree
-from .forest import QuantileRandomForest
+from .tree import QuantileRegressionTree
+from .forest import QuantileRegressionForest
 
 from .linear import QuantileLinearRegression
 

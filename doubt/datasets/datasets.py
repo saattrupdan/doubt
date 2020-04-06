@@ -219,7 +219,7 @@ class BikeSharingDaily(BaseDataset):
         csv_file = io.StringIO(csv)
 
         # Read the file-like object into a dataframe
-        df = pd.read_csv(csv_file, usecols = [0] + list(range(2, 18)))
+        df = pd.read_csv(csv_file, usecols = [0] + list(range(2, 16)))
         return df
 
 class BikeSharingHourly(BaseDataset):
@@ -337,7 +337,7 @@ class BikeSharingHourly(BaseDataset):
         csv_file = io.StringIO(csv)
 
         # Read the file-like object into a dataframe
-        df = pd.read_csv(csv_file, usecols = [0] + list(range(2, 18)))
+        df = pd.read_csv(csv_file, usecols = [0] + list(range(2, 17)))
         return df
 
 class Blog(BaseDataset):
