@@ -961,17 +961,52 @@ class FacebookComments(BaseDataset):
 
 class FacebookMetrics(BaseDataset):
     f'''
-    Description
+    The data is related to posts' published during the year of 2014 on the 
+    Facebook's page of a renowned cosmetics brand.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        name (type): 
-            Description
+        page_likes(int): 
+            The total number of likes of the Facebook page at the given time.
+        post_type (int):
+            The type of post. Here 0 means 'Photo', 1 means 'Status', 2 means
+            'Link' and 3 means 'Video'
+        post_category (int):
+            The category of the post.
+        post_month (int):
+            The month the post was posted, from 1 to 12 inclusive.
+        post_weekday (int):
+            The day of the week the post was posted, from 1 to 7 inclusive.
+        post_hour (int):
+            The hour the post was posted, from 0 to 23 inclusive
+        paid (int):
+            Binary feature, whether the post was paid for.
 
     Targets:
-        name (type): 
-            Description
+        total_reach (int):
+            The lifetime post total reach.
+        total_impressions (int):
+            The lifetime post total impressions.
+        engaged_users (int):
+            The lifetime engaged users.
+        post_consumers (int):
+            The lifetime post consumers.
+        post_consumptions (int):
+            The lifetime post consumptions.
+        post_impressions (int):
+            The lifetime post impressions by people who liked the page.
+        post_reach (int):
+            The lifetime post reach by people who liked the page.
+        post_engagements (int):
+            The lifetime people who have liked the page and engaged with
+            the post.
+        comments (int):
+            The number of comments.
+        shares (int):
+            The number of shares.
+        total_interactions (int):
+            The total number of interactions
     
     Source:
         https://archive.ics.uci.edu/ml/datasets/Facebook+metrics 
@@ -980,18 +1015,18 @@ class FacebookMetrics(BaseDataset):
         Load in the data set:
         >>> dataset = FacebookMetrics()
         >>> dataset.shape
-        (?, ?)
+        (500, 19)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (?, ?) (?, ?)
+        (500, 7) (500, 11)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (?, ?) (?, ?) (?, ?) (?, ?)
+        (386, 7) (386, 11) (114, 7) (114, 11)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -1002,8 +1037,8 @@ class FacebookMetrics(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00368/Facebook_metrics.zip'
 
-    feats = []
-    trgts = []
+    feats = range(7)
+    trgts = range(7, 18)
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -1014,41 +1049,114 @@ class FacebookMetrics(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        buffer = io.BytesIO(data)
+
+        # Unzip the file and pull out the csv file
+        with zipfile.ZipFile(buffer, 'r') as zip_file:
+            csv = zip_file.read('dataset_Facebook.csv')
+
+        # Convert the bytes into a file-like object
+        csv_file = io.BytesIO(csv)
+
+        # Read the file-like object into a dataframe
+        cols = ['page_likes', 'post_type', 'post_category', 'post_month',
+                'post_weekday', 'post_hour', 'paid', 'total_reach',
+                'total_impressions', 'engaged_users', 'post_consumers',
+                'post_consumptions', 'post_impressions', 'post_reach',
+                'post_engagements', 'comments', 'shares', 'total_interactions']
+        df = pd.read_csv(csv_file, sep = ';', names = cols, header = 0,
+                         index_col = False)
+
+        # Numericalise post type
+        post_types = list(df.post_type.unique())
+        df['post_type'] = df.post_type.map(lambda txt: post_types.index(txt))
+
+        return df
 
 class FishBioconcentration(BaseDataset):
     f'''
-    Description
+    This dataset contains manually-curated experimental bioconcentration 
+    factor (BCF) for 1058 molecules (continuous values). Each row contains a 
+    molecule, identified by a CAS number, a name (if available), and a SMILES 
+    string. Additionally, the KOW (experimental or predicted) is reported. In 
+    this database, you will also find Extended Connectivity Fingerprints 
+    (binary vectors of 1024 bits), to be used as independent variables to 
+    predict the BCF.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        name (type): 
-            Description
+        logkow (float):
+            Octanol water paritioning coefficient (experimental or predicted,
+            as indicated by ``KOW type``
+        kow_exp (int):
+            Indicates whether ``logKOW`` is experimental or predicted, with 1
+            denoting experimental and 0 denoting predicted
+        smiles_[idx] for idx = 0..125 (int):
+            Encoding of SMILES string to identify the 2D molecular structure.
+            The encoding is as follows, where 'x' is a padding string to
+            ensure that all the SMILES strings are of the same length:
+                0  = 'x'
+                1  = '#'
+                2  = '('
+                3  = ')'
+                4  = '+'
+                5  = '-'
+                6  = '/'
+                7  = '1'
+                8  = '2'
+                9  = '3'
+                10 = '4'
+                11 = '5'
+                12 = '6'
+                13 = '7'
+                14 = '8'
+                15 = '='
+                16 = '@'
+                17 = 'B'
+                18 = 'C'
+                19 = 'F'
+                20 = 'H'
+                21 = 'I'
+                22 = 'N'
+                23 = 'O'
+                24 = 'P'
+                25 = 'S'
+                26 = '['
+                27 = '\\'
+                28 = ']'
+                29 = 'c'
+                30 = 'i'
+                31 = 'l'
+                32 = 'n'
+                33 = 'o'
+                34 = 'r'
+                35 = 's'
 
     Targets:
-        name (type): 
-            Description
+        logbcf (float): 
+            Experimental fish bioconcentration factor (logarithm form)
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/QSAR+fish+bioconcentration+factor+%28BCF%29 
+        https://archive.ics.uci.edu/ml/datasets/QSAR+fish+bioconcentration+factor+%28BCF%29
 
     Examples:
         Load in the data set:
         >>> dataset = FishBioconcentration()
         >>> dataset.shape
-        (?, ?)
+        (1054, 129)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (?, ?) (?, ?)
+        (1054, 128) (1058, 1)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (?, ?) (?, ?) (?, ?) (?, ?)
+        (819, 128) (819, 1) (235, 128) (235, 1)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -1059,8 +1167,8 @@ class FishBioconcentration(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00511/QSAR_fish_BCF.zip'
 
-    feats = []
-    trgts = []
+    feats = range(128)
+    trgts = [128]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -1071,41 +1179,108 @@ class FishBioconcentration(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        buffer = io.BytesIO(data)
+
+        # Unzip the file and pull out the csv file
+        with zipfile.ZipFile(buffer, 'r') as zip_file:
+            csv = zip_file.read('QSAR_BCF_Kow.csv')
+
+        # Convert the string into a file-like object
+        csv_file = io.BytesIO(csv)
+
+        # Read the file-like object into a dataframe
+        cols = ['cas', 'name', 'smiles', 'logkow', 'kow_exp', 'logbcf']
+        df = pd.read_csv(
+            csv_file, 
+            names = cols, 
+            header = 0, 
+            usecols = [col for col in cols if col not in ['cas', 'name']]
+        )
+
+        # Drop NaNs 
+        df = df.dropna()
+
+        # Encode KOW types
+        kow_types = ['pred', 'exp']
+        df['kow_exp'] = df.kow_exp.map(lambda txt: kow_types.index(txt))
+
+        # Get maximum SMILE string length and pull out all the SMILE string
+        # symbols, along with a '-' symbol for padding
+        max_smile = max(len(smile_string) for smile_string in df.smiles)
+        smile_symbols = ['x'] + sorted({symbol for smile_string in df.smiles
+                                        for symbol in set(smile_string)})
+
+        # Pad SMILE strings
+        df['smiles'] = [smile_string + 'x' * (max_smile - len(smile_string))
+                        for smile_string in df.smiles]
+
+        # Encode SMILE strings
+        for idx in range(max_smile):
+            df[f'smiles_{idx}'] = df.smiles.map(\
+                lambda txt: smile_symbols.index(txt[idx])
+            )
+
+        # Drop original SMILE feature
+        df = df.drop(columns = 'smiles')
+
+        # Put the target variable at the end
+        df = df[
+            ['logkow', 'kow_exp'] + \
+            [f'smiles_{idx}' for idx in range(max_smile)] + \
+            ['logbcf']
+        ]
+
+        return df
 
 class FishToxicity(BaseDataset):
     f'''
-    Description
+    This dataset was used to develop quantitative regression QSAR models to 
+    predict acute aquatic toxicity towards the fish Pimephales promelas 
+    (fathead minnow) on a set of 908 chemicals. LC50 data, which is the 
+    concentration that causes death in 50% of test fish over a test duration 
+    of 96 hours, was used as model response
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        name (type): 
-            Description
+        CIC0 (float):
+            Information indices
+        SM1_Dz(Z) (float):
+            2D matrix-based descriptors
+        GATS1i (float):
+            2D autocorrelations
+        NdsCH (int)
+            Atom-type counts
+        NdssC (int)
+            Atom-type counts
+        MLOGP (float):
+            Molecular properties
 
     Targets:
-        name (type): 
-            Description
+        LC50 (float): 
+            A concentration that causes death in 50% of test fish over a
+            test duration of 96 hours. In -log(mol/L) units.
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/QSAR+fish+toxicity 
+        https://archive.ics.uci.edu/ml/datasets/QSAR+fish+toxicity
 
     Examples:
         Load in the data set:
         >>> dataset = FishToxicity()
         >>> dataset.shape
-        (?, ?)
+        (908, 7)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (?, ?) (?, ?)
+        (908, 6) (908, 1)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (?, ?) (?, ?) (?, ?) (?, ?)
+        (701, 6) (701, 1) (207, 6) (207, 1)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -1116,8 +1291,8 @@ class FishToxicity(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00504/qsar_fish_toxicity.csv'
 
-    feats = []
-    trgts = []
+    feats = range(6)
+    trgts = [6]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -1128,7 +1303,15 @@ class FishToxicity(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        csv_file = io.BytesIO(data)
+
+        # Read the file-like object into a dataframe
+        cols = ['CIC0', 'SM1_Dz(Z)', 'GATS1i', 'NdsCH', 
+                'NdssC', 'MLOGP', 'LC50']
+        df = pd.read_csv(csv_file, sep = ';', header = None, names = cols)
+
+        return df
 
 class ForestFire(BaseDataset):
     f''' 
@@ -1145,10 +1328,10 @@ class ForestFire(BaseDataset):
         Y (float): 
             The y-axis spatial coordinate within the Montesinho park map
             Ranges from 2 to 9.
-        month (str):
-            Month of the year. Ranges from 'jan' to 'dec'
-        day (str):
-            Day of the year. Ranges from 'mon' to 'sun'
+        month (int):
+            Month of the year. Ranges from 0 to 11
+        day (int):
+            Day of the week. Ranges from 0 to 6
         FFMC (float):
             FFMC index from the FWI system. Ranges from 18.7 to 96.20
         DMC (float):
@@ -1175,24 +1358,24 @@ class ForestFire(BaseDataset):
         sense to model with the logarithm transform.
 
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Forest+Fires 
+        https://archive.ics.uci.edu/ml/datasets/Forest+Fires
 
     Examples:
         Load in the data set:
         >>> dataset = ForestFire()
         >>> dataset.shape
-        (?, ?)
+        (517, 13)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (?, ?) (?, ?)
+        (517, 12) (517, 1)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (?, ?) (?, ?) (?, ?) (?, ?)
+        (400, 12) (400, 1) (117, 12) (117, 1)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -1203,8 +1386,8 @@ class ForestFire(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'forest-fires/forestfires.csv'
 
-    feats = []
-    trgts = []
+    feats = range(12)
+    trgts = [12]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -1215,41 +1398,125 @@ class ForestFire(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        csv_file = io.BytesIO(data)
+
+        # Read the file-like object into a dataframe
+        df = pd.read_csv(csv_file)
+
+        # Encode month
+        months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 
+                  'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+        df['month'] = df.month.map(lambda string: months.index(string))
+
+        # Encode day
+        weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun']
+        df['day'] = df.day.map(lambda string: weekdays.index(string))
+
+        return df
 
 class GasTurbine(BaseDataset):
     f'''
-    Description
+    Data have been generated from a sophisticated simulator of a Gas Turbines 
+    (GT), mounted on a Frigate characterized by a COmbined Diesel eLectric 
+    And Gas (CODLAG) propulsion plant type.
+
+    The experiments have been carried out by means of a numerical simulator of 
+    a naval vessel (Frigate) characterized by a Gas Turbine (GT) propulsion 
+    plant. The different blocks forming the complete simulator (Propeller, 
+    Hull, GT, Gear Box and Controller) have been developed and fine tuned over 
+    the year on several similar real propulsion plants. In view of these 
+    observations the available data are in agreement with a possible real 
+    vessel.
+
+    In this release of the simulator it is also possible to take into account 
+    the performance decay over time of the GT components such as GT compressor 
+    and turbines.
+
+    The propulsion system behaviour has been described with this parameters:
+        - Ship speed (linear function of the lever position lp).
+        - Compressor degradation coefficient kMc.
+        - Turbine degradation coefficient kMt.
+    so that each possible degradation state can be described by a combination 
+    of this triple (lp,kMt,kMc).
+
+    The range of decay of compressor and turbine has been sampled with an 
+    uniform grid of precision 0.001 so to have a good granularity of 
+    representation.
+
+    In particular for the compressor decay state discretization the kMc 
+    coefficient has been investigated in the domain [1; 0.95], and the turbine 
+    coefficient in the domain [1; 0.975].
+
+    Ship speed has been investigated sampling the range of feasible speed from 
+    3 knots to 27 knots with a granularity of representation equal to tree 
+    knots.
+
+    A series of measures (16 features) which indirectly represents of the 
+    state of the system subject to performance decay has been acquired and 
+    stored in the dataset over the parameter's space.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        name (type): 
-            Description
+        lever_position (float)
+            The position of the lever
+        ship_speed (float):
+            The ship speed, in knots
+        shaft_torque (float):
+            The shaft torque of the gas turbine, in kN m
+        turbine_revolution_rate (float):
+            The gas turbine rate of revolutions, in rpm
+        generator_revolution_rate (float):
+            The gas generator rate of revolutions, in rpm
+        starboard_propeller_torque (float):
+            The torque of the starboard propeller, in kN
+        port_propeller_torque (float):
+            The torque of the port propeller, in kN
+        turbine_exit_temp (float):
+            Height pressure turbine exit temperature, in celcius
+        inlet_temp (float):
+            Gas turbine compressor inlet air temperature, in celcius
+        outlet_temp (float):
+            Gas turbine compressor outlet air temperature, in celcius
+        turbine_exit_pres (float):
+            Height pressure turbine exit pressure, in bar
+        inlet_pres (float):
+            Gas turbine compressor inlet air pressure, in bar
+        outlet_pres (float):
+            Gas turbine compressor outlet air pressure, in bar
+        exhaust_pres (float):
+            Gas turbine exhaust gas pressure, in bar
+        turbine_injection_control (float):
+            Turbine injection control, in percent
+        fuel_flow (float):
+            Fuel flow, in kg/s
 
     Targets:
-        name (type): 
-            Description
+        compressor_decay (type): 
+            Gas turbine compressor decay state coefficient
+        turbine_decay (type): 
+            Gas turbine decay state coefficient
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Condition+Based+Maintenance+of+Naval+Propulsion+Plants 
+        https://archive.ics.uci.edu/ml/datasets/Condition+Based+Maintenance+of+Naval+Propulsion+Plants
 
     Examples:
         Load in the data set:
         >>> dataset = GasTurbine()
         >>> dataset.shape
-        (?, ?)
+        (11934, 18)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (?, ?) (?, ?)
+        (11934, 16) (11934, 2)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (?, ?) (?, ?) (?, ?) (?, ?)
+        (9520, 16) (9520, 2) (2414, 16) (2414, 2)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -1260,8 +1527,8 @@ class GasTurbine(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00316/UCI%20CBM%20Dataset.zip'
 
-    feats = []
-    trgts = []
+    feats = range(16)
+    trgts = [16, 17]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -1272,7 +1539,34 @@ class GasTurbine(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        buffer = io.BytesIO(data)
+
+        # Unzip the file and pull out the txt file
+        with zipfile.ZipFile(buffer, 'r') as zip_file:
+            txt = zip_file.read('UCI CBM Dataset/data.txt')
+
+        # Decode text and replace initial space on each line
+        txt = txt[3:].decode('utf-8').replace('\n   ', '\n')
+
+        # Convert the remaining triple spaces into commas, to make loading
+        # it as a csv file easier
+        txt = txt.replace('   ', ',')
+
+        # Convert the string into a file-like object
+        csv_file = io.StringIO(txt)
+
+        # Read the file-like object into a dataframe
+        cols = ['lever_position', 'ship_speed', 'shaft_torque',
+                'turbine_revolution_rate', 'generator_revolution_rate',
+                'starboard_propeller_torque', 'port_propeller_torque',
+                'turbine_exit_temp', 'inlet_temp', 'outlet_temp',
+                'turbine_exit_pres', 'inlet_pres', 'outlet_pres',
+                'exhaust_pres', 'turbine_injection_control', 'fuel_flow',
+                'compressor_decay', 'turbine_decay']
+        df = pd.read_csv(csv_file, header = None, names = cols)
+
+        return df
 
 class NewTaipeiHousing(BaseDataset):
     f'''
@@ -1848,7 +2142,7 @@ class Yacht(BaseDataset):
         raise NotImplementedError
 
 if __name__ == '__main__':
-    dataset = FacebookComments(cache = None)
+    dataset = GasTurbine(cache = None)
     print(dataset.shape)
 
     X, y = dataset.split()
@@ -1860,3 +2154,5 @@ if __name__ == '__main__':
 
     df = dataset.to_pandas()
     print(type(df))
+
+    print(df)
