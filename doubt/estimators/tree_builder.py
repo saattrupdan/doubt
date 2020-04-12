@@ -4,7 +4,6 @@ from ..data_structures import Stack, Queue
 
 import scipy.optimize as opt
 import numpy as np
-import copy
 import logging
 
 logging.basicConfig(format = '%(message)s')
@@ -95,71 +94,6 @@ class Node(object):
 
         return self
 
-    def get_all_leaves(self):
-        ''' Fetch all leaves below the node. '''
-        stack = Stack([self])
-        leaves = []
-        while True:
-            try:
-                node = stack.pop()
-            except IndexError:
-                break
-            
-            if node.is_leaf:
-                leaves.append(node)
-            else:
-                stack.push(node.left_child)
-                stack.push(node.right_child)
-
-        return leaves
-
-    def cost_complexity(self, pruning: float = 0.):
-        '''
-        Calculate the mean cost complexity of all the leaves of the node. 
-        '''
-        leaves = self.get_all_leaves()
-        penalty = pruning * len(leaves)
-        return np.sum([leaf.impurity for leaf in leaves]) + penalty
-
-    def splitting_gain(self):
-        ''' 
-        Compute the splitting gain, or impurity decrease, between the
-        node and its children.
-        '''
-
-        # Fetch all the leaves below the node
-        leaves = self.get_all_leaves()
-
-        # Compute the sum of the impurities of leaves below the node
-        leaf_impurity = np.sum([leaf.impurity for leaf in leaves])
-
-        assert self.impurity > leaf_impurity
-
-        # Return the impurity decrease, or the splitting gain
-        return self.impurity - leaf_impurity
-
-    def prune(self):
-        ''' Remove all the node's descendants from the tree. '''
-
-        # Fetch all the leaves below the node
-        leaves = self.get_all_leaves()
-
-        # Set the target values in the node to be the concatenation
-        # of all target values in its descendants
-        self.vals = np.concatenate([leaf.vals for leaf in leaves])
-
-        # Make the node a leaf
-        self.is_leaf = True
-
-        # Remove all unnecessary information in the leaf
-        self.left_child = None
-        self.right_child = None
-        self.thres = None
-        self.feat = None
-        del self.left_child, self.right_child, self.thres, self.feat
-
-        return self
-
     def get_all_descendants(self):
         ''' Fetch all the descendants of the node from the tree. '''
         stack = Stack([self])
@@ -216,9 +150,8 @@ class Tree(object):
 class TreeBuilder(object):
     ''' Builds quantile regression trees in a depth-first fashion. '''
 
-    def __init__(self, min_samples_leaf: int = 5, pruning: float = 0.):
+    def __init__(self, min_samples_leaf: int = 5):
         self.min_samples_leaf = min_samples_leaf
-        self.pruning = pruning
 
     def build(self, X, y):
         root = Node(X[:, 0] == X[:, 0])
@@ -249,26 +182,4 @@ class TreeBuilder(object):
                 node.is_leaf = True
                 node.vals = y[node.mask]
 
-        if self.pruning > 0.:
-            leaves = root.get_all_leaves()
-            best_cc = np.sum([leaf.impurity for leaf in leaves])
-            best_cc += len(leaves) * self.pruning
-            logger.debug(f'Cost-complexity intialised to {best_cc:,.0}')
-
-            nodes = root.get_all_descendants()
-            splitting_gains = [node.splitting_gain() for node in nodes]
-            logger.debug(f'Computed splitting gains for '\
-                         f'{len(nodes)} descendants')
-
-            best_root = copy.deepcopy(root)
-            logger.debug('Pruning initialised')
-            key = lambda pair: pair[0]
-            for _, node in sorted(zip(splitting_gains, nodes), key = key):
-                node.prune()
-                cc = root.cost_complexity(self.pruning)
-                if cc < best_cc:
-                    best_cc = cc
-                    best_root = copy.deepcopy(root)
-            return Tree(best_root)
-        else:
-            return Tree(root)
+        return Tree(root)
