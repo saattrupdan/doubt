@@ -1570,37 +1570,50 @@ class GasTurbine(BaseDataset):
 
 class NewTaipeiHousing(BaseDataset):
     f'''
-    Description
+    The "real estate valuation" is a regression problem. The market historical
+    data set of real estate valuation are collected from Sindian Dist., New 
+    Taipei City, Taiwan.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        name (type): 
-            Description
+        transaction_date (float):
+            The transaction date encoded as a floating point value. For
+            instance, 2013.250 is March 2013 and 2013.500 is June March
+        house_age (float):
+            The age of the house
+        mrt_distance (float):
+            Distance to the nearest MRT station
+        n_stores (int):
+            Number of convenience stores
+        lat (float):
+            Latitude
+        lng (float):
+            Longitude
 
     Targets:
-        name (type): 
-            Description
+        house_price (float): 
+            House price of unit area
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set 
+        https://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set
 
     Examples:
         Load in the data set:
         >>> dataset = NewTaipeiHousing()
         >>> dataset.shape
-        (?, ?)
+        (414, 7)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (?, ?) (?, ?)
+        (414, 6) (414, 1)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (?, ?) (?, ?) (?, ?) (?, ?)
+        (321, 6) (321, 1) (93, 6) (93, 1)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -1611,8 +1624,8 @@ class NewTaipeiHousing(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00477/Real%20estate%20valuation%20data%20set.xlsx'
 
-    feats = []
-    trgts = []
+    feats = range(6)
+    trgts = [6]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -1623,41 +1636,104 @@ class NewTaipeiHousing(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        xlsx_file = io.BytesIO(data)
+
+        # Load in the dataframe
+        cols = ['idx', 'transaction_date', 'house_age', 'mrt_distance', 
+                'n_stores', 'lat', 'lng', 'house_price']
+        df = pd.read_excel(xlsx_file, header = 0, names = cols)
+
+        # Remove the index
+        df = df.iloc[:, 1:]
+
+        return df
 
 class Parkinsons(BaseDataset):
     f'''
-    Description
+    This dataset is composed of a range of biomedical voice measurements from 
+    42 people with early-stage Parkinson's disease recruited to a six-month 
+    trial of a telemonitoring device for remote symptom progression 
+    monitoring. The recordings were automatically captured in the patient's 
+    homes.
+
+    Columns in the table contain subject number, subject age, subject gender, 
+    time interval from baseline recruitment date, motor UPDRS, total UPDRS, 
+    and 16 biomedical voice measures. Each row corresponds to one of 5,875 
+    voice recording from these individuals. The main aim of the data is to 
+    predict the motor and total UPDRS scores ('motor_UPDRS' and 'total_UPDRS') 
+    from the 16 voice measures. 
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        name (type): 
-            Description
+        subject# (int): 
+            Integer that uniquely identifies each subject
+        age (int):
+            Subject age
+        sex (int):
+            Binary feature. Subject sex, with 0 being male and 1 female
+        test_time (float):
+            Time since recruitment into the trial. The integer part is the
+            number of days since recruitment
+        Jitter(%) (float):
+            Measure of variation in fundamental frequency
+        Jitter(Abs) (float):
+            Measure of variation in fundamental frequency
+        Jitter:RAP (float):
+            Measure of variation in fundamental frequency
+        Jitter:PPQ5 (float):
+            Measure of variation in fundamental frequency
+        Jitter:DDP (float):
+            Measure of variation in fundamental frequency
+        Shimmer (float):
+            Measure of variation in amplitude
+        Shimmer(dB) (float):
+            Measure of variation in amplitude
+        Shimmer:APQ3 (float):
+            Measure of variation in amplitude
+        Shimmer:APQ5 (float):
+            Measure of variation in amplitude
+        Shimmer:APQ11 (float):
+            Measure of variation in amplitude
+        Shimmer:DDA (float):
+            Measure of variation in amplitude
+        NHR (float):
+            Measure of ratio of noise to tonal components in the voice
+        HNR (float):
+            Measure of ratio of noise to tonal components in the voice
+        RPDE (float):
+            A nonlinear dynamical complexity measure
+        DFA (float):
+            Signal fractal scaling exponent
+        PPE (float):
+            A nonlinear measure of fundamental frequency variation
 
     Targets:
-        name (type): 
-            Description
+        motor_UPDRS (float):
+            Clinician's motor UPDRS score, linearly interpolated
+        total_UPDRS (float):
+            Clinician's total UPDRS score, linearly interpolated
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Parkinsons+Telemonitoring 
+        https://archive.ics.uci.edu/ml/datasets/Parkinsons+Telemonitoring
 
     Examples:
         Load in the data set:
         >>> dataset = Parkinsons()
         >>> dataset.shape
-        (?, ?)
+        (5875, 22)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (?, ?) (?, ?)
+        (5875, 20) (5875, 2)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (?, ?) (?, ?) (?, ?) (?, ?)
+        (4668, 20) (4668, 2) (1207, 20) (1207, 2)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -1668,8 +1744,8 @@ class Parkinsons(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'parkinsons/telemonitoring/parkinsons_updrs.data'
 
-    feats = []
-    trgts = []
+    feats = range(20)
+    trgts = [20, 21]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -1680,41 +1756,69 @@ class Parkinsons(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        csv_file = io.BytesIO(data)
+
+        # Load in dataframe
+        df = pd.read_csv(csv_file, header = 0)
+
+        # Put target columns at the end
+        cols = [col for col in df.columns if col[-5:] != 'UPDRS']
+        df = df[cols + ['motor_UPDRS', 'total_UPDRS']]
+
+        return df
 
 class Protein(BaseDataset):
     f'''
-    Description
+    This is a data set of Physicochemical Properties of Protein Tertiary 
+    Structure. The data set is taken from CASP 5-9. There are 45730 decoys 
+    and size varying from 0 to 21 armstrong.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        name (type): 
-            Description
+        F1 (float):
+            Total surface area
+        F2 (float):
+            Non polar exposed area
+        F3 (float):
+            Fractional area of exposed non polar residue
+        F4 (float):
+            Fractional area of exposed non polar part of residue
+        F5 (float):
+            Molecular mass weighted exposed area
+        F6 (float):
+            Average deviation from standard exposed area of residue
+        F7 (float):
+            Euclidean distance
+        F8 (float):
+            Secondary structure penalty
+        F9 (float):
+            Spacial Distribution constraints (N,K Value)
 
     Targets:
-        name (type): 
-            Description
+        RMSD (float): 
+            Size of the residue
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Physicochemical+Properties+of+Protein+Tertiary+Structure 
+        https://archive.ics.uci.edu/ml/datasets/Physicochemical+Properties+of+Protein+Tertiary+Structure
 
     Examples:
         Load in the data set:
         >>> dataset = Protein()
         >>> dataset.shape
-        (?, ?)
+        (45730, 10)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (?, ?) (?, ?)
+        (45730, 9) (45730, 1)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (?, ?) (?, ?) (?, ?) (?, ?)
+        (36606, 9) (36606, 1) (9124, 9) (9124, 1)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -1725,8 +1829,8 @@ class Protein(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00265/CASP.csv'
 
-    feats = []
-    trgts = []
+    feats = range(9)
+    trgts = [9]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -1737,41 +1841,75 @@ class Protein(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        csv_file = io.BytesIO(data)
+
+        # Load in the dataframe
+        df = pd.read_csv(csv_file)
+
+        # Put the target column at the end
+        df = df[[f'F{i}' for i in range(1, 10)] + ['RMSD']]
+
+        return df
 
 class Servo(BaseDataset):
     f'''
-    Description
+    Data was from a simulation of a servo system.
+
+    Ross Quinlan:
+
+    This data was given to me by Karl Ulrich at MIT in 1986. I didn't record 
+    his description at the time, but here's his subsequent (1992) recollection:
+
+    "I seem to remember that the data was from a simulation of a servo system 
+    involving a servo amplifier, a motor, a lead screw/nut, and a sliding 
+    carriage of some sort. It may have been on of the translational axes of a 
+    robot on the 9th floor of the AI lab. In any case, the output value is 
+    almost certainly a rise time, or the time required for the system to 
+    respond to a step change in a position set point."
+
+    (Quinlan, ML'93)
+
+    "This is an interesting collection of data provided by Karl Ulrich. It 
+    covers an extremely non-linear phenomenon - predicting the rise time of a 
+    servomechanism in terms of two (continuous) gain settings and two 
+    (discrete) choices of mechanical linkages."
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        name (type): 
-            Description
+        motor (int): 
+            Motor, ranges from 0 to 4 inclusive
+        screw (int):
+            Screw, ranges from 0 to 4 inclusive
+        pgain (int):
+            PGain, ranges from 3 to 6 inclusive
+        vgain (int):
+            VGain, ranges from 1 to 5 inclusive
 
     Targets:
-        name (type): 
-            Description
+        class (float): 
+            Class values, ranges from 0.13 to 7.10 inclusive
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Servo 
+        https://archive.ics.uci.edu/ml/datasets/Servo
 
     Examples:
         Load in the data set:
         >>> dataset = Servo()
         >>> dataset.shape
-        (?, ?)
+        (167, 5)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (?, ?) (?, ?)
+        (167, 4) (167, 1)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (?, ?) (?, ?) (?, ?) (?, ?)
+        (128, 4) (128, 1) (39, 4) (39, 1)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -1782,8 +1920,8 @@ class Servo(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'servo/servo.data'
 
-    feats = []
-    trgts = []
+    feats = range(4)
+    trgts = [4]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -1794,41 +1932,92 @@ class Servo(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        csv_file = io.BytesIO(data)
+
+        # Load in the dataframe
+        cols = ['motor', 'screw', 'pgain', 'vgain', 'class']
+        df = pd.read_csv(csv_file, names = cols)
+
+        # Encode motor and screw
+        codes = ['A', 'B', 'C', 'D', 'E']
+        df['motor'] = df.motor.map(lambda x: codes.index(x))
+        df['screw'] = df.screw.map(lambda x: codes.index(x))
+
+        return df
 
 class SolarFlare(BaseDataset):
     f'''
-    Description
+    Each class attribute counts the number of solar flares of a certain class 
+    that occur in a 24 hour period.
+    
+    The database contains 3 potential classes, one for the number of times a 
+    certain type of solar flare occured in a 24 hour period.
+
+    Each instance represents captured features for 1 active region on the sun.
+
+    The data are divided into two sections. The second section (flare.data2) 
+    has had much more error correction applied to the it, and has consequently 
+    been treated as more reliable.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        name (type): 
-            Description
+        class (int): 
+            Code for class (modified Zurich class). Ranges from 0 to 6 
+            inclusive
+        spot_size (int):
+            Code for largest spot size. Ranges from 0 to 5 inclusive
+        spot_distr (int):
+            Code for spot distribution. Ranges from 0 to 3 inclusive
+        activity (int):
+            Binary feature indicating 1 = reduced and 2 = unchanged
+        evolution (int):
+            0 = decay, 1 = no growth and 2 = growth
+        flare_activity (int):
+            Previous 24 hour flare activity code, where 0 = nothing as big
+            as an M1, 1 = one M1 and 2 = more activity than one M1
+        is_complex (int):
+            Binary feature indicating historically complex
+        became_complex (int):
+            Binary feature indicating whether the region became historically
+            complex on this pass across the sun's disk
+        large (int):
+            Binary feature, indicating whether area is large
+        large_spot (int):
+            Binary feature, indicating whether the area of the largest
+            spot is greater than 5
 
     Targets:
-        name (type): 
-            Description
+        C-class (int): 
+            C-class flares production by this region in the following 24
+            hours (common flares)
+        M-class (int): 
+            M-class flares production by this region in the following 24
+            hours (common flares)
+        X-class (int): 
+            X-class flares production by this region in the following 24
+            hours (common flares)
     
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Solar+Flare 
+        https://archive.ics.uci.edu/ml/datasets/Solar+Flare
 
     Examples:
         Load in the data set:
         >>> dataset = Solar()
         >>> dataset.shape
-        (?, ?)
+        (1066, 13)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (?, ?) (?, ?)
+        (1066, 10) (1066, 3)
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (?, ?) (?, ?) (?, ?) (?, ?)
+        (831, 10) (831, 3) (235, 10) (235, 3)
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -1839,8 +2028,8 @@ class SolarFlare(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'solar-flare/flare.data2'
 
-    feats = []
-    trgts = []
+    feats = range(10)
+    trgts = range(10, 13)
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
@@ -1851,7 +2040,28 @@ class SolarFlare(BaseDataset):
         Returns:
             Pandas dataframe: The prepared data
         '''
-        raise NotImplementedError
+        # Convert the bytes into a file-like object
+        csv_file = io.BytesIO(data)
+
+        # Load in dataframe
+        cols = ['class', 'spot_size', 'spot_distr', 'activity', 'evolution',
+                'flare_activity', 'is_complex', 'became_complex', 'large',
+                'large_spot', 'C-class', 'M-class', 'X-class']
+        df = pd.read_csv(csv_file, sep = ' ', skiprows = [0], names = cols)
+
+        # Encode class
+        encodings = ['A', 'B', 'C', 'D', 'E', 'F', 'H']
+        df['class'] = df['class'].map(lambda x: encodings.index(x))
+
+        # Encode spot size
+        encodings = ['X', 'R', 'S', 'A', 'H', 'K']
+        df['spot_size'] = df.spot_size.map(lambda x: encodings.index(x))
+
+        # Encode spot distribution
+        encodings = ['X', 'O', 'I', 'C']
+        df['spot_distr'] = df.spot_distr.map(lambda x: encodings.index(x))
+
+        return df
 
 class SpaceShuttle(BaseDataset):
     f'''
@@ -2142,7 +2352,7 @@ class Yacht(BaseDataset):
         raise NotImplementedError
 
 if __name__ == '__main__':
-    dataset = GasTurbine(cache = None)
+    dataset = SolarFlare(cache = None)
     print(dataset.shape)
 
     X, y = dataset.split()
