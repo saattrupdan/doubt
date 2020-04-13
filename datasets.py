@@ -5,7 +5,7 @@ being the original descriptions verbatim. Some feature names were constructed
 from their descriptions and were not part of the original data set.
 '''
 
-from ._dataset import BaseDataset
+from doubt.datasets._dataset import BaseDataset
 
 import pandas as pd
 import zipfile
