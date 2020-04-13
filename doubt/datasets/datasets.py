@@ -42,7 +42,7 @@ BASE_DATASET_DESCRIPTION = '''
 '''
 
 class Airfoil(BaseDataset):
-    f'''
+    __doc__ = f'''
     The NASA data set comprises different size NACA 0012 airfoils at various 
     wind tunnel speeds and angles of attack. The span of the airfoil and the 
     observer position were the same in all of the experiments.   
@@ -71,18 +71,21 @@ class Airfoil(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (1503, 5) (1503, 1)
+        ((1503, 5), (1503, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (1179, 5) (1179, 1) (324, 5) (324, 1)
+        ((1179, 5), (1179, 1), (324, 5), (324, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -108,7 +111,7 @@ class Airfoil(BaseDataset):
         return df
 
 class BikeSharingDaily(BaseDataset):
-    f'''
+    __doc__ = f'''
     Bike sharing systems are new generation of traditional bike rentals where 
     whole process from membership, rental and return back has become automatic.
     Through these systems, user is able to easily rent a bike from a 
@@ -180,18 +183,21 @@ class BikeSharingDaily(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (731, 12) (731, 3)
+        ((731, 12), (731, 3))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (562, 12) (562, 3) (169, 12) (169, 3)
+        ((562, 12), (562, 3), (169, 12), (169, 3))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -224,7 +230,7 @@ class BikeSharingDaily(BaseDataset):
         return df
 
 class BikeSharingHourly(BaseDataset):
-    f'''
+    __doc__ = f'''
     Bike sharing systems are new generation of traditional bike rentals where 
     whole process from membership, rental and return back has become automatic.
     Through these systems, user is able to easily rent a bike from a 
@@ -298,24 +304,27 @@ class BikeSharingHourly(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (17379, 13) (17379, 3)
+        ((17379, 13), (17379, 3))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (13878, 13) (13878, 3) (3501, 13) (3501, 3)
+        ((13878, 13), (13878, 3), (3501, 13), (3501, 3))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00275/Bike-Sharing-Dataset.zip'
 
-    feats = range(14)
+    feats = range(13)
     trgts = [13, 14, 15]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
@@ -342,7 +351,7 @@ class BikeSharingHourly(BaseDataset):
         return df
 
 class Blog(BaseDataset):
-    f'''
+    __doc__ = f'''
     This data originates from blog posts. The raw HTML-documents
     of the blog posts were crawled and processed.
     The prediction task associated with the data is the prediction
@@ -430,18 +439,21 @@ class Blog(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (52397, 279) (52397, 1)
+        ((52397, 279), (52397, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (41932, 279) (41932, 1) (10465, 279) (10465, 1)
+        ((41932, 279), (41932, 1), (10465, 279), (10465, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -474,7 +486,7 @@ class Blog(BaseDataset):
         return df
 
 class Nanotube(BaseDataset):
-    f'''
+    __doc__ = f'''
     CASTEP can simulate a wide range of properties of materials proprieties 
     using density functional theory (DFT). DFT is the most successful method 
     calculates atomic coordinates faster than other mathematical approaches, 
@@ -536,18 +548,21 @@ class Nanotube(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (10721, 5) (10721, 3)
+        ((10721, 5), (10721, 3))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (8542, 5) (8542, 3) (2179, 5) (2179, 3)
+        ((8542, 5), (8542, 3), (2179, 5), (2179, 3))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -573,7 +588,7 @@ class Nanotube(BaseDataset):
         return df
 
 class Concrete(BaseDataset):
-    f'''
+    __doc__ = f'''
     Concrete is the most important material in civil engineering. The concrete 
     compressive strength is a highly nonlinear function of age and 
     ingredients. 
@@ -614,18 +629,21 @@ class Concrete(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (1030, 8) (1030, 1)
+        ((1030, 8), (1030, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (801, 8) (801, 1) (229, 8) (229, 1)
+        ((801, 8), (801, 1), (229, 8), (229, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -652,7 +670,7 @@ class Concrete(BaseDataset):
         return df
 
 class CPU(BaseDataset):
-    f'''
+    __doc__ = f'''
     Relative CPU Performance Data, described in terms of its cycle time, 
     memory size, etc. 
 
@@ -692,18 +710,21 @@ class CPU(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (209, 8) (209, 1)
+        ((209, 8), (209, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (158, 8) (158, 1) (51, 8) (51, 1)
+        ((158, 8), (158, 1), (51, 8), (51, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -735,7 +756,7 @@ class CPU(BaseDataset):
         return df
 
 class PowerPlant(BaseDataset):
-    f'''
+    __doc__ = f'''
     The dataset contains 9568 data points collected from a Combined Cycle 
     Power Plant over 6 years (2006-2011), when the power plant was set to 
     work with full load. Features consist of hourly average ambient variables 
@@ -786,18 +807,21 @@ class PowerPlant(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (9568, 4) (9568, 1)
+        ((9568, 4), (9568, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (7615, 4) (7615, 1) (1953, 4) (1953, 1)
+        ((7615, 4), (7615, 1), (1953, 4), (1953, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -831,7 +855,7 @@ class PowerPlant(BaseDataset):
         return df
 
 class FacebookComments(BaseDataset):
-    f'''
+    __doc__ = f'''
     Instances in this dataset contain features extracted from Facebook posts. 
     The task associated with the data is to predict how many comments the 
     post will receive.
@@ -906,18 +930,21 @@ class FacebookComments(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (199030, 54) (199030, 1)
+        ((199030, 54), (199030, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (159288, 54) (159288, 1) (39742, 54) (39742, 1)
+        ((159288, 54), (159288, 1), (39742, 54), (39742, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -961,7 +988,7 @@ class FacebookComments(BaseDataset):
         return df
 
 class FacebookMetrics(BaseDataset):
-    f'''
+    __doc__ = f'''
     The data is related to posts' published during the year of 2014 on the 
     Facebook's page of a renowned cosmetics brand.
 
@@ -1016,23 +1043,26 @@ class FacebookMetrics(BaseDataset):
         Load in the data set:
         >>> dataset = FacebookMetrics()
         >>> dataset.shape
-        (500, 19)
+        (500, 18)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (500, 7) (500, 11)
+        ((500, 7), (500, 11))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (386, 7) (386, 11) (114, 7) (114, 11)
+        ((386, 7), (386, 11), (114, 7), (114, 11))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1076,7 +1106,7 @@ class FacebookMetrics(BaseDataset):
         return df
 
 class FishBioconcentration(BaseDataset):
-    f'''
+    __doc__ = f'''
     This dataset contains manually-curated experimental bioconcentration 
     factor (BCF) for 1058 molecules (continuous values). Each row contains a 
     molecule, identified by a CAS number, a name (if available), and a SMILES 
@@ -1151,18 +1181,21 @@ class FishBioconcentration(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (1054, 128) (1058, 1)
+        ((1054, 128), (1054, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (819, 128) (819, 1) (235, 128) (235, 1)
+        ((819, 128), (819, 1), (235, 128), (235, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1235,7 +1268,7 @@ class FishBioconcentration(BaseDataset):
         return df
 
 class FishToxicity(BaseDataset):
-    f'''
+    __doc__ = f'''
     This dataset was used to develop quantitative regression QSAR models to 
     predict acute aquatic toxicity towards the fish Pimephales promelas 
     (fathead minnow) on a set of 908 chemicals. LC50 data, which is the 
@@ -1275,18 +1308,21 @@ class FishToxicity(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (908, 6) (908, 1)
+        ((908, 6), (908, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (701, 6) (701, 1) (207, 6) (207, 1)
+        ((701, 6), (701, 1), (207, 6), (207, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1315,7 +1351,7 @@ class FishToxicity(BaseDataset):
         return df
 
 class ForestFire(BaseDataset):
-    f''' 
+    __doc__ = f''' 
     This is a difficult regression task, where the aim is to predict the 
     burned area of forest fires, in the northeast region of Portugal, by 
     using meteorological and other data.
@@ -1370,18 +1406,21 @@ class ForestFire(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (517, 12) (517, 1)
+        ((517, 12), (517, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (400, 12) (400, 1) (117, 12) (117, 1)
+        ((400, 12), (400, 1), (117, 12), (117, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1417,7 +1456,7 @@ class ForestFire(BaseDataset):
         return df
 
 class GasTurbine(BaseDataset):
-    f'''
+    __doc__ = f'''
     Data have been generated from a sophisticated simulator of a Gas Turbines 
     (GT), mounted on a Frigate characterized by a COmbined Diesel eLectric 
     And Gas (CODLAG) propulsion plant type.
@@ -1511,18 +1550,21 @@ class GasTurbine(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (11934, 16) (11934, 2)
+        ((11934, 16), (11934, 2))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (9520, 16) (9520, 2) (2414, 16) (2414, 2)
+        ((9520, 16), (9520, 2), (2414, 16), (2414, 2))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1570,7 +1612,7 @@ class GasTurbine(BaseDataset):
         return df
 
 class NewTaipeiHousing(BaseDataset):
-    f'''
+    __doc__ = f'''
     The "real estate valuation" is a regression problem. The market historical
     data set of real estate valuation are collected from Sindian Dist., New 
     Taipei City, Taiwan.
@@ -1608,18 +1650,21 @@ class NewTaipeiHousing(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (414, 6) (414, 1)
+        ((414, 6), (414, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (321, 6) (321, 1) (93, 6) (93, 1)
+        ((321, 6), (321, 1), (93, 6), (93, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1651,7 +1696,7 @@ class NewTaipeiHousing(BaseDataset):
         return df
 
 class Parkinsons(BaseDataset):
-    f'''
+    __doc__ = f'''
     This dataset is composed of a range of biomedical voice measurements from 
     42 people with early-stage Parkinson's disease recruited to a six-month 
     trial of a telemonitoring device for remote symptom progression 
@@ -1728,18 +1773,21 @@ class Parkinsons(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (5875, 20) (5875, 2)
+        ((5875, 20), (5875, 2))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (4668, 20) (4668, 2) (1207, 20) (1207, 2)
+        ((4668, 20), (4668, 2), (1207, 20), (1207, 2))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1770,7 +1818,7 @@ class Parkinsons(BaseDataset):
         return df
 
 class Protein(BaseDataset):
-    f'''
+    __doc__ = f'''
     This is a data set of Physicochemical Properties of Protein Tertiary 
     Structure. The data set is taken from CASP 5-9. There are 45730 decoys 
     and size varying from 0 to 21 armstrong.
@@ -1813,18 +1861,21 @@ class Protein(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (45730, 9) (45730, 1)
+        ((45730, 9), (45730, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (36606, 9) (36606, 1) (9124, 9) (9124, 1)
+        ((36606, 9), (36606, 1), (9124, 9), (9124, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1854,7 +1905,7 @@ class Protein(BaseDataset):
         return df
 
 class Servo(BaseDataset):
-    f'''
+    __doc__ = f'''
     Data was from a simulation of a servo system.
 
     Ross Quinlan:
@@ -1904,18 +1955,21 @@ class Servo(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (167, 4) (167, 1)
+        ((167, 4), (167, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (128, 4) (128, 1) (39, 4) (39, 1)
+        ((128, 4), (128, 1), (39, 4), (39, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -1948,7 +2002,7 @@ class Servo(BaseDataset):
         return df
 
 class SolarFlare(BaseDataset):
-    f'''
+    __doc__ = f'''
     Each class attribute counts the number of solar flares of a certain class 
     that occur in a 24 hour period.
     
@@ -2005,25 +2059,28 @@ class SolarFlare(BaseDataset):
 
     Examples:
         Load in the data set:
-        >>> dataset = Solar()
+        >>> dataset = SolarFlare()
         >>> dataset.shape
         (1066, 13)
 
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (1066, 10) (1066, 3)
+        ((1066, 10), (1066, 3))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (831, 10) (831, 3) (235, 10) (235, 3)
+        ((831, 10), (831, 3), (235, 10), (235, 3))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -2065,7 +2122,7 @@ class SolarFlare(BaseDataset):
         return df
 
 class SpaceShuttle(BaseDataset):
-    f'''
+    __doc__ = f'''
     The motivation for collecting this database was the explosion of the USA 
     Space Shuttle Challenger on 28 January, 1986. An investigation ensued into 
     the reliability of the shuttle's propulsion system. The explosion was 
@@ -2124,18 +2181,21 @@ class SpaceShuttle(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (23, 4) (23, 1)
+        ((23, 4), (23, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (16, 4) (16, 1) (7, 4) (7, 1)
+        ((16, 4), (16, 1), (7, 4), (7, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -2169,7 +2229,7 @@ class SpaceShuttle(BaseDataset):
         return df
 
 class Stocks(BaseDataset):
-    f'''
+    __doc__ = f'''
     There are three disadvantages of weighted scoring stock selection models. 
     First, they cannot identify the relations between weights of stock-picking 
     concepts and performances of portfolios. Second, they cannot systematically
@@ -2249,18 +2309,21 @@ class Stocks(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (252, 12) (252, 6)
+        ((252, 12), (252, 6))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (195, 12) (195, 6) (57, 12) (57, 6)
+        ((195, 12), (195, 6), (57, 12), (57, 6))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -2297,7 +2360,7 @@ class Stocks(BaseDataset):
         return df
 
 class Superconductivity(BaseDataset):
-    f'''
+    __doc__ = f'''
     This dataset contains data on 21,263 superconductors and their relevant 
     features. The goal here is to predict the critical temperature based on 
     the features extracted.
@@ -2402,18 +2465,21 @@ class Superconductivity(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (21263, 81) (21263, 1)
+        ((21263, 81), (21263, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (17018, 81) (17018, 1) (4245, 81) (4245, 1)
+        ((17018, 81), (17018, 1), (4245, 81), (4245, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -2447,7 +2513,7 @@ class Superconductivity(BaseDataset):
         return df
 
 class TehranHousing(BaseDataset):
-    f''' 
+    __doc__ = f''' 
     Data set includes construction cost, sale prices, project variables, and 
     economic variables corresponding to real estate single-family residential 
     apartments in Tehran, Iran.
@@ -2492,18 +2558,21 @@ class TehranHousing(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (371, 107) (371, 2)
+        ((371, 107), (371, 2))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (287, 107) (287, 2) (84, 107) (84, 2)
+        ((287, 107), (287, 2), (84, 107), (84, 2))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
@@ -2534,7 +2603,7 @@ class TehranHousing(BaseDataset):
         return df
 
 class Yacht(BaseDataset):
-    f'''
+    __doc__ = f'''
     Prediction of residuary resistance of sailing yachts at the initial design 
     stage is of a great value for evaluating the ship's performance and for 
     estimating the required propulsive power. Essential inputs include the 
@@ -2578,18 +2647,21 @@ class Yacht(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        (308, 6) (308, 1)
+        ((308, 6), (308, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        (241, 6) (241, 1) (67, 6) (67, 1)
+        ((241, 6), (241, 1), (67, 6), (67, 1))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
+
+        Remember to close the dataset again after use, to close the cache:
+        >>> dataset.close()
     ''' 
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
