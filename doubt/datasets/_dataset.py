@@ -13,6 +13,36 @@ from typing import Optional
 from typing import Iterable
 from typing import Tuple
 
+
+BASE_DATASET_DESCRIPTION = '''
+    Parameters:
+        cache (str or None):
+            The name of the cache. It will be saved to ``cache``.h5 in the
+            current working directory. If None then no cache will be saved.
+            Defaults to '.cache'.
+
+    Attributes:
+        shape (tuple of integers): 
+            Dimensions of the data set
+        columns (list of strings): 
+            List of column names in the data set
+
+    Class attributes:
+        url (string):
+            The url where the raw data files can be downloaded
+        feats (iterable):
+            The column indices of the feature variables
+        trgts (iterable):
+            The column indices of the target variables
+
+    Methods:
+        head(n: int = 5) -> pd.DataFrame: 
+        to_pandas() -> pandas.DataFrame: 
+        close() -> None:
+        split(test_size: float or None = None, 
+              seed: float or None = None) -> Tuple of Numpy arrays
+'''
+
 class BaseDataset(object, metaclass = abc.ABCMeta):
 
     url: str
@@ -71,6 +101,9 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
 
     def __str__(self):
         return str(self._data)
+
+    def __repr__(self):
+        return repr(self._data)
 
     def split(self, test_size: Optional[float] = None, 
               seed: Optional[float] = None) -> Tuple[np.ndarray]:

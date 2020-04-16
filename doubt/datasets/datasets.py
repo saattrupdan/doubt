@@ -5,41 +5,12 @@ being the original descriptions verbatim. Some feature names were constructed
 from their descriptions and were not part of the original data set.
 '''
 
-from ._dataset import BaseDataset
+from ._dataset import BaseDataset, BASE_DATASET_DESCRIPTION
 
 import pandas as pd
 import zipfile
 import io
 import re
-
-BASE_DATASET_DESCRIPTION = '''
-    Parameters:
-        cache (str or None):
-            The name of the cache. It will be saved to ``cache``.h5 in the
-            current working directory. If None then no cache will be saved.
-            Defaults to '.cache'.
-
-    Attributes:
-        shape (tuple of integers): 
-            Dimensions of the data set
-        columns (list of strings): 
-            List of column names in the data set
-
-    Class attributes:
-        url (string):
-            The url where the raw data files can be downloaded
-        feats (iterable):
-            The column indices of the feature variables
-        trgts (iterable):
-            The column indices of the target variables
-
-    Methods:
-        head(n: int = 5) -> pd.DataFrame: 
-        to_pandas() -> pandas.DataFrame: 
-        close() -> None:
-        split(test_size: float or None = None, 
-              seed: float or None = None) -> Tuple of Numpy arrays
-'''
 
 class Airfoil(BaseDataset):
     __doc__ = f'''

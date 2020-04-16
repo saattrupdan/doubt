@@ -1,6 +1,6 @@
 ''' Quantile regression trees '''
 
-from ._estimator import BaseEstimator
+from .._model import BaseEstimator
 from .tree_builder import TreeBuilder
 
 from typing import Optional

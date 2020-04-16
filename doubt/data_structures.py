@@ -31,5 +31,3 @@ class Stack(object):
 
     def peek(self):
         return self.deque[-1]
-
-

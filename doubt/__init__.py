@@ -1,7 +1,7 @@
-from .estimators.tree import QuantileRegressionTree
-from .estimators.forest import QuantileRegressionForest
-from .estimators.linear import QuantileLinearRegression
-from .estimators.nn import QuantileNetwork
+from .models.tree import QuantileRegressionTree
+from .models.forest import QuantileRegressionForest
+from .models.linear import QuantileLinearRegression
+from .models.nn import QuantileNetwork
 
 from .datasets import datasets
 

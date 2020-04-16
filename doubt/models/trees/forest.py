@@ -1,6 +1,6 @@
 ''' Quantile regression forests '''
 
-from ._estimator import BaseEstimator
+from .._model import BaseEstimator
 from .tree import QuantileRegressionTree
 
 from typing import Optional

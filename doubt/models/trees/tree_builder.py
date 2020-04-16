@@ -1,6 +1,6 @@
 ''' Build quantile regression trees. '''
 
-from ..data_structures import Stack, Queue
+from ...data_structures import Stack, Queue
 
 import scipy.optimize as opt
 import numpy as np
