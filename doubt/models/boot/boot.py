@@ -71,9 +71,9 @@ class Boot(object):
             raise RuntimeError('Input not recognised.')
 
     def compute_statistic(
-        statistic: Callable[NumericArray, float], 
+        statistic: Callable[[NumericArray], float], 
         n_boots: int,
-        agg: Callable[NumericArray, float]) -> Union[float, FloatArray]:
+        agg: Callable[[NumericArray], float]) -> Union[float, FloatArray]:
         ''' Compute bootstrapped statistic. '''
 
         if not self.mode == 'data':
@@ -83,8 +83,8 @@ class Boot(object):
 
         raise NotImplementedError
 
-    def predict(self, *args, **kwargs, 
-                q: Optional[FloatArray] = None) -> Union[float, FloatArray]:
+    def predict(self, *args, q: Optional[FloatArray] = None, 
+                **kwargs) -> Union[float, FloatArray]:
         ''' Compute bootstrapped predictions. '''
 
         if not self.mode == 'model':

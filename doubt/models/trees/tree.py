@@ -1,12 +1,12 @@
 ''' Quantile regression trees '''
 
-from .._model import BaseEstimator
+from .._model import BaseModel
 from .tree_builder import TreeBuilder
 
 from typing import Optional
 import numpy as np
 
-class QuantileRegressionTree(BaseEstimator):
+class QuantileRegressionTree(BaseModel):
 
     def __init__(self, min_samples_leaf: int = 5):
         self._tree = None

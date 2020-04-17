@@ -6,7 +6,7 @@ from typing import Sequence, Union
 FloatMatrix = Sequence[Sequence[float]]
 FloatNDArray = Union[Sequence[float], FloatMatrix]
 
-class BaseEstimator(object, metaclass = abc.ABCMeta):
+class BaseModel(object, metaclass = abc.ABCMeta):
     @abc.abstractmethod
     def __init__(self, *args, **kwargs):
         pass

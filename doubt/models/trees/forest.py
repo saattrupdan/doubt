@@ -1,6 +1,6 @@
 ''' Quantile regression forests '''
 
-from .._model import BaseEstimator
+from .._model import BaseModel
 from .tree import QuantileRegressionTree
 
 from typing import Optional
@@ -8,7 +8,7 @@ import numpy as np
 from tqdm.auto import tqdm
 from joblib import Parallel, delayed
 
-class QuantileRegressionForest(BaseEstimator):
+class QuantileRegressionForest(BaseModel):
     def __init__(self, 
         n_estimators: int = 10, 
         min_samples_leaf: int = 5, 
