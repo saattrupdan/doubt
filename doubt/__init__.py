@@ -1,7 +1,9 @@
-from .models.tree import QuantileRegressionTree
-from .models.forest import QuantileRegressionForest
-from .models.linear import QuantileLinearRegression
-from .models.nn import QuantileNetwork
+from .models import QuantileRegressionTree
+from .models import QuantileRegressionForest
+from .models import QuantileLinearRegression
+from .models import TorchDoubt
+from .models import TFDoubt
+from .models import Boot
 
 from .datasets import datasets
 
