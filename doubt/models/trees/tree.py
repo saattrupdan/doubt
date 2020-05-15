@@ -7,7 +7,16 @@ from typing import Optional
 import numpy as np
 
 class QuantileRegressionTree(BaseModel):
+    ''' A decision tree for regression which can output quantiles as well.
 
+    >>> from doubt.datasets import Concrete
+    >>> X, y = Concrete().split()
+    >>> tree = QuantileRegressionTree()
+    >>> tree.fit(X, y).predict(X).shape
+    (1030,)
+    >>> tree.predict(np.ones(8)).round()
+    array([29.])
+    '''
     def __init__(self, min_samples_leaf: int = 5):
         self._tree = None
 

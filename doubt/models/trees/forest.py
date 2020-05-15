@@ -9,14 +9,26 @@ from tqdm.auto import tqdm
 from joblib import Parallel, delayed
 
 class QuantileRegressionForest(BaseModel):
+    ''' A random forest for regression which can output quantiles as well.
+
+    >>> from doubt.datasets import Concrete
+    >>> X, y = Concrete().split()
+    >>> forest = QuantileRegressionForest(random_seed = 42)
+    >>> forest.fit(X, y).predict(X).shape
+    (1030,)
+    >>> forest.predict(np.ones(8)).round()
+    array([8.])
+    '''
     def __init__(self, 
         n_estimators: int = 10, 
         min_samples_leaf: int = 5, 
-        n_jobs: int = -1):
+        n_jobs: int = -1,
+        random_seed: Optional[int] = None):
 
         self.n_estimators = n_estimators
         self.min_samples_leaf = min_samples_leaf
         self.n_jobs = n_jobs
+        self.random_seed = random_seed
 
         self._estimators = n_estimators * [
             QuantileRegressionTree(min_samples_leaf = min_samples_leaf)
@@ -25,6 +37,8 @@ class QuantileRegressionForest(BaseModel):
     def fit(self, X, y):
         ''' Fit decision trees in parallel. '''
         nrows = X.shape[0]
+
+        if self.random_seed is not None: np.random.seed(self.random_seed)
 
         # Get bootstrap resamples of the data set
         bidxs = np.random.choice(nrows, size = (self.n_estimators, nrows), 

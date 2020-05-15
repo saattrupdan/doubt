@@ -9,7 +9,8 @@ setup(
             'data_structures',
             sources = ['./data_structures.pyx'],
             #include_dirs = [np.get_include()]
-        )
+        ),
+        language_level = 3
     ),
     #install_requires = ['numpy']
 )
