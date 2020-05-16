@@ -11,13 +11,20 @@ from joblib import Parallel, delayed
 class QuantileRegressionForest(BaseModel):
     ''' A random forest for regression which can output quantiles as well.
 
-    >>> from doubt.datasets import Concrete
-    >>> X, y = Concrete().split()
-    >>> forest = QuantileRegressionForest(random_seed = 42)
-    >>> forest.fit(X, y).predict(X).shape
-    (1030,)
-    >>> forest.predict(np.ones(8)).round()
-    array([8.])
+    Examples:
+        Fitting and predicting follows scikit-learn syntax:
+        >>> from doubt.datasets import Concrete
+        >>> X, y = Concrete().split()
+        >>> forest = QuantileRegressionForest(random_seed = 42)
+        >>> forest.fit(X, y).predict(X).shape
+        (1030,)
+        >>> forest.predict(np.ones(8))
+        8.08755348
+
+        Instead of only returning the prediction, we can also return a
+        prediction interval:
+        >>> forest.predict(np.ones(8), uncertainty = 0.05)
+        (8.08755348, array([ 6.26733684, 12.63809508]))
     '''
     def __init__(self, 
         n_estimators: int = 10, 
@@ -36,12 +43,12 @@ class QuantileRegressionForest(BaseModel):
 
     def fit(self, X, y):
         ''' Fit decision trees in parallel. '''
-        nrows = X.shape[0]
+        n = X.shape[0]
 
         if self.random_seed is not None: np.random.seed(self.random_seed)
 
         # Get bootstrap resamples of the data set
-        bidxs = np.random.choice(nrows, size = (self.n_estimators, nrows), 
+        bidxs = np.random.choice(n, size = (self.n_estimators, n), 
                                  replace = True)
 
         # Fit trees in parallel on the bootstrapped resamples
@@ -53,31 +60,27 @@ class QuantileRegressionForest(BaseModel):
             )
         return self
 
-    def predict(self, X, uncertainty: Optional[float] = None,
-                quantile: Optional[float] = None):
+    def predict(self, X, uncertainty: Optional[float] = None):
         ''' Perform predictions. '''
 
-        if uncertainty is not None and quantile is not None:
-            raise RuntimeError('Both uncertainty and quantile can not be set')
-
         # Ensure that X is two-dimensional
-        if len(X.shape) == 1: X = np.expand_dims(X, 0)
+        onedim = (len(X.shape) == 1)
+        if onedim: X = np.expand_dims(X, 0)
 
         with Parallel(n_jobs = self.n_jobs, backend = 'threading') as parallel:
 
-            predictions = parallel(delayed(estimator.predict)(X, quantile)
-                                   for estimator in self._estimators)
-
+            preds = parallel(
+                delayed(estimator.predict)(X, uncertainty)
+                for estimator in self._estimators
+            )
             if uncertainty is not None:
-                lower_quantile = (1 - uncertainty) / 2
-                lower = parallel(delayed(estimator.predict)(X, lower_quantile)
-                                 for estimator in self._estimators)
-                upper_quantile = (1 + uncertainty) / 2
-                upper = parallel(delayed(estimator.predict)(X, upper_quantile)
-                                 for estimator in self._estimators)
-
-                return (np.mean(predictions, axis = 0), 
-                        (np.mean(lower, axis = 0),
-                         np.mean(upper, axis = 0)))
-
-        return np.mean(predictions, axis = 0)
+                intervals = np.concatenate([interval for _, interval in preds])
+                intervals = np.mean(intervals, axis = 0)
+                preds = np.concatenate([pred for pred, _ in preds])
+                preds = np.mean(preds, axis = 0)
+                return preds, intervals
+            
+            else:
+                preds = np.mean(preds, axis = 0)
+                if onedim: preds = preds[0]
+                return preds
