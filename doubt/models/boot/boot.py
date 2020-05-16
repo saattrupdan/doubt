@@ -143,7 +143,6 @@ class Boot(object):
 
             val_residuals.append(y_val - preds)
             bootstrap_preds[b] = self.model.predict(X)
-
         bootstrap_preds -= np.mean(bootstrap_preds)
         val_residuals = np.concatenate(val_residuals)
         val_residuals = np.quantile(val_residuals, q = np.arange(0, 1, .01))
