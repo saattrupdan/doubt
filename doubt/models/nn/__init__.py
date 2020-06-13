@@ -1,2 +1,1 @@
-from .torch import TorchDoubt
-from .tf import TFDoubt
+from .nn import TorchDoubt

@@ -45,7 +45,7 @@ class Airfoil(BaseDataset):
         ((1503, 5), (1503, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((1179, 5), (1179, 1), (324, 5), (324, 1))
@@ -157,7 +157,7 @@ class BikeSharingDaily(BaseDataset):
         ((731, 12), (731, 3))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((562, 12), (562, 3), (169, 12), (169, 3))
@@ -278,7 +278,7 @@ class BikeSharingHourly(BaseDataset):
         ((17379, 13), (17379, 3))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((13878, 13), (13878, 3), (3501, 13), (3501, 3))
@@ -413,7 +413,7 @@ class Blog(BaseDataset):
         ((52397, 279), (52397, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((41932, 279), (41932, 1), (10465, 279), (10465, 1))
@@ -522,7 +522,7 @@ class Nanotube(BaseDataset):
         ((10721, 5), (10721, 3))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((8542, 5), (8542, 3), (2179, 5), (2179, 3))
@@ -603,7 +603,7 @@ class Concrete(BaseDataset):
         ((1030, 8), (1030, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((801, 8), (801, 1), (229, 8), (229, 1))
@@ -684,7 +684,7 @@ class CPU(BaseDataset):
         ((209, 8), (209, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((158, 8), (158, 1), (51, 8), (51, 1))
@@ -781,7 +781,7 @@ class PowerPlant(BaseDataset):
         ((9568, 4), (9568, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((7615, 4), (7615, 1), (1953, 4), (1953, 1))
@@ -904,7 +904,7 @@ class FacebookComments(BaseDataset):
         ((199030, 54), (199030, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((159288, 54), (159288, 1), (39742, 54), (39742, 1))
@@ -1022,7 +1022,7 @@ class FacebookMetrics(BaseDataset):
         ((500, 7), (500, 11))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((386, 7), (386, 11), (114, 7), (114, 11))
@@ -1155,7 +1155,7 @@ class FishBioconcentration(BaseDataset):
         ((1054, 128), (1054, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((819, 128), (819, 1), (235, 128), (235, 1))
@@ -1282,7 +1282,7 @@ class FishToxicity(BaseDataset):
         ((908, 6), (908, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((701, 6), (701, 1), (207, 6), (207, 1))
@@ -1380,7 +1380,7 @@ class ForestFire(BaseDataset):
         ((517, 12), (517, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((400, 12), (400, 1), (117, 12), (117, 1))
@@ -1524,7 +1524,7 @@ class GasTurbine(BaseDataset):
         ((11934, 16), (11934, 2))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((9520, 16), (9520, 2), (2414, 16), (2414, 2))
@@ -1624,7 +1624,7 @@ class NewTaipeiHousing(BaseDataset):
         ((414, 6), (414, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((321, 6), (321, 1), (93, 6), (93, 1))
@@ -1747,7 +1747,7 @@ class Parkinsons(BaseDataset):
         ((5875, 20), (5875, 2))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((4668, 20), (4668, 2), (1207, 20), (1207, 2))
@@ -1835,7 +1835,7 @@ class Protein(BaseDataset):
         ((45730, 9), (45730, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((36606, 9), (36606, 1), (9124, 9), (9124, 1))
@@ -1929,7 +1929,7 @@ class Servo(BaseDataset):
         ((167, 4), (167, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((128, 4), (128, 1), (39, 4), (39, 1))
@@ -2040,7 +2040,7 @@ class SolarFlare(BaseDataset):
         ((1066, 10), (1066, 3))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((831, 10), (831, 3), (235, 10), (235, 3))
@@ -2155,7 +2155,7 @@ class SpaceShuttle(BaseDataset):
         ((23, 4), (23, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((16, 4), (16, 1), (7, 4), (7, 1))
@@ -2283,7 +2283,7 @@ class Stocks(BaseDataset):
         ((252, 12), (252, 6))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((195, 12), (195, 6), (57, 12), (57, 6))
@@ -2439,7 +2439,7 @@ class Superconductivity(BaseDataset):
         ((21263, 81), (21263, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((17018, 81), (17018, 1), (4245, 81), (4245, 1))
@@ -2532,7 +2532,7 @@ class TehranHousing(BaseDataset):
         ((371, 107), (371, 2))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((287, 107), (287, 2), (84, 107), (84, 2))
@@ -2621,7 +2621,7 @@ class Yacht(BaseDataset):
         ((308, 6), (308, 1))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, seed = 42)
+        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((241, 6), (241, 1), (67, 6), (67, 1))
@@ -2667,7 +2667,7 @@ if __name__ == '__main__':
     X, y = dataset.split()
     print(X.shape, y.shape)
 
-    train_test_split = dataset.split(test_size = 0.2, seed = 42)
+    train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
     X_train, y_train, X_test, y_test = train_test_split
     print(X_train.shape, y_train.shape, X_test.shape, y_test.shape)
 

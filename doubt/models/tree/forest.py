@@ -5,7 +5,6 @@ from .tree import QuantileRegressionTree
 
 from typing import Optional
 import numpy as np
-from tqdm.auto import tqdm
 from joblib import Parallel, delayed
 
 class QuantileRegressionForest(BaseModel):
@@ -14,31 +13,57 @@ class QuantileRegressionForest(BaseModel):
     Examples:
         Fitting and predicting follows scikit-learn syntax:
         >>> from doubt.datasets import Concrete
-        >>> X, y = Concrete().split()
+        >>> X, y = Concrete().split(random_seed = 42)
         >>> forest = QuantileRegressionForest(random_seed = 42)
         >>> forest.fit(X, y).predict(X).shape
         (1030,)
         >>> forest.predict(np.ones(8))
-        8.08755348
+        13.927484147600001
 
         Instead of only returning the prediction, we can also return a
         prediction interval:
         >>> forest.predict(np.ones(8), uncertainty = 0.05)
-        (8.08755348, array([ 6.26733684, 12.63809508]))
+        (13.927484147600001, array([13.92748425, 13.92748425]))
+        
     '''
     def __init__(self, 
         n_estimators: int = 10, 
-        min_samples_leaf: int = 5, 
+        criterion = "mse",
+        splitter = "best",
+        max_depth = None,
+        min_samples_split = 2,
+        min_samples_leaf = 1,
+        min_weight_fraction_leaf = 0.,
+        max_features = None,
+        max_leaf_nodes = None,
         n_jobs: int = -1,
         random_seed: Optional[int] = None):
 
         self.n_estimators = n_estimators
         self.min_samples_leaf = min_samples_leaf
+        self.criterion = criterion
+        self.splitter = splitter
+        self.max_depth = max_depth
+        self.min_samples_split = min_samples_split
+        self.min_samples_leaf = min_samples_leaf
+        self.min_weight_fraction_leaf = min_weight_fraction_leaf
+        self.max_features = max_features
+        self.max_leaf_nodes = max_leaf_nodes
         self.n_jobs = n_jobs
         self.random_seed = random_seed
 
         self._estimators = n_estimators * [
-            QuantileRegressionTree(min_samples_leaf = min_samples_leaf)
+            QuantileRegressionTree(
+                criterion = criterion,
+                splitter = splitter,
+                max_depth = max_depth,
+                min_samples_split = min_samples_split,
+                min_samples_leaf = min_samples_leaf,
+                min_weight_fraction_leaf = min_weight_fraction_leaf,
+                max_features = max_features,
+                max_leaf_nodes = max_leaf_nodes,
+                random_seed = random_seed
+            )
         ]
 
     def fit(self, X, y):
@@ -52,11 +77,10 @@ class QuantileRegressionForest(BaseModel):
                                  replace = True)
 
         # Fit trees in parallel on the bootstrapped resamples
-        pbar = tqdm(self._estimators, desc = 'Growing trees')
-        with Parallel(n_jobs = self.n_jobs, backend = 'threading') as parallel:
+        with Parallel(n_jobs = self.n_jobs) as parallel:
             self._estimators = parallel(
                 delayed(estimator.fit)(X[bidxs[b, :], :], y[bidxs[b, :]])
-                for b, estimator in enumerate(pbar)
+                for b, estimator in enumerate(self._estimators)
             )
         return self
 
@@ -67,7 +91,7 @@ class QuantileRegressionForest(BaseModel):
         onedim = (len(X.shape) == 1)
         if onedim: X = np.expand_dims(X, 0)
 
-        with Parallel(n_jobs = self.n_jobs, backend = 'threading') as parallel:
+        with Parallel(n_jobs = self.n_jobs) as parallel:
 
             preds = parallel(
                 delayed(estimator.predict)(X, uncertainty)

@@ -40,7 +40,7 @@ BASE_DATASET_DESCRIPTION = '''
         to_pandas() -> pandas.DataFrame: 
         close() -> None:
         split(test_size: float or None = None, 
-              seed: float or None = None) -> Tuple of Numpy arrays
+              random_seed: float or None = None) -> Tuple of Numpy arrays
 '''
 
 class BaseDataset(object, metaclass = abc.ABCMeta):
@@ -106,7 +106,7 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
         return repr(self._data)
 
     def split(self, test_size: Optional[float] = None, 
-              seed: Optional[float] = None) -> Tuple[np.ndarray]:
+              random_seed: Optional[float] = None) -> Tuple[np.ndarray]:
         ''' 
         Split dataset into features and targets and optionally also train/test.
 
@@ -115,7 +115,7 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
                 The fraction of the dataset that will constitute the test
                 set. If None then no train/test split will happen. Defaults
                 to None.
-            seed (float or None):
+            random_seed (float or None):
                 The random seed used for the train/test split. If None then
                 a random number will be chosen. Defaults to None.
 
@@ -129,7 +129,7 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
         trgts = type(self).trgts
 
         if test_size is not None:
-            if seed is not None: np.random.seed(seed)
+            if random_seed is not None: np.random.seed(random_seed)
             test_idxs = np.random.random(size = (nrows,)) < test_size
             train_idxs = ~test_idxs
 
