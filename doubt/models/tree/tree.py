@@ -1,5 +1,7 @@
 import numpy as np
 
+# TODO: Change docstrings to Google style, add tests
+
 from sklearn.tree import BaseDecisionTree
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.utils import check_array

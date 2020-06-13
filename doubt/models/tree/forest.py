@@ -24,7 +24,6 @@ class QuantileRegressionForest(BaseModel):
         prediction interval:
         >>> forest.predict(np.ones(8), uncertainty = 0.05)
         (13.927484147600001, array([13.92748425, 13.92748425]))
-        
     '''
     def __init__(self, 
         n_estimators: int = 10, 

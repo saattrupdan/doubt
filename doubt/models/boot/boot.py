@@ -1,5 +1,7 @@
 ''' Bootstrap wrapper for datasets and models '''
 
+#TODO: Add documentation to methods, and sources for the bootstrap methods
+
 from typing import Optional
 from typing import Union
 from typing import Sequence

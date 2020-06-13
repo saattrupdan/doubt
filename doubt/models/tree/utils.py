@@ -1,5 +1,7 @@
 import numpy as np
 
+# TODO: Change docstrings to Google format
+
 def weighted_percentile(a, q, weights = None, sorter = None):
     """
     Returns the weighted percentile of a at q given weights.
