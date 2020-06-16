@@ -1,7 +1,5 @@
 ''' Linear models '''
 
-# TODO: Add documentation
-
 from .._model import BaseModel
 
 from sklearn.linear_model import LinearRegression
@@ -16,6 +14,21 @@ FloatArray = Sequence[float]
 class QuantileLinearRegression(BaseModel):
     ''' Quantile linear regression model.
 
+    Args:
+        uncertainty (float):
+            The uncertainty in the prediction intervals. Must be between 0
+            and 1. Defaults to 0.05.
+        max_iter (int):
+            The maximal number of iterations to train the model for. Defaults
+            to 10,000.
+        n_jobs (int):
+            The number of CPU cores to run in parallel when training. If set
+            to -1 then all CPU cores will be used. Defaults to -1.
+
+    Methods:
+        fit(X, y) -> self
+        predict(X) -> tuple
+
     Examples:
         Fitting and predicting follows scikit-learn syntax:
         >>> from doubt.datasets import Concrete
@@ -26,7 +39,7 @@ class QuantileLinearRegression(BaseModel):
         >>> model.predict([500, 0, 0, 100, 2, 1000, 500, 20])
         (52.672378992388026, array([ 30.41893262, 106.94239059]))
     '''
-    def __init__(self, uncertainty: 0.05, max_iter: int = 10000,
+    def __init__(self, uncertainty: float = 0.05, max_iter: int = 10000,
                  n_jobs: int = -1):
         self.uncertainty = uncertainty
         self.max_iter = max_iter
@@ -35,6 +48,14 @@ class QuantileLinearRegression(BaseModel):
         self.q_slope: Optional[FloatArray] = None
 
     def fit(self, X, y):
+        ''' Fit the model.
+
+        Args:
+            X (float array):
+                The feature matrix.
+            y (float array):
+                The target matrix.
+        '''
         self.linreg.fit(X, y)
 
         n = X.shape[0]
@@ -54,6 +75,18 @@ class QuantileLinearRegression(BaseModel):
         return self
 
     def predict(self, X):
+        ''' Compute model predictions.
+
+        Args:
+            X (float array):
+                The array containing the data set, either of shape (n,) or
+                (n, f), with n being the number of samples and f being the
+                number of features.
+
+        Returns:
+            pair of float arrays:
+                The bootstrapped predictions and the confidence intervals
+        '''
         X = np.asarray(X)
         onedim = (len(X.shape) == 1)
         if onedim: X = np.expand_dims(X, 0)
