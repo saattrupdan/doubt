@@ -1,9 +1,8 @@
 ''' Bootstrap wrapper for datasets and models '''
 
-#TODO: Add documentation to methods, and sources for the bootstrap methods
-
 from typing import Optional
 from typing import Union
+from typing import Tuple
 from typing import Sequence
 from typing import Callable
 
@@ -18,22 +17,28 @@ class Boot(object):
     Datasets can be any sequence of numeric input, from which bootstrapped
     statistics can be calculated, with confidence intervals included.
 
-    The models can be any model with a `predict` method, such as all 
-    the models in `scikit-learn`, and the bootstrapped model can then
-    produce predictions with prediction intervals.
+    The models can be any model that is either callable or equipped with 
+    a `predict` method, such as all the models in `scikit-learn`, `pytorch`
+    and `tensorflow`, and the bootstrapped model can then produce predictions 
+    with prediction intervals.
 
-    Note:
-        For PyTorch and TensorFlow models it is recommended to use `TorchBoot`
-        and `TFBoot` instead, to have full integration with these frameworks.
+    The bootstrapped confidence intervals are computed using the .632+ estimate
+    from [1], with the caveat that the no-information error rate that is used
+    here is an approximation, to avoid n^2 running time. The bootstrapped 
+    prediction intervals are computed using the method from [2].
 
     Args:
-        input (array-like or model):
+        input (float array or model):
             Either a dataset to calculate bootstrapped statistics on, or an
             model for which bootstrapped predictions will be computed.
+        random_seed (float or None):
+            The random seed used for bootstrapping. If set to None then no
+            seed will be set. Defaults to None.
 
     Methods:
         compute_statistic(statistic, n_boots, agg) -> float or array of floats
-        predict(array, q) -> float or array of floats
+        predict(X, n_boots, uncertainty) -> float or array of floats
+        fit(X, y) -> self
         
     Examples:
         Compute the bootstrap distribution of the mean, with a 95% confidence
@@ -57,17 +62,23 @@ class Boot(object):
         >>> linreg.predict([10, 30, 1000, 50])
         (array([481.92031021]), array([473.43314309, 490.0313962 ]))
 
+    Sources:
+        [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements 
+             of statistical learning (Vol. 1, No. 10). New York: Springer 
+             series in statistics.
+        [2]: Kumar, S., & Srivistava, A. N. (2012). Bootstrap prediction 
+             intervals in non-parametric regression with applications to 
+             anomaly detection.
     '''
     def __init__(self, input, random_seed: Optional[float] = None):
         self.random_seed = random_seed
-        fn = getattr(input, 'predict', None)
-        data = getattr(input, '__getitem__', None)
 
-        if fn is not None and callable(fn):
+        if callable(input) or getattr(input, 'predict', None) is not None:
             self.mode = 'model'
-            self.model = input
+            self.model_predict = input if callable(input) else input.predict
+            self.model_fit = input.fit
 
-        elif data is not None:
+        elif getattr(input, '__getitem__', None) is not None:
             self.X_train = None
             self.y_train = None
             self.mode = 'data'
@@ -80,8 +91,28 @@ class Boot(object):
         statistic: Callable[[NumericArray], float], 
         n_boots: Optional[int] = None,
         uncertainty: float = .05,
-        return_all: bool = False) -> Union[float, FloatArray]:
-        ''' Compute bootstrapped statistic. '''
+        return_all: bool = False) -> Tuple[float, FloatArray]:
+        ''' Compute bootstrapped statistic. 
+        
+        Args:
+            statistic (numeric array -> float):
+                The statistic to be computed on bootstrapped samples.
+            n_boots (int or None):
+                The number of resamples to bootstrap. If None then it is set
+                to the square root of the data set. Defaults to None
+            uncertainty (float):
+                The uncertainty used to compute the confidence interval
+                of the bootstrapped statistic. Not used if `return_all` is
+                set to True. Defaults to 0.05.
+            return_all (bool):
+                Whether all bootstrapped statistics should be returned instead
+                of the confidence interval. Defaults to False.
+
+        Returns:
+            pair of a float and an array of floats: 
+                The bootstrapped statistic and either the confidence interval
+                or all of the bootstrapped statistics
+        '''
 
         if not self.mode == 'data':
             raise RuntimeError('This Boot is not set up for computing '\
@@ -109,8 +140,26 @@ class Boot(object):
 
     def predict(self, X, 
         n_boots: Optional[int] = None,
-        uncertainty: float = .05) -> Union[float, FloatArray]:
-        ''' Compute bootstrapped predictions. '''
+        uncertainty: float = .05) -> Tuple[float, FloatArray]:
+        ''' Compute bootstrapped predictions. 
+        
+        Args:
+            X (float array):
+                The array containing the data set, either of shape (n,)
+                or (n, f), with n being the number of samples and f being
+                the number of features.
+            n_boots (int or None):
+                The number of resamples to bootstrap. If None then it is set
+                to the square root of the data set. Defaults to None
+            uncertainty (float):
+                The uncertainty used to compute the confidence interval
+                of the bootstrapped statistic. Not used if `return_all` is
+                set to True. Defaults to 0.05.
+
+        Returns:
+            pair of a float and an array of floats: 
+                The bootstrapped predictions and the confidence intervals
+        '''
 
         if not self.mode == 'model':
             raise RuntimeError('This Boot is not set up for predictions. '\
@@ -121,8 +170,8 @@ class Boot(object):
         X = np.asarray(X)
         n = self.X_train.shape[0]
 
-        twodim = (len(X.shape) == 1)
-        if twodim: X = np.expand_dims(X, 0)
+        onedim = (len(X.shape) == 1)
+        if onedim: X = np.expand_dims(X, 0)
 
         # The authors choose the number of bootstrap samples as the square 
         # root of the number of samples
@@ -137,14 +186,14 @@ class Boot(object):
 
             X_train = self.X_train[train_idxs, :]
             y_train = self.y_train[train_idxs]
-            self.model.fit(X_train, y_train)
+            self.model_fit(X_train, y_train)
 
             X_val = self.X_train[val_idxs, :]
             y_val = self.y_train[val_idxs]
-            preds = self.model.predict(X_val)
+            preds = self.model_predict(X_val)
 
             val_residuals.append(y_val - preds)
-            bootstrap_preds[b] = self.model.predict(X)
+            bootstrap_preds[b] = self.model_predict(X)
         bootstrap_preds -= np.mean(bootstrap_preds)
         val_residuals = np.concatenate(val_residuals)
         val_residuals = np.quantile(val_residuals, q = np.arange(0, 1, .01))
@@ -159,21 +208,33 @@ class Boot(object):
         C = np.array([m + o for m in bootstrap_preds for o in residuals])
         quantiles = np.quantile(C, q = [uncertainty / 2, 1 - uncertainty / 2])
 
-        preds = self.model.predict(X)
+        preds = self.model_predict(X)
 
-        if twodim:
+        if onedim:
             return preds[0], (preds + quantiles)[0]
         else:
             return preds, preds + quantiles
 
     def fit(self, X, y):
+        ''' Fits the model to the data.
+
+        Args:
+            X (float array):
+                The feature matrix.
+            y (float array):
+                The target matrix.
+        '''
+        if not self.mode == 'model':
+            raise RuntimeError('This Boot is not set up for predictions. '\
+                               'Initialise with a model instead.')
+
         X = np.asarray(X)
         y = np.asarray(y)
         self.X_train = X
         self.y_train = y
 
-        self.model.fit(X, y)
-        preds = self.model.predict(X)
+        self.model_fit(X, y)
+        preds = self.model_predict(X)
         self.train_residuals = np.quantile(y - preds, q = np.arange(0, 1, .01))
 
         permuted = np.random.permutation(y) - np.random.permutation(preds)
