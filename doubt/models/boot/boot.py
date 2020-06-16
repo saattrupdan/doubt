@@ -36,8 +36,8 @@ class Boot(object):
             seed will be set. Defaults to None.
 
     Methods:
-        compute_statistic(statistic, n_boots, agg) -> float or array of floats
-        predict(X, n_boots, uncertainty) -> float or array of floats
+        compute_statistic(statistic, n_boots, agg) -> tuple
+        predict(X, n_boots, uncertainty) -> tuple
         fit(X, y) -> self
         
     Examples:
@@ -157,7 +157,7 @@ class Boot(object):
                 set to True. Defaults to 0.05.
 
         Returns:
-            pair of a float and an array of floats: 
+            pair of float arrays:
                 The bootstrapped predictions and the confidence intervals
         '''
 
