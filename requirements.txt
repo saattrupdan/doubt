@@ -45,3 +45,4 @@ tqdm==4.46.1
 urllib3==1.25.9
 wcwidth==0.2.4
 Werkzeug==1.0.1
+xlrd==1.2.0
