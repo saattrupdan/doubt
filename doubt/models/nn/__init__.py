@@ -1,1 +1,1 @@
-from .nn import TorchDoubt
+from .nn import QuantileNeuralNetwork

@@ -5,4 +5,4 @@ from .linear import QuantileLinearRegression
 from .tree import QuantileRegressionTree
 from .tree import QuantileRegressionForest
 
-from .nn import TorchDoubt
+from .nn import QuantileNeuralNetwork
