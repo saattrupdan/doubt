@@ -6,3 +6,5 @@
 **.cache.h5
 **.html
 test.py
+**/checkpoints/*
+**/lightning_logs/*
