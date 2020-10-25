@@ -34,8 +34,9 @@ def weighted_percentile(a, q, weights = None, sorter = None):
     """
     if weights is None:
         weights = np.ones_like(a)
+
     if q > 1 or q < 0:
-        raise ValueError(f'q should be in-between 0 and 1, got {q}')
+        q *= 100
 
     a = np.asarray(a, dtype = np.float32)
     weights = np.asarray(weights, dtype = np.float32)
