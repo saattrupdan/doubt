@@ -12,7 +12,7 @@ from .utils import weighted_percentile
 class BaseTreeQuantileRegressor(BaseDecisionTree):
 
     def predict(self, X, uncertainty = None, check_input=False):
-        """
+        '''
         Predict regression value for X.
         Parameters
         ----------
@@ -30,7 +30,7 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
         y : array of shape = [n_samples]
             If quantile is set to None, then return E(Y | X). Else return
             y such that F(Y=y | x) = quantile.
-        """
+        '''
         # apply method requires X to be of dtype np.float32
         X = check_array(X, dtype=np.float32, accept_sparse="csc")
         preds = super(BaseTreeQuantileRegressor, self)\
@@ -43,6 +43,7 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
 
             X_leaves = self.apply(X)
             unique_leaves = np.unique(X_leaves)
+
             for leaf in unique_leaves:
                 intervals[X_leaves == leaf, 0] = weighted_percentile(
                     self.y_train_[self.y_train_leaves_ == leaf], lower)
