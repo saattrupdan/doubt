@@ -13,20 +13,22 @@ class QuantileRegressionForest(BaseModel):
     Examples:
         Fitting and predicting follows scikit-learn syntax:
         >>> from doubt.datasets import Concrete
-        >>> X, y = Concrete().split(random_seed = 42)
+        >>> X, y = Concrete().split()
         >>> forest = QuantileRegressionForest(random_seed = 42)
         >>> forest.fit(X, y).predict(X).shape
         (1030,)
-        >>> forest.predict(np.ones(8))
-        13.927484147600001
+        >>> preds = forest.predict(np.ones(8))
+        >>> 12.50 < preds and preds < 13.50
+        True
 
         Instead of only returning the prediction, we can also return a
         prediction interval:
-        >>> forest.predict(np.ones(8), uncertainty = 0.05)
-        (13.927484147600001, array([13.92748425, 13.92748425]))
+        >>> preds, interval = forest.predict(np.ones(8), uncertainty = 0.05)
+        >>> interval[0] < preds and preds < interval[1]
+        True
     '''
     def __init__(self, 
-        n_estimators: int = 10, 
+        n_estimators: int = 100, 
         criterion = "mse",
         splitter = "best",
         max_depth = None,
