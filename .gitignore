@@ -1,11 +1,16 @@
-**/.env/*
+# Virtual environment
 **/.venv/*
+
+# VIm swap files
+**/*.swp
+
+# Python compiled files
+**/*.pyc
+
+# Caches and logs
 **/.pytest_cache/*
 **/__pycache__/*
 **/.mypy_cache/*
-**.swp
 **.cache.h5
-**.html
-test.py
 **/checkpoints/*
 **/lightning_logs/*
