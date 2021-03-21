@@ -1,17 +1,14 @@
-''' Base class for data sets '''
+'''Base class for data sets'''
 
 from pathlib import Path
 import warnings
 import requests
 import abc
 import re
+from typing import Optional, Iterable, Tuple
 
 import numpy as np
 import pandas as pd
-
-from typing import Optional
-from typing import Iterable
-from typing import Tuple
 
 
 BASE_DATASET_DESCRIPTION = '''
@@ -43,7 +40,8 @@ BASE_DATASET_DESCRIPTION = '''
               random_seed: float or None = None) -> Tuple of Numpy arrays
 '''
 
-class BaseDataset(object, metaclass = abc.ABCMeta):
+
+class BaseDataset(object, metaclass=abc.ABCMeta):
 
     url: str
     feats: Iterable
@@ -75,19 +73,19 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
         except KeyError:
             with warnings.catch_warnings():
                 warnings.simplefilter('ignore')
-                response = requests.get(self.url, verify = False)
+                response = requests.get(self.url, verify=False)
             data = self._prep_data(response.content)
             if self._cache != {}:
                 data.to_hdf(self._cache, name)
         return data
 
-    def to_pandas(self):
+    def to_pandas(self) -> pd.DataFrame:
         return self._data
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self._data)
 
-    def head(self, n: int = 5):
+    def head(self, n: int = 5) -> pd.DataFrame:
         return self._data.head(n)
 
     def close(self):
@@ -96,16 +94,17 @@ class BaseDataset(object, metaclass = abc.ABCMeta):
         del self._data
         del self
 
-    def __exit__(self):
+    def __exit__(self, exc_type: str, exc_value: str, exc_traceback: str):
         self.close()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self._data)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return repr(self._data)
 
-    def split(self, test_size: Optional[float] = None, 
+    def split(self, 
+              test_size: Optional[float] = None, 
               random_seed: Optional[float] = None) -> Tuple[np.ndarray]:
         ''' 
         Split dataset into features and targets and optionally also train/test.
