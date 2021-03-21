@@ -36,8 +36,9 @@ class QuantileLinearRegression(BaseModel):
         >>> model = QuantileLinearRegression(uncertainty = 0.05)
         >>> model.fit(X, y).predict(X)[0].shape
         (1030,)
-        >>> model.predict([500, 0, 0, 100, 2, 1000, 500, 20])
-        (52.672378992388026, array([ 30.41893262, 106.94239059]))
+        >>> pred, (low, high) = model.predict([500, 0, 0, 100, 2, 1000, 500, 20])
+        >>> 30 < low < 50 < pred < 55 < high
+        True
     '''
     def __init__(self, uncertainty: float = 0.05, max_iter: int = 10000,
                  n_jobs: int = -1):
