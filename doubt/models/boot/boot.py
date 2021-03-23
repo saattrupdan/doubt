@@ -1,18 +1,15 @@
-''' Bootstrap wrapper for datasets and models '''
+''' Bootstrap wrapper for datasets and models'''
 
-from typing import Optional
-from typing import Union
-from typing import Tuple
-from typing import Sequence
-from typing import Callable
-
+from typing import Optional, Union, Tuple, Sequence, Callable
 import numpy as np
+from types import MethodType
 
 FloatArray = Sequence[float]
 NumericArray = Sequence[Union[float, int]]
 
-class Boot(object):
-    ''' Bootstrap wrapper for datasets and models.
+
+class Boot:
+    '''Bootstrap wrapper for datasets and models.
 
     Datasets can be any sequence of numeric input, from which bootstrapped
     statistics can be calculated, with confidence intervals included.
@@ -70,174 +67,162 @@ class Boot(object):
              intervals in non-parametric regression with applications to 
              anomaly detection.
     '''
-    def __init__(self, input, random_seed: Optional[float] = None):
+    def __init__(self, input: object, random_seed: Optional[float] = None):
         self.random_seed = random_seed
 
-        if callable(input) or getattr(input, 'predict', None) is not None:
+        # Input is a model
+        if callable(input) or hasattr(input, 'predict'):
             self.mode = 'model'
-            self.model_predict = input if callable(input) else input.predict
             self.model_fit = input.fit
+            self.model_predict = input if callable(input) else input.predict
+            self.fit = MethodType(fit, self)
+            self.predict = MethodType(predict, self)
 
-        elif getattr(input, '__getitem__', None) is not None:
-            self.X_train = None
-            self.y_train = None
-            self.mode = 'data'
+        # Input is a dataset
+        elif hasattr(input, '__getitem__'):
             self.data = np.asarray(input)
+            self.compute_statistic = MethodType(compute_statistic, self)
 
         else:
-            raise RuntimeError('Input not recognised.')
+            raise TypeError('Input not recognised.')
 
-    def compute_statistic(self,
-        statistic: Callable[[NumericArray], float], 
-        n_boots: Optional[int] = None,
-        uncertainty: float = .05,
-        return_all: bool = False) -> Tuple[float, FloatArray]:
-        ''' Compute bootstrapped statistic. 
-        
-        Args:
-            statistic (numeric array -> float):
-                The statistic to be computed on bootstrapped samples.
-            n_boots (int or None):
-                The number of resamples to bootstrap. If None then it is set
-                to the square root of the data set. Defaults to None
-            uncertainty (float):
-                The uncertainty used to compute the confidence interval
-                of the bootstrapped statistic. Not used if `return_all` is
-                set to True. Defaults to 0.05.
-            return_all (bool):
-                Whether all bootstrapped statistics should be returned instead
-                of the confidence interval. Defaults to False.
+def compute_statistic(self,
+    statistic: Callable[[NumericArray], float], 
+    n_boots: Optional[int] = None,
+    uncertainty: float = .05,
+    return_all: bool = False) -> Tuple[float, FloatArray]:
+    '''Compute bootstrapped statistic. 
+    
+    Args:
+        statistic (numeric array -> float):
+            The statistic to be computed on bootstrapped samples.
+        n_boots (int or None):
+            The number of resamples to bootstrap. If None then it is set
+            to the square root of the data set. Defaults to None
+        uncertainty (float):
+            The uncertainty used to compute the confidence interval
+            of the bootstrapped statistic. Not used if `return_all` is
+            set to True. Defaults to 0.05.
+        return_all (bool):
+            Whether all bootstrapped statistics should be returned instead
+            of the confidence interval. Defaults to False.
 
-        Returns:
-            pair of a float and an array of floats: 
-                The bootstrapped statistic and either the confidence interval
-                or all of the bootstrapped statistics
-        '''
+    Returns:
+        pair of a float and an array of floats: 
+            The bootstrapped statistic and either the confidence interval
+            or all of the bootstrapped statistics
+    '''
+    if self.random_seed is not None: np.random.seed(self.random_seed)
 
-        if not self.mode == 'data':
-            raise RuntimeError('This Boot is not set up for computing '\
-                               'statistics on data. Initialise with a '\
-                               'dataset instead.')
-        
-        if self.random_seed is not None: np.random.seed(self.random_seed)
+    n = self.data.shape[0]
 
-        n = self.data.shape[0]
+    if n_boots is None: n_boots = np.sqrt(n).astype(int)
 
-        if n_boots is None: n_boots = np.sqrt(n).astype(int)
+    statistics = np.empty((n_boots,), dtype = float)
+    for b in range(n_boots):
+        boot_idxs = np.random.choice(range(n), size = n, replace = True)
+        statistics[b] = statistic(self.data[boot_idxs])
 
-        statistics = np.empty((n_boots,), dtype = float)
-        for b in range(n_boots):
-            boot_idxs = np.random.choice(range(n), size = n, replace = True)
-            statistics[b] = statistic(self.data[boot_idxs])
+    if return_all:
+        return statistic(self.data), statistics
+    else:
+        lower = uncertainty / 2
+        upper = 1. - lower
+        interval = np.quantile(statistics, q = (lower, upper))
+        return statistic(self.data), interval
 
-        if return_all:
-            return statistic(self.data), statistics
-        else:
-            lower = uncertainty / 2
-            upper = 1. - lower
-            interval = np.quantile(statistics, q = (lower, upper))
-            return statistic(self.data), interval
+def predict(self, 
+    X: FloatArray,
+    n_boots: Optional[int] = None,
+    uncertainty: float = .05) -> Tuple[float, FloatArray]:
+    ''' Compute bootstrapped predictions. 
+    
+    Args:
+        X (float array):
+            The array containing the data set, either of shape (n,)
+            or (n, f), with n being the number of samples and f being
+            the number of features.
+        n_boots (int or None):
+            The number of resamples to bootstrap. If None then it is set
+            to the square root of the data set. Defaults to None
+        uncertainty (float):
+            The uncertainty used to compute the confidence interval
+            of the bootstrapped statistic. Not used if `return_all` is
+            set to True. Defaults to 0.05.
 
-    def predict(self, X, 
-        n_boots: Optional[int] = None,
-        uncertainty: float = .05) -> Tuple[float, FloatArray]:
-        ''' Compute bootstrapped predictions. 
-        
-        Args:
-            X (float array):
-                The array containing the data set, either of shape (n,)
-                or (n, f), with n being the number of samples and f being
-                the number of features.
-            n_boots (int or None):
-                The number of resamples to bootstrap. If None then it is set
-                to the square root of the data set. Defaults to None
-            uncertainty (float):
-                The uncertainty used to compute the confidence interval
-                of the bootstrapped statistic. Not used if `return_all` is
-                set to True. Defaults to 0.05.
+    Returns:
+        pair of float arrays:
+            The bootstrapped predictions and the confidence intervals
+    '''
+    if self.random_seed is not None: np.random.seed(self.random_seed)
 
-        Returns:
-            pair of float arrays:
-                The bootstrapped predictions and the confidence intervals
-        '''
+    X = np.asarray(X)
+    n = self.X_train.shape[0]
 
-        if not self.mode == 'model':
-            raise RuntimeError('This Boot is not set up for predictions. '\
-                               'Initialise with a model instead.')
+    onedim = (len(X.shape) == 1)
+    if onedim: X = np.expand_dims(X, 0)
 
-        if self.random_seed is not None: np.random.seed(self.random_seed)
+    # The authors choose the number of bootstrap samples as the square 
+    # root of the number of samples
+    if n_boots is None: n_boots = np.sqrt(n).astype(int)
 
-        X = np.asarray(X)
-        n = self.X_train.shape[0]
+    # Compute the m_i's and the validation residuals
+    bootstrap_preds = np.empty(n_boots)
+    val_residuals = []
+    for b in range(n_boots):
+        train_idxs = np.random.choice(range(n), size = n, replace = True)
+        val_idxs = [idx for idx in range(n) if idx not in train_idxs]
 
-        onedim = (len(X.shape) == 1)
-        if onedim: X = np.expand_dims(X, 0)
+        X_train = self.X_train[train_idxs, :]
+        y_train = self.y_train[train_idxs]
+        self.model_fit(X_train, y_train)
 
-        # The authors choose the number of bootstrap samples as the square 
-        # root of the number of samples
-        if n_boots is None: n_boots = np.sqrt(n).astype(int)
+        X_val = self.X_train[val_idxs, :]
+        y_val = self.y_train[val_idxs]
+        preds = self.model_predict(X_val)
 
-        # Compute the m_i's and the validation residuals
-        bootstrap_preds = np.empty(n_boots)
-        val_residuals = []
-        for b in range(n_boots):
-            train_idxs = np.random.choice(range(n), size = n, replace = True)
-            val_idxs = [idx for idx in range(n) if idx not in train_idxs]
+        val_residuals.append(y_val - preds)
+        bootstrap_preds[b] = self.model_predict(X)
+    bootstrap_preds -= np.mean(bootstrap_preds)
+    val_residuals = np.concatenate(val_residuals)
+    val_residuals = np.quantile(val_residuals, q = np.arange(0, 1, .01))
 
-            X_train = self.X_train[train_idxs, :]
-            y_train = self.y_train[train_idxs]
-            self.model_fit(X_train, y_train)
+    # Compute the .632+ bootstrap estimate for the sample noise and bias
+    generalisation = np.abs(val_residuals - self.train_residuals)
+    relative_overfitting_rate = np.mean(generalisation / self.no_info_val)
+    weight = .632 / (1 - .368 * relative_overfitting_rate)
+    residuals = (1 - weight) * self.train_residuals + weight * val_residuals
 
-            X_val = self.X_train[val_idxs, :]
-            y_val = self.y_train[val_idxs]
-            preds = self.model_predict(X_val)
+    # Construct the C set and get the quantiles
+    C = np.array([m + o for m in bootstrap_preds for o in residuals])
+    quantiles = np.quantile(C, q = [uncertainty / 2, 1 - uncertainty / 2])
 
-            val_residuals.append(y_val - preds)
-            bootstrap_preds[b] = self.model_predict(X)
-        bootstrap_preds -= np.mean(bootstrap_preds)
-        val_residuals = np.concatenate(val_residuals)
-        val_residuals = np.quantile(val_residuals, q = np.arange(0, 1, .01))
+    preds = self.model_predict(X)
 
-        # Compute the .632+ bootstrap estimate for the sample noise and bias
-        generalisation = np.abs(val_residuals - self.train_residuals)
-        relative_overfitting_rate = np.mean(generalisation / self.no_info_val)
-        weight = .632 / (1 - .368 * relative_overfitting_rate)
-        residuals = (1 - weight) * self.train_residuals + weight * val_residuals
+    if onedim:
+        return preds[0], (preds + quantiles)[0]
+    else:
+        return preds, preds + quantiles
 
-        # Construct the C set and get the quantiles
-        C = np.array([m + o for m in bootstrap_preds for o in residuals])
-        quantiles = np.quantile(C, q = [uncertainty / 2, 1 - uncertainty / 2])
+def fit(self, X: FloatArray, y: FloatArray):
+    ''' Fits the model to the data.
 
-        preds = self.model_predict(X)
+    Args:
+        X (float array):
+            The feature matrix.
+        y (float array):
+            The target matrix.
+    '''
+    X = np.asarray(X)
+    y = np.asarray(y)
+    self.X_train = X
+    self.y_train = y
 
-        if onedim:
-            return preds[0], (preds + quantiles)[0]
-        else:
-            return preds, preds + quantiles
+    self.model_fit(X, y)
+    preds = self.model_predict(X)
+    self.train_residuals = np.quantile(y - preds, q = np.arange(0, 1, .01))
 
-    def fit(self, X, y):
-        ''' Fits the model to the data.
-
-        Args:
-            X (float array):
-                The feature matrix.
-            y (float array):
-                The target matrix.
-        '''
-        if not self.mode == 'model':
-            raise RuntimeError('This Boot is not set up for predictions. '\
-                               'Initialise with a model instead.')
-
-        X = np.asarray(X)
-        y = np.asarray(y)
-        self.X_train = X
-        self.y_train = y
-
-        self.model_fit(X, y)
-        preds = self.model_predict(X)
-        self.train_residuals = np.quantile(y - preds, q = np.arange(0, 1, .01))
-
-        permuted = np.random.permutation(y) - np.random.permutation(preds)
-        no_info_error = np.mean(np.abs(permuted))
-        self.no_info_val = np.abs(no_info_error - self.train_residuals)
-        return self
+    permuted = np.random.permutation(y) - np.random.permutation(preds)
+    no_info_error = np.mean(np.abs(permuted))
+    self.no_info_val = np.abs(no_info_error - self.train_residuals)
+    return self
