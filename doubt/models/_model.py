@@ -13,14 +13,14 @@ class BaseModel(object, metaclass = abc.ABCMeta):
 
     @abc.abstractmethod
     def predict(self, X: FloatMatrix, **kwargs) -> FloatNDArray:
-        return 
+        return
 
     @abc.abstractmethod
     def fit(self, X: FloatMatrix, y: FloatNDArray, **kwargs):
-        return 
+        return
 
     def plot_pred_interval(self, X: FloatMatrix, y: FloatNDArray, **kwargs):
-        return 
+        return
 
     def __call__(self, X: FloatMatrix, **kwargs) -> FloatNDArray:
         return self.predict(X)

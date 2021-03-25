@@ -27,8 +27,8 @@ class QuantileRegressionForest(BaseModel):
         >>> interval[0] < preds and preds < interval[1]
         True
     '''
-    def __init__(self, 
-        n_estimators: int = 100, 
+    def __init__(self,
+        n_estimators: int = 100,
         criterion = "mse",
         splitter = "best",
         max_depth = None,
@@ -74,7 +74,7 @@ class QuantileRegressionForest(BaseModel):
         if self.random_seed is not None: np.random.seed(self.random_seed)
 
         # Get bootstrap resamples of the data set
-        bidxs = np.random.choice(n, size = (self.n_estimators, n), 
+        bidxs = np.random.choice(n, size = (self.n_estimators, n),
                                  replace = True)
 
         # Fit trees in parallel on the bootstrapped resamples
@@ -99,13 +99,14 @@ class QuantileRegressionForest(BaseModel):
                 for estimator in self._estimators
             )
             if uncertainty is not None:
-                intervals = np.concatenate([interval for _, interval in preds])
-                intervals = np.mean(intervals, axis = 0)
-                preds = np.concatenate([pred for pred, _ in preds])
-                preds = np.mean(preds, axis = 0)
+                intervals = np.stack([interval for _, interval in preds], axis=0)
+                intervals = intervals.mean(0)
+                preds = np.stack([pred for pred, _ in preds])
+                preds = preds.mean(0)
+                if onedim: preds = preds[0]
                 return preds, intervals
-            
+
             else:
-                preds = np.mean(preds, axis = 0)
+                preds = np.mean(preds, axis=0)
                 if onedim: preds = preds[0]
                 return preds

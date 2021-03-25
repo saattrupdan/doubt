@@ -1,7 +1,7 @@
 '''Facebook comments data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -14,8 +14,8 @@ import io
 
 class FacebookComments(BaseDataset):
     __doc__ = f'''
-    Instances in this dataset contain features extracted from Facebook posts. 
-    The task associated with the data is to predict how many comments the 
+    Instances in this dataset contain features extracted from Facebook posts.
+    The task associated with the data is to predict how many comments the
     post will receive.
 
     {BASE_DATASET_DESCRIPTION}
@@ -23,14 +23,14 @@ class FacebookComments(BaseDataset):
     Features:
         page_popularity (int):
             Defines the popularity of support for the source of the document
-        page_checkins (int): 
+        page_checkins (int):
             Describes how many individuals so far visited this place. This
             feature is only associated with places; e.g., some institution,
             place, theater, etc.
         page_talking_about (int):
             Defines the daily interest of individuals towards source of the
             document/post. The people who actually come back to the page,
-            after liking the page. This include activities such as comments, 
+            after liking the page. This include activities such as comments,
             likes to a post, shares etc., by visitors to the page
         page_category (int):
             Defines the category of the source of the document; e.g., place,
@@ -57,14 +57,14 @@ class FacebookComments(BaseDataset):
         post_length (int):
             Character count in the post
         post_share_count (int):
-            This feature counts the number of shares of the post, how many 
+            This feature counts the number of shares of the post, how many
             people had shared this post onto their timeline
         post_promotion_status (int):
             Binary feature. To reach more people with posts in News Feed,
             individuals can promote their post and this feature indicates
             whether the post is promoted or not
         h_local (int):
-            This describes the hours for which we have received the target 
+            This describes the hours for which we have received the target
             variable/comments. Ranges from 0 to 23
         day_published[n] for n=0..6 (int):
             Binary feature. This represents the day (Sunday-Saturday) on
@@ -75,7 +75,7 @@ class FacebookComments(BaseDataset):
 
     Targets:
         ncomments (int): The number of comments in the next `h_local` hours
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/Facebook+Comment+Volume+Dataset
 
@@ -103,7 +103,7 @@ class FacebookComments(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00363/Dataset.zip'

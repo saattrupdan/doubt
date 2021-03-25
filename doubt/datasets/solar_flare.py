@@ -1,7 +1,7 @@
 '''Solar flare data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -13,23 +13,23 @@ import io
 
 class SolarFlare(BaseDataset):
     __doc__ = f'''
-    Each class attribute counts the number of solar flares of a certain class 
+    Each class attribute counts the number of solar flares of a certain class
     that occur in a 24 hour period.
-    
-    The database contains 3 potential classes, one for the number of times a 
+
+    The database contains 3 potential classes, one for the number of times a
     certain type of solar flare occured in a 24 hour period.
 
     Each instance represents captured features for 1 active region on the sun.
 
-    The data are divided into two sections. The second section (flare.data2) 
-    has had much more error correction applied to the it, and has consequently 
+    The data are divided into two sections. The second section (flare.data2)
+    has had much more error correction applied to the it, and has consequently
     been treated as more reliable.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        class (int): 
-            Code for class (modified Zurich class). Ranges from 0 to 6 
+        class (int):
+            Code for class (modified Zurich class). Ranges from 0 to 6
             inclusive
         spot_size (int):
             Code for largest spot size. Ranges from 0 to 5 inclusive
@@ -54,16 +54,16 @@ class SolarFlare(BaseDataset):
             spot is greater than 5
 
     Targets:
-        C-class (int): 
+        C-class (int):
             C-class flares production by this region in the following 24
             hours (common flares)
-        M-class (int): 
+        M-class (int):
             M-class flares production by this region in the following 24
             hours (common flares)
-        X-class (int): 
+        X-class (int):
             X-class flares production by this region in the following 24
             hours (common flares)
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/Solar+Flare
 
@@ -91,7 +91,7 @@ class SolarFlare(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'solar-flare/flare.data2'

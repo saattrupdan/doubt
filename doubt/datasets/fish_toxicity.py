@@ -1,7 +1,7 @@
 '''Fish toxicity data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -13,10 +13,10 @@ import io
 
 class FishToxicity(BaseDataset):
     __doc__ = f'''
-    This dataset was used to develop quantitative regression QSAR models to 
-    predict acute aquatic toxicity towards the fish Pimephales promelas 
-    (fathead minnow) on a set of 908 chemicals. LC50 data, which is the 
-    concentration that causes death in 50% of test fish over a test duration 
+    This dataset was used to develop quantitative regression QSAR models to
+    predict acute aquatic toxicity towards the fish Pimephales promelas
+    (fathead minnow) on a set of 908 chemicals. LC50 data, which is the
+    concentration that causes death in 50% of test fish over a test duration
     of 96 hours, was used as model response
 
     {BASE_DATASET_DESCRIPTION}
@@ -36,10 +36,10 @@ class FishToxicity(BaseDataset):
             Molecular properties
 
     Targets:
-        LC50 (float): 
+        LC50 (float):
             A concentration that causes death in 50% of test fish over a
             test duration of 96 hours. In -log(mol/L) units.
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/QSAR+fish+toxicity
 
@@ -67,7 +67,7 @@ class FishToxicity(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00504/qsar_fish_toxicity.csv'
@@ -88,7 +88,7 @@ class FishToxicity(BaseDataset):
         csv_file = io.BytesIO(data)
 
         # Read the file-like object into a dataframe
-        cols = ['CIC0', 'SM1_Dz(Z)', 'GATS1i', 'NdsCH', 
+        cols = ['CIC0', 'SM1_Dz(Z)', 'GATS1i', 'NdsCH',
                 'NdssC', 'MLOGP', 'LC50']
         df = pd.read_csv(csv_file, sep=';', header=None, names=cols)
 

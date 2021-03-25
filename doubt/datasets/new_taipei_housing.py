@@ -1,7 +1,7 @@
 '''New Taipei Housing data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -14,7 +14,7 @@ import io
 class NewTaipeiHousing(BaseDataset):
     __doc__ = f'''
     The "real estate valuation" is a regression problem. The market historical
-    data set of real estate valuation are collected from Sindian Dist., New 
+    data set of real estate valuation are collected from Sindian Dist., New
     Taipei City, Taiwan.
 
     {BASE_DATASET_DESCRIPTION}
@@ -35,9 +35,9 @@ class NewTaipeiHousing(BaseDataset):
             Longitude
 
     Targets:
-        house_price (float): 
+        house_price (float):
             House price of unit area
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/Real+estate+valuation+data+set
 
@@ -65,7 +65,7 @@ class NewTaipeiHousing(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00477/Real%20estate%20valuation%20data%20set.xlsx'
@@ -86,7 +86,7 @@ class NewTaipeiHousing(BaseDataset):
         xlsx_file = io.BytesIO(data)
 
         # Load in the dataframe
-        cols = ['idx', 'transaction_date', 'house_age', 'mrt_distance', 
+        cols = ['idx', 'transaction_date', 'house_age', 'mrt_distance',
                 'n_stores', 'lat', 'lng', 'house_price']
         df = pd.read_excel(xlsx_file, header=0, names=cols)
 

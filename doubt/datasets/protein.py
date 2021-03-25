@@ -1,7 +1,7 @@
 '''Protein data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -13,8 +13,8 @@ import io
 
 class Protein(BaseDataset):
     __doc__ = f'''
-    This is a data set of Physicochemical Properties of Protein Tertiary 
-    Structure. The data set is taken from CASP 5-9. There are 45730 decoys 
+    This is a data set of Physicochemical Properties of Protein Tertiary
+    Structure. The data set is taken from CASP 5-9. There are 45730 decoys
     and size varying from 0 to 21 armstrong.
 
     {BASE_DATASET_DESCRIPTION}
@@ -40,9 +40,9 @@ class Protein(BaseDataset):
             Spacial Distribution constraints (N,K Value)
 
     Targets:
-        RMSD (float): 
+        RMSD (float):
             Size of the residue
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/Physicochemical+Properties+of+Protein+Tertiary+Structure
 
@@ -70,7 +70,7 @@ class Protein(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00265/CASP.csv'

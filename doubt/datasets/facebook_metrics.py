@@ -1,7 +1,7 @@
 '''Facebook metrics data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -14,13 +14,13 @@ import io
 
 class FacebookMetrics(BaseDataset):
     __doc__ = f'''
-    The data is related to posts' published during the year of 2014 on the 
+    The data is related to posts' published during the year of 2014 on the
     Facebook's page of a renowned cosmetics brand.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        page_likes(int): 
+        page_likes(int):
             The total number of likes of the Facebook page at the given time.
         post_type (int):
             The type of post. Here 0 means 'Photo', 1 means 'Status', 2 means
@@ -60,9 +60,9 @@ class FacebookMetrics(BaseDataset):
             The number of shares.
         total_interactions (int):
             The total number of interactions
-    
+
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Facebook+metrics 
+        https://archive.ics.uci.edu/ml/datasets/Facebook+metrics
 
     Examples:
         Load in the data set:
@@ -88,7 +88,7 @@ class FacebookMetrics(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00368/Facebook_metrics.zip'

@@ -1,7 +1,7 @@
 '''Blog post data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -88,9 +88,9 @@ class Blog(BaseDataset):
     Targets:
         int: The number of comments in the next 24 hours (relative to
              baseline)
-    
+
     Source:
-        https://archive.ics.uci.edu/ml/datasets/BlogFeedback 
+        https://archive.ics.uci.edu/ml/datasets/BlogFeedback
 
     Examples:
         Load in the data set:
@@ -116,7 +116,7 @@ class Blog(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00304/BlogFeedback.zip'

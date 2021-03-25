@@ -1,7 +1,7 @@
 '''Concrete data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -13,34 +13,34 @@ import io
 
 class Concrete(BaseDataset):
     __doc__ = f'''
-    Concrete is the most important material in civil engineering. The concrete 
-    compressive strength is a highly nonlinear function of age and 
-    ingredients. 
+    Concrete is the most important material in civil engineering. The concrete
+    compressive strength is a highly nonlinear function of age and
+    ingredients.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        Cement (float): 
+        Cement (float):
             Kg of cement in an m3 mixture
-        Blast Furnace Slag (float): 
+        Blast Furnace Slag (float):
             Kg of blast furnace slag in an m3 mixture
-        Fly Ash (float): 
+        Fly Ash (float):
             Kg of fly ash in an m3 mixture
-        Water (float): 
+        Water (float):
             Kg of water in an m3 mixture
-        Superplasticiser (float): 
+        Superplasticiser (float):
             Kg of superplasticiser in an m3 mixture
-        Coarse Aggregate (float): 
+        Coarse Aggregate (float):
             Kg of coarse aggregate in an m3 mixture
-        Fine Aggregate (float): 
+        Fine Aggregate (float):
             Kg of fine aggregate in an m3 mixture
-        Age (int): 
+        Age (int):
             Age in days, between 1 and 365 inclusive
 
     Targets:
-        Concrete Compressive Strength (float): 
+        Concrete Compressive Strength (float):
             Concrete compressive strength in megapascals
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/Concrete+Compressive+Strength
 
@@ -68,7 +68,7 @@ class Concrete(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'concrete/compressive/Concrete_Data.xls'

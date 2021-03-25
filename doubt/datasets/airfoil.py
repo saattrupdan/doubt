@@ -1,7 +1,7 @@
 '''Airfoil data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -13,9 +13,9 @@ import io
 
 class Airfoil(BaseDataset):
     __doc__ = f'''
-    The NASA data set comprises different size NACA 0012 airfoils at various 
-    wind tunnel speeds and angles of attack. The span of the airfoil and the 
-    observer position were the same in all of the experiments.   
+    The NASA data set comprises different size NACA 0012 airfoils at various
+    wind tunnel speeds and angles of attack. The span of the airfoil and the
+    observer position were the same in all of the experiments.
 
     {BASE_DATASET_DESCRIPTION}
 
@@ -28,9 +28,9 @@ class Airfoil(BaseDataset):
 
     Targets:
         float: Scaled sound pressure level, in decibels
-    
+
     Source:
-        https://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise 
+        https://archive.ics.uci.edu/ml/datasets/Airfoil+Self-Noise
 
     Examples:
         Load in the data set:

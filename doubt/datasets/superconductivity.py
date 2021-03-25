@@ -1,7 +1,7 @@
 '''Superconductivity data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -14,8 +14,8 @@ import io
 
 class Superconductivity(BaseDataset):
     __doc__ = f'''
-    This dataset contains data on 21,263 superconductors and their relevant 
-    features. The goal here is to predict the critical temperature based on 
+    This dataset contains data on 21,263 superconductors and their relevant
+    features. The goal here is to predict the critical temperature based on
     the features extracted.
 
     {BASE_DATASET_DESCRIPTION}
@@ -105,7 +105,7 @@ class Superconductivity(BaseDataset):
 
     Targets:
         critical_temp (float)
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/Superconductivty+Data
 
@@ -133,7 +133,7 @@ class Superconductivity(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00464/superconduct.zip'

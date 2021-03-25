@@ -1,7 +1,7 @@
 '''Servo data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -17,27 +17,27 @@ class Servo(BaseDataset):
 
     Ross Quinlan:
 
-    This data was given to me by Karl Ulrich at MIT in 1986. I didn't record 
+    This data was given to me by Karl Ulrich at MIT in 1986. I didn't record
     his description at the time, but here's his subsequent (1992) recollection:
 
-    "I seem to remember that the data was from a simulation of a servo system 
-    involving a servo amplifier, a motor, a lead screw/nut, and a sliding 
-    carriage of some sort. It may have been on of the translational axes of a 
-    robot on the 9th floor of the AI lab. In any case, the output value is 
-    almost certainly a rise time, or the time required for the system to 
+    "I seem to remember that the data was from a simulation of a servo system
+    involving a servo amplifier, a motor, a lead screw/nut, and a sliding
+    carriage of some sort. It may have been on of the translational axes of a
+    robot on the 9th floor of the AI lab. In any case, the output value is
+    almost certainly a rise time, or the time required for the system to
     respond to a step change in a position set point."
 
     (Quinlan, ML'93)
 
-    "This is an interesting collection of data provided by Karl Ulrich. It 
-    covers an extremely non-linear phenomenon - predicting the rise time of a 
-    servomechanism in terms of two (continuous) gain settings and two 
+    "This is an interesting collection of data provided by Karl Ulrich. It
+    covers an extremely non-linear phenomenon - predicting the rise time of a
+    servomechanism in terms of two (continuous) gain settings and two
     (discrete) choices of mechanical linkages."
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        motor (int): 
+        motor (int):
             Motor, ranges from 0 to 4 inclusive
         screw (int):
             Screw, ranges from 0 to 4 inclusive
@@ -47,9 +47,9 @@ class Servo(BaseDataset):
             VGain, ranges from 1 to 5 inclusive
 
     Targets:
-        class (float): 
+        class (float):
             Class values, ranges from 0.13 to 7.10 inclusive
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/Servo
 
@@ -77,7 +77,7 @@ class Servo(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'servo/servo.data'

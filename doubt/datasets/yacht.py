@@ -1,7 +1,7 @@
 '''Yacht data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -13,37 +13,37 @@ import io
 
 class Yacht(BaseDataset):
     __doc__ = f'''
-    Prediction of residuary resistance of sailing yachts at the initial design 
-    stage is of a great value for evaluating the ship's performance and for 
-    estimating the required propulsive power. Essential inputs include the 
+    Prediction of residuary resistance of sailing yachts at the initial design
+    stage is of a great value for evaluating the ship's performance and for
+    estimating the required propulsive power. Essential inputs include the
     basic hull dimensions and the boat velocity.
 
-    The Delft data set comprises 308 full-scale experiments, which were 
+    The Delft data set comprises 308 full-scale experiments, which were
     performed at the Delft Ship Hydromechanics Laboratory for that purpose.
 
-    These experiments include 22 different hull forms, derived from a parent 
+    These experiments include 22 different hull forms, derived from a parent
     form closely related to the "Standfast 43" designed by Frans Maas.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        pos (float): 
+        pos (float):
             Longitudinal position of the center of buoyancy, adimensional
-        prismatic (float): 
+        prismatic (float):
             Prismatic coefficient, adimensional
-        displacement (float): 
+        displacement (float):
             Length-displacement ratio, adimensional
-        beam_draught (float): 
+        beam_draught (float):
             Beam-draught ratio, adimensional
-        length_beam (float): 
+        length_beam (float):
             Length-beam ratio, adimensional
-        froude_no (float): 
+        froude_no (float):
             Froude number, adimensional
 
     Targets:
-        resistance (float): 
+        resistance (float):
             Residuary resistance per unit weight of displacement, adimensional
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/Yacht+Hydrodynamics
 
@@ -71,7 +71,7 @@ class Yacht(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00243/yacht_hydrodynamics.data'

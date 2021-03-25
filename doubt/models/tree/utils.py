@@ -64,7 +64,7 @@ def weighted_percentile(a, q, weights = None, sorter = None):
     total = sorted_cum_weights[-1]
 
     # Step 2
-    partial_sum = 1. / total 
+    partial_sum = 1. / total
     partial_sum *= sorted_cum_weights - sorted_weights / 2.0
     start = np.searchsorted(partial_sum, q) - 1
     if start == len(sorted_cum_weights) - 1:

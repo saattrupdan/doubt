@@ -1,7 +1,7 @@
 '''Forest fire data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -12,18 +12,18 @@ import io
 
 
 class ForestFire(BaseDataset):
-    __doc__ = f''' 
-    This is a difficult regression task, where the aim is to predict the 
-    burned area of forest fires, in the northeast region of Portugal, by 
+    __doc__ = f'''
+    This is a difficult regression task, where the aim is to predict the
+    burned area of forest fires, in the northeast region of Portugal, by
     using meteorological and other data.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        X (float): 
+        X (float):
             The x-axis spatial coordinate within the Montesinho park map.
             Ranges from 1 to 9.
-        Y (float): 
+        Y (float):
             The y-axis spatial coordinate within the Montesinho park map
             Ranges from 2 to 9.
         month (int):
@@ -46,7 +46,7 @@ class ForestFire(BaseDataset):
             Wind speed in km/h. Ranges from 0.4 to 9.4
         rain (float):
             Outside rain in mm/m2. Ranges from 0.0 to 6.4
-    
+
     Targets:
         area (float):
             The burned area of the forest (in ha). Ranges from 0.00 to 1090.84
@@ -106,7 +106,7 @@ class ForestFire(BaseDataset):
         df = pd.read_csv(csv_file)
 
         # Encode month
-        months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 
+        months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun',
                   'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
         df['month'] = df.month.map(lambda string: months.index(string))
 

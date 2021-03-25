@@ -19,9 +19,9 @@ BASE_DATASET_DESCRIPTION = '''
             Defaults to '.cache'.
 
     Attributes:
-        shape (tuple of integers): 
+        shape (tuple of integers):
             Dimensions of the data set
-        columns (list of strings): 
+        columns (list of strings):
             List of column names in the data set
 
     Class attributes:
@@ -33,10 +33,10 @@ BASE_DATASET_DESCRIPTION = '''
             The column indices of the target variables
 
     Methods:
-        head(n: int = 5) -> pd.DataFrame: 
-        to_pandas() -> pandas.DataFrame: 
+        head(n: int = 5) -> pd.DataFrame:
+        to_pandas() -> pandas.DataFrame:
         close() -> None:
-        split(test_size: float or None = None, 
+        split(test_size: float or None = None,
               random_seed: float or None = None) -> Tuple of Numpy arrays
 '''
 
@@ -55,7 +55,7 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def _prep_data(self, data: bytes) -> pd.DataFrame:
-        return 
+        return
 
     def get_data(self) -> pd.DataFrame:
         ''' Download and prepare the dataset.
@@ -63,7 +63,7 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
         Returns:
             Pandas DataFrame: The dataset.
         '''
-        
+
         # Get name of dataset, being the class name converted to snake case
         name = re.sub(r'([A-Z])', r'_\1', type(self).__name__)
         name = name.lower().strip('_')
@@ -103,10 +103,10 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
     def __repr__(self) -> str:
         return repr(self._data)
 
-    def split(self, 
-              test_size: Optional[float] = None, 
+    def split(self,
+              test_size: Optional[float] = None,
               random_seed: Optional[float] = None) -> Tuple[np.ndarray]:
-        ''' 
+        '''
         Split dataset into features and targets and optionally also train/test.
 
         Args:
@@ -120,7 +120,7 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
 
         Returns:
             If ``test_size`` is not `None` then a tuple of numpy arrays
-            (X_train, y_train, X_test, y_test) is returned, and otherwise 
+            (X_train, y_train, X_test, y_test) is returned, and otherwise
             the tuple (X, y) of numpy arrays is returned.
         '''
         nrows = len(self._data)
@@ -136,7 +136,7 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
             y_train = self._data.iloc[train_idxs, trgts].values
             X_test = self._data.iloc[test_idxs, feats].values
             y_test = self._data.iloc[test_idxs, trgts].values
-            
+
             return X_train, y_train, X_test, y_test
 
         else:

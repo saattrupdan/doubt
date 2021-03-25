@@ -1,7 +1,7 @@
 '''CPU data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -13,13 +13,13 @@ import io
 
 class CPU(BaseDataset):
     __doc__ = f'''
-    Relative CPU Performance Data, described in terms of its cycle time, 
-    memory size, etc. 
+    Relative CPU Performance Data, described in terms of its cycle time,
+    memory size, etc.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
-        vendor_name (string): 
+        vendor_name (string):
             Name of the vendor, 30 unique values
         model_name (string):
             Name of the model
@@ -39,7 +39,7 @@ class CPU(BaseDataset):
     Targets:
         prp (int):
             Published relative performance
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/Computer+Hardware
 
@@ -67,7 +67,7 @@ class CPU(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'cpu-performance/machine.data'

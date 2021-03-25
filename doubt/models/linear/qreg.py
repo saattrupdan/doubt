@@ -1,4 +1,4 @@
-''' Linear models '''
+'''Linear models'''
 
 from .._model import BaseModel
 
@@ -6,13 +6,13 @@ from sklearn.linear_model import LinearRegression
 from statsmodels.regression.quantile_regression import QuantReg
 import numpy as np
 
-from typing import Optional
-from typing import Sequence
+from typing import Optional, Sequence
 
 FloatArray = Sequence[float]
 
+
 class QuantileLinearRegression(BaseModel):
-    ''' Quantile linear regression model.
+    '''Quantile linear regression model.
 
     Args:
         uncertainty (float):
@@ -48,8 +48,8 @@ class QuantileLinearRegression(BaseModel):
         self.q_bias = np.empty((2,))
         self.q_slope: Optional[FloatArray] = None
 
-    def fit(self, X, y):
-        ''' Fit the model.
+    def fit(self, X: FloatArray, y: FloatArray):
+        '''Fit the model.
 
         Args:
             X (float array):
@@ -68,15 +68,15 @@ class QuantileLinearRegression(BaseModel):
             lower_q = self.uncertainty / 2.
             upper_q = 1. - lower_q
             for i, quantile in enumerate([lower_q, upper_q]):
-                result = statsmodels_qreg.fit(q = quantile, 
+                result = statsmodels_qreg.fit(q = quantile,
                                               max_iter = self.max_iter)
                 self.q_bias[i] = result.params[0]
                 self.q_slope[i] = result.params[1:]
 
         return self
 
-    def predict(self, X):
-        ''' Compute model predictions.
+    def predict(self, X: FloatArray):
+        '''Compute model predictions.
 
         Args:
             X (float array):

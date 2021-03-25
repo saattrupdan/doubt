@@ -1,7 +1,7 @@
 '''Fish bioconcentration data set.
 
-This data set is from the UCI data set archive, with the description being 
-the original description verbatim. Some feature names may have been altered, 
+This data set is from the UCI data set archive, with the description being
+the original description verbatim. Some feature names may have been altered,
 based on the description.
 '''
 
@@ -14,12 +14,12 @@ import io
 
 class FishBioconcentration(BaseDataset):
     __doc__ = f'''
-    This dataset contains manually-curated experimental bioconcentration 
-    factor (BCF) for 1058 molecules (continuous values). Each row contains a 
-    molecule, identified by a CAS number, a name (if available), and a SMILES 
-    string. Additionally, the KOW (experimental or predicted) is reported. In 
-    this database, you will also find Extended Connectivity Fingerprints 
-    (binary vectors of 1024 bits), to be used as independent variables to 
+    This dataset contains manually-curated experimental bioconcentration
+    factor (BCF) for 1058 molecules (continuous values). Each row contains a
+    molecule, identified by a CAS number, a name (if available), and a SMILES
+    string. Additionally, the KOW (experimental or predicted) is reported. In
+    this database, you will also find Extended Connectivity Fingerprints
+    (binary vectors of 1024 bits), to be used as independent variables to
     predict the BCF.
 
     {BASE_DATASET_DESCRIPTION}
@@ -73,9 +73,9 @@ class FishBioconcentration(BaseDataset):
                 35 = 's'
 
     Targets:
-        logbcf (float): 
+        logbcf (float):
             Experimental fish bioconcentration factor (logarithm form)
-    
+
     Source:
         https://archive.ics.uci.edu/ml/datasets/QSAR+fish+bioconcentration+factor+%28BCF%29
 
@@ -103,7 +103,7 @@ class FishBioconcentration(BaseDataset):
 
         Remember to close the dataset again after use, to close the cache:
         >>> dataset.close()
-    ''' 
+    '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00511/QSAR_fish_BCF.zip'
@@ -133,13 +133,13 @@ class FishBioconcentration(BaseDataset):
         # Read the file-like object into a dataframe
         cols = ['cas', 'name', 'smiles', 'logkow', 'kow_exp', 'logbcf']
         df = pd.read_csv(
-            csv_file, 
-            names=cols, 
-            header=0, 
+            csv_file,
+            names=cols,
+            header=0,
             usecols = [col for col in cols if col not in ['cas', 'name']]
         )
 
-        # Drop NaNs 
+        # Drop NaNs
         df = df.dropna()
 
         # Encode KOW types
