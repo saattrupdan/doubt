@@ -56,13 +56,13 @@ class Yacht(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        ((308, 6), (308, 1))
+        ((308, 6), (308,))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
+        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((241, 6), (241, 1), (67, 6), (67, 1))
+        ((241, 6), (241,), (67, 6), (67,))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()

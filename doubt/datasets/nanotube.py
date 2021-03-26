@@ -77,7 +77,7 @@ class Nanotube(BaseDataset):
         ((10721, 5), (10721, 3))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
+        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((8542, 5), (8542, 3), (2179, 5), (2179, 3))

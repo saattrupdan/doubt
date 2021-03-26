@@ -118,13 +118,13 @@ class Superconductivity(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        ((21263, 81), (21263, 1))
+        ((21263, 81), (21263,))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
+        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((17018, 81), (17018, 1), (4245, 81), (4245, 1))
+        ((17018, 81), (17018,), (4245, 81), (4245,))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()

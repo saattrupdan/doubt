@@ -88,13 +88,13 @@ class FishBioconcentration(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        ((1054, 128), (1054, 1))
+        ((1054, 128), (1054,))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
+        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((819, 128), (819, 1), (235, 128), (235, 1))
+        ((819, 128), (819,), (235, 128), (235,))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -136,7 +136,7 @@ class FishBioconcentration(BaseDataset):
             csv_file,
             names=cols,
             header=0,
-            usecols = [col for col in cols if col not in ['cas', 'name']]
+            usecols=[col for col in cols if col not in ['cas', 'name']]
         )
 
         # Drop NaNs

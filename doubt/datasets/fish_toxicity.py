@@ -52,13 +52,13 @@ class FishToxicity(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        ((908, 6), (908, 1))
+        ((908, 6), (908,))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
+        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((701, 6), (701, 1), (207, 6), (207, 1))
+        ((701, 6), (701,), (207, 6), (207,))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()

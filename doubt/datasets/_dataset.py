@@ -31,13 +31,6 @@ BASE_DATASET_DESCRIPTION = '''
             The column indices of the feature variables
         trgts (iterable):
             The column indices of the target variables
-
-    Methods:
-        head(n: int = 5) -> pd.DataFrame:
-        to_pandas() -> pandas.DataFrame:
-        close() -> None:
-        split(test_size: float or None = None,
-              random_seed: float or None = None) -> Tuple of Numpy arrays
 '''
 
 
@@ -106,8 +99,7 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
     def split(self,
               test_size: Optional[float] = None,
               random_seed: Optional[float] = None) -> Tuple[np.ndarray]:
-        '''
-        Split dataset into features and targets and optionally also train/test.
+        '''Split dataset into features and targets and optionally also train/test.
 
         Args:
             test_size (float or None):
@@ -119,7 +111,7 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
                 a random number will be chosen. Defaults to None.
 
         Returns:
-            If ``test_size`` is not `None` then a tuple of numpy arrays
+            If `test_size` is not `None` then a tuple of numpy arrays
             (X_train, y_train, X_test, y_test) is returned, and otherwise
             the tuple (X, y) of numpy arrays is returned.
         '''
@@ -133,13 +125,13 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
             train_idxs = ~test_idxs
 
             X_train = self._data.iloc[train_idxs, feats].values
-            y_train = self._data.iloc[train_idxs, trgts].values
+            y_train = self._data.iloc[train_idxs, trgts].values.squeeze()
             X_test = self._data.iloc[test_idxs, feats].values
-            y_test = self._data.iloc[test_idxs, trgts].values
+            y_test = self._data.iloc[test_idxs, trgts].values.squeeze()
 
             return X_train, y_train, X_test, y_test
 
         else:
             X = self._data.iloc[:, feats].values
-            y = self._data.iloc[:, trgts].values
+            y = self._data.iloc[:, trgts].values.squeeze()
             return X, y

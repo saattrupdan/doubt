@@ -90,7 +90,7 @@ class BikeSharingHourly(BaseDataset):
         ((17379, 13), (17379, 3))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
+        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((13878, 13), (13878, 3), (3501, 13), (3501, 3))
@@ -130,5 +130,6 @@ class BikeSharingHourly(BaseDataset):
         csv_file = io.StringIO(csv)
 
         # Read the file-like object into a dataframe
-        df = pd.read_csv(csv_file, usecols = [0] + list(range(2, 17)))
+        cols = [0] + list(range(2, 17))
+        df = pd.read_csv(csv_file, usecols=cols)
         return df

@@ -88,13 +88,13 @@ class FacebookComments(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        ((199030, 54), (199030, 1))
+        ((199030, 54), (199030,))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
+        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((159288, 54), (159288, 1), (39742, 54), (39742, 1))
+        ((159288, 54), (159288,), (39742, 54), (39742,))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()

@@ -101,13 +101,13 @@ class Blog(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        ((52397, 279), (52397, 1))
+        ((52397, 279), (52397,))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
+        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((41932, 279), (41932, 1), (10465, 279), (10465, 1))
+        ((41932, 279), (41932,), (10465, 279), (10465,))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -144,5 +144,5 @@ class Blog(BaseDataset):
         csv_file = io.StringIO(csv)
 
         # Read the file-like object into a dataframe
-        df = pd.read_csv(csv_file, header = None)
+        df = pd.read_csv(csv_file, header=None)
         return df

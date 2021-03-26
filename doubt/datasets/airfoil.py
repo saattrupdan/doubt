@@ -41,13 +41,13 @@ class Airfoil(BaseDataset):
         Split the data set into features and targets, as NumPy arrays:
         >>> X, y = dataset.split()
         >>> X.shape, y.shape
-        ((1503, 5), (1503, 1))
+        ((1503, 5), (1503,))
 
         Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size = 0.2, random_seed = 42)
+        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
         >>> X_train, y_train, X_test, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((1179, 5), (1179, 1), (324, 5), (324, 1))
+        ((1179, 5), (1179,), (324, 5), (324,))
 
         Output the underlying Pandas DataFrame:
         >>> df = dataset.to_pandas()
@@ -77,5 +77,5 @@ class Airfoil(BaseDataset):
         csv_file = io.BytesIO(data)
 
         # Read the file-like object into a data frame
-        df = pd.read_csv(csv_file, sep = '\t', header = None)
+        df = pd.read_csv(csv_file, sep='\t', header=None)
         return df

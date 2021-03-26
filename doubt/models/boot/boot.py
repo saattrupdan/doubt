@@ -134,8 +134,8 @@ def compute_statistic(self,
 def predict(self,
     X: FloatArray,
     n_boots: Optional[int] = None,
-    uncertainty: float = .05) -> Tuple[float, FloatArray]:
-    ''' Compute bootstrapped predictions.
+    uncertainty: float = .05) -> Tuple[Union[float, FloatArray], FloatArray]:
+    '''Compute bootstrapped predictions.
 
     This is an extension of the prediction method calculation in [2], which
     also takes validation error into account. To remedy this, the .632+
@@ -163,6 +163,10 @@ def predict(self,
         [2]: https://ntrs.nasa.gov/api/citations/20130014367/downloads/20130014367.pdf
         [3]: https://web.stanford.edu/~hastie/ElemStatLearn/
     '''
+    if not hasattr(self, 'X_train') or self.X_train is None:
+        raise RuntimeError('This model has not been fitted yet! Call fit() '
+                            'before predicting new samples.')
+
     if self.random_seed is not None: np.random.seed(self.random_seed)
 
     X = np.asarray(X)
@@ -212,12 +216,12 @@ def predict(self,
     preds = self.model_predict(X)
 
     if onedim:
-        return preds[0], (preds + quantiles)
+        return preds[0], (preds + quantiles)[0]
     else:
         return preds, np.expand_dims(preds, axis=1) + quantiles
 
 def fit(self, X: FloatArray, y: FloatArray):
-    ''' Fits the model to the data.
+    '''Fits the model to the data.
 
     Args:
         X (float array):
