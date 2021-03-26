@@ -1,4 +1,4 @@
-''' Bootstrap wrapper for datasets and models'''
+'''Bootstrap wrapper for datasets and models'''
 
 from typing import Optional, Union, Tuple, Sequence, Callable
 import numpy as np
