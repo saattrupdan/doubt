@@ -1,5 +1,5 @@
 # Virtual environment
-**/.venv/*
+**/.venv
 
 # VIm swap files
 **/*.swp
@@ -8,9 +8,10 @@
 **/*.pyc
 
 # Caches and logs
-**/.pytest_cache/*
-**/__pycache__/*
-**/.mypy_cache/*
+**/.pytest_cache
+**/__pycache__
+**/.mypy_cache
 **.cache.h5
-**/checkpoints/*
-**/lightning_logs/*
+**/checkpoints
+**/lightning_logs
+**/.ipynb_checkpoints
