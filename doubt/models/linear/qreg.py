@@ -97,10 +97,3 @@ class QuantileLinearRegression(BaseModel):
         intervals = np.stack([lower, upper], axis = 1).squeeze()
         if onedim: preds = preds.item()
         return preds, intervals
-
-if __name__ == '__main__':
-    from doubt.datasets import Concrete
-    X, y = Concrete().split()
-    qreg = QuantileLinearRegression(uncertainty = 0.05)
-    qreg.fit(X, y)
-    print(qreg.predict(X))
