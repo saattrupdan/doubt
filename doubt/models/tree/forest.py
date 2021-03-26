@@ -82,8 +82,8 @@ class QuantileRegressionForest(BaseModel):
 
         Instead of only returning the prediction, we can also return a
         prediction interval:
-        >>> preds, interval = forest.predict(np.ones(8), uncertainty = 0.25)
-        >>> interval[0] < preds and preds < interval[1]
+        >>> preds, interval = forest.predict(np.ones(8), uncertainty=0.25)
+        >>> interval[0] < preds < interval[1]
         True
     '''
     def __init__(self,
@@ -162,7 +162,9 @@ class QuantileRegressionForest(BaseModel):
                 intervals = intervals.mean(0)
                 preds = np.stack([pred for pred, _ in preds])
                 preds = preds.mean(0)
-                if onedim: preds = preds[0]
+                if onedim:
+                    preds = preds[0]
+                    intervals = intervals[0]
                 return preds, intervals
 
             else:
