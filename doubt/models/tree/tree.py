@@ -39,8 +39,7 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
         '''
         # Apply method requires X to be of dtype np.float32
         X = check_array(X, dtype=np.float32, accept_sparse='csc')
-        preds = super(BaseTreeQuantileRegressor, self)\
-                .predict(X, check_input = check_input)
+        preds = super().predict(X, check_input=check_input)
 
         if uncertainty is not None:
             lower = uncertainty / 2
@@ -102,9 +101,8 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
         # Apply method requires X to be of dtype np.float32
         X, y = check_X_y(
             X, y, accept_sparse='csc', dtype=np.float32, multi_output=False)
-        super(BaseTreeQuantileRegressor, self).fit(
-            X, y, sample_weight=sample_weight, check_input=check_input,
-            X_idx_sorted=X_idx_sorted)
+        super().fit(X, y, sample_weight=sample_weight, check_input=check_input,
+                    X_idx_sorted=X_idx_sorted)
         self.y_train_ = y
 
         # Stores the leaf nodes that the samples lie in.
@@ -199,7 +197,7 @@ class QuantileRegressionTree(DecisionTreeRegressor, BaseTreeQuantileRegressor):
                  min_weight_fraction_leaf: float = 0.,
                  max_leaf_nodes: Optional[int] = None,
                  random_seed: Union[int, np.random.RandomState, None] = None):
-        super(QuantileRegressionTree, self).__init__(
+        super().__init__(
             criterion=criterion,
             splitter=splitter,
             max_depth=max_depth,
