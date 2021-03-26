@@ -137,6 +137,10 @@ def predict(self,
     uncertainty: float = .05) -> Tuple[float, FloatArray]:
     ''' Compute bootstrapped predictions.
 
+    This is an extension of the prediction method calculation in [2], which
+    also takes validation error into account. To remedy this, the .632+
+    bootstrap estimate from [3] has been used. Read more in [1].
+
     Args:
         X (float array):
             The array containing the data set, either of shape (f,)
@@ -153,6 +157,11 @@ def predict(self,
     Returns:
         pair of float arrays:
             The bootstrapped predictions and the confidence intervals
+
+    References:
+        [1]: https://saattrupdan.github.io/2020-03-01-bootstrap-prediction/
+        [2]: https://ntrs.nasa.gov/api/citations/20130014367/downloads/20130014367.pdf
+        [3]: https://web.stanford.edu/~hastie/ElemStatLearn/
     '''
     if self.random_seed is not None: np.random.seed(self.random_seed)
 
