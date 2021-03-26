@@ -15,3 +15,6 @@
 **/checkpoints
 **/lightning_logs
 **/.ipynb_checkpoints
+
+# Test notebook
+test.ipynb
