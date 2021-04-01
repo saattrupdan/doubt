@@ -19,5 +19,7 @@
 **/lightning_logs
 **/.ipynb_checkpoints
 
-# Test notebook
-test.ipynb
+# Build artifacts
+**/build
+**/dist
+**/*egg-info
