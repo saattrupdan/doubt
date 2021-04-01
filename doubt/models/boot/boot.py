@@ -37,12 +37,12 @@ class Boot:
         interval:
         >>> from doubt.datasets import FishToxicity
         >>> X, y = FishToxicity().split()
-        >>> boot = Boot(y, random_seed = 42)
+        >>> boot = Boot(y, random_seed=42)
         >>> boot.compute_statistic(np.mean)
         (4.064430616740088, array([3.99133279, 4.15605735]))
 
         Alternatively, we can output the whole bootstrap distribution:
-        >>> boot.compute_statistic(np.mean, n_boots = 3, return_all = True)
+        >>> boot.compute_statistic(np.mean, n_boots=3, return_all=True)
         (4.064430616740088, array([4.10546476, 4.02547137, 4.03936894]))
 
         Wrap a scikit-learn model and get prediction intervals:

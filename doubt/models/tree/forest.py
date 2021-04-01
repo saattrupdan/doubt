@@ -1,4 +1,4 @@
-''' Quantile regression forests '''
+'''Quantile regression forests'''
 
 from .._model import BaseModel
 from .tree import QuantileRegressionTree
