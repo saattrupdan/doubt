@@ -3,6 +3,7 @@
 from pathlib import Path
 import re
 from typing import Union, Tuple
+import subprocess
 
 
 def get_current_version(return_tuple: bool = False) -> Union[str, Tuple[int]]:
@@ -49,22 +50,31 @@ def set_new_version(major: int, minor: int, patch: int):
         f.write(new_init)
 
 
+def create_version_tag():
+    '''Creates a tag of the form v[MAJOR].[MINOR].[PATCH]'''
+    version = get_current_version(return_tuple=False)
+    subprocess.run(['git', 'tag', f'v{version}'])
+
+
 def bump_major():
     '''Add one to the major version'''
     major, minor, patch = get_current_version(return_tuple=True)
     set_new_version(major + 1, 0, 0)
+    create_version_tag()
 
 
 def bump_minor():
     '''Add one to the minor version'''
     major, minor, patch = get_current_version(return_tuple=True)
     set_new_version(major, minor + 1, 0)
+    create_version_tag()
 
 
 def bump_patch():
     '''Add one to the patch version'''
     major, minor, patch = get_current_version(return_tuple=True)
     set_new_version(major, minor, patch + 1)
+    create_version_tag()
 
 
 if __name__ == '__main__':
