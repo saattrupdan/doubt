@@ -1,5 +1,7 @@
 from setuptools import setup, find_packages
 
+# TODO: Include extras_requires, with neural network stuff
+
 setup(name='doubt',
       maintainer='Dan Saattrup Nielsen',
       maintainer_email='saattrupdan@gmail.com',
