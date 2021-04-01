@@ -6,6 +6,13 @@ A Python package to include prediction intervals in the predictions of machine
 learning models, to quantify their uncertainty.
 
 
+## Installation
+
+```shell
+pip install doubt
+```
+
+
 ## Features
 
 - Bootstrap wrapper for all Scikit-Learn and PyTorch models
