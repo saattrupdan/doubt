@@ -1,1 +1,1 @@
-from .qreg import QuantileLinearRegression
+from .qreg import QuantileLinearRegression # noqa

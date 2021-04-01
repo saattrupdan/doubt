@@ -1,2 +1,2 @@
-from .tree import QuantileRegressionTree
-from .forest import QuantileRegressionForest
+from .tree import QuantileRegressionTree # noqa
+from .forest import QuantileRegressionForest # noqa

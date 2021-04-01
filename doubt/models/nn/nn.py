@@ -6,7 +6,6 @@ import torch.nn.functional as F
 import torch.utils.data as D
 import pytorch_lightning as pl
 import copy
-from pathlib import Path
 from typing import Sequence, Optional
 
 FloatArray = Sequence[float]
@@ -39,12 +38,12 @@ class QuantileLoss(nn.Module):
     def forward(self, preds, target):
         residuals = target.unsqueeze(1) - preds
         lower_loss = torch.mean(
-            self.activation(residuals[:, 0]) * self.lower - \
+            self.activation(residuals[:, 0]) * self.lower -
             self.activation(-residuals[:, 0]) * (self.lower - 1)
         )
         median_loss = torch.abs(residuals[:, 1]).mean()
         upper_loss = torch.mean(
-            self.activation(residuals[:, 2]) * self.upper - \
+            self.activation(residuals[:, 2]) * self.upper -
             self.activation(-residuals[:, 2]) * (self.upper - 1)
         )
         return (lower_loss + median_loss + upper_loss) / 3
@@ -103,8 +102,8 @@ class QuantileNeuralNetwork(pl.LightningModule):
         self.lower = copy.deepcopy(model)
         self.upper = copy.deepcopy(model)
         self.criterion = QuantileLoss(
-            uncertainty = uncertainty,
-            activation = loss_activation
+            uncertainty=uncertainty,
+            activation=loss_activation
         )
 
     def forward(self, X: torch.Tensor) -> torch.Tensor:

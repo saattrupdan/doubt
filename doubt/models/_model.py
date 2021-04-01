@@ -6,7 +6,8 @@ from typing import Sequence, Union
 FloatMatrix = Sequence[Sequence[float]]
 FloatNDArray = Union[Sequence[float], FloatMatrix]
 
-class BaseModel(object, metaclass = abc.ABCMeta):
+
+class BaseModel(abc.ABC):
     @abc.abstractmethod
     def __init__(self, *args, **kwargs):
         pass

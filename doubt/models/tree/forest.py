@@ -3,9 +3,10 @@
 from .._model import BaseModel
 from .tree import QuantileRegressionTree
 
-from typing import Optional
+from typing import Optional, Union
 import numpy as np
 from joblib import Parallel, delayed
+
 
 class QuantileRegressionForest(BaseModel):
     ''' A random forest for regression which can output quantiles as well.
@@ -20,8 +21,8 @@ class QuantileRegressionForest(BaseModel):
             absolute error. Defaults to 'mse'.
         splitter (string, optional):
             The strategy used to choose the split at each node. Supported
-            strategies are 'best' to choose the best split and 'random' to choose
-            the best random split. Defaults to 'best'.
+            strategies are 'best' to choose the best split and 'random' to
+            choose the best random split. Defaults to 'best'.
         max_features (int, float, string or None, optional):
             The number of features to consider when looking for the best split:
             - If int, then consider `max_features` features at each split.
@@ -33,12 +34,12 @@ class QuantileRegressionForest(BaseModel):
             - If 'log2', then `max_features=log2(n_features)`.
             - If None, then `max_features=n_features`.
             Note: the search for a split does not stop until at least one
-            valid partition of the node samples is found, even if it requires to
-            effectively inspect more than ``max_features`` features. Defaults
-            to None.
+            valid partition of the node samples is found, even if it requires
+            to effectively inspect more than ``max_features`` features.
+            Defaults to None.
         max_depth (int or None, optional):
-            The maximum depth of the tree. If None, then nodes are expanded until
-            all leaves are pure or until all leaves contain less than
+            The maximum depth of the tree. If None, then nodes are expanded
+            until all leaves are pure or until all leaves contain less than
             min_samples_split samples. Defaults to None.
         min_samples_split (int or float, optional):
             The minimum number of samples required to split an internal node:
@@ -64,10 +65,10 @@ class QuantileRegressionForest(BaseModel):
             The number of CPU cores used in fitting and predicting. If -1 then
             all available CPU cores will be used. Defaults to -1.
         random_seed (int, RandomState instance or None, optional):
-            If int, random_state is the seed used by the random number generator;
-            If RandomState instance, random_state is the random number generator;
-            If None, the random number generator is the RandomState instance used
-            by `np.random`. Defaults to None.
+            If int, random_state is the seed used by the random number
+            generator; If RandomState instance, random_state is the random
+            number generator; If None, the random number generator is the
+            RandomState instance used by `np.random`. Defaults to None.
 
     Examples:
         Fitting and predicting follows scikit-learn syntax:
@@ -87,17 +88,17 @@ class QuantileRegressionForest(BaseModel):
         True
     '''
     def __init__(self,
-        n_estimators: int = 100,
-        criterion = "mse",
-        splitter = "best",
-        max_features = None,
-        max_depth = None,
-        min_samples_split = 2,
-        min_samples_leaf = 1,
-        min_weight_fraction_leaf = 0.,
-        max_leaf_nodes = None,
-        n_jobs: int = -1,
-        random_seed: Optional[int] = None):
+                 n_estimators: int = 100,
+                 criterion: str = "mse",
+                 splitter: str = "best",
+                 max_features: Optional[Union[int, float, str]] = None,
+                 max_depth: Optional[int] = None,
+                 min_samples_split: Union[int, float] = 2,
+                 min_samples_leaf: Union[int, float] = 1,
+                 min_weight_fraction_leaf: float = 0.,
+                 max_leaf_nodes: Optional[int] = None,
+                 n_jobs: int = -1,
+                 random_seed: Optional[int] = None):
 
         self.n_estimators = n_estimators
         self.min_samples_leaf = min_samples_leaf
@@ -114,15 +115,15 @@ class QuantileRegressionForest(BaseModel):
 
         self._estimators = n_estimators * [
             QuantileRegressionTree(
-                criterion = criterion,
-                splitter = splitter,
-                max_depth = max_depth,
-                min_samples_split = min_samples_split,
-                min_samples_leaf = min_samples_leaf,
-                min_weight_fraction_leaf = min_weight_fraction_leaf,
-                max_features = max_features,
-                max_leaf_nodes = max_leaf_nodes,
-                random_seed = random_seed
+                criterion=criterion,
+                splitter=splitter,
+                max_depth=max_depth,
+                min_samples_split=min_samples_split,
+                min_samples_leaf=min_samples_leaf,
+                min_weight_fraction_leaf=min_weight_fraction_leaf,
+                max_features=max_features,
+                max_leaf_nodes=max_leaf_nodes,
+                random_seed=random_seed
             )
         ]
 
@@ -130,14 +131,15 @@ class QuantileRegressionForest(BaseModel):
         ''' Fit decision trees in parallel. '''
         n = X.shape[0]
 
-        if self.random_seed is not None: np.random.seed(self.random_seed)
+        if self.random_seed is not None:
+            np.random.seed(self.random_seed)
 
         # Get bootstrap resamples of the data set
-        bidxs = np.random.choice(n, size = (self.n_estimators, n),
-                                 replace = True)
+        bidxs = np.random.choice(n, size=(self.n_estimators, n),
+                                 replace=True)
 
         # Fit trees in parallel on the bootstrapped resamples
-        with Parallel(n_jobs = self.n_jobs) as parallel:
+        with Parallel(n_jobs=self.n_jobs) as parallel:
             self._estimators = parallel(
                 delayed(estimator.fit)(X[bidxs[b, :], :], y[bidxs[b, :]])
                 for b, estimator in enumerate(self._estimators)
@@ -149,16 +151,18 @@ class QuantileRegressionForest(BaseModel):
 
         # Ensure that X is two-dimensional
         onedim = (len(X.shape) == 1)
-        if onedim: X = np.expand_dims(X, 0)
+        if onedim:
+            X = np.expand_dims(X, 0)
 
-        with Parallel(n_jobs = self.n_jobs) as parallel:
+        with Parallel(n_jobs=self.n_jobs) as parallel:
 
             preds = parallel(
                 delayed(estimator.predict)(X, uncertainty)
                 for estimator in self._estimators
             )
             if uncertainty is not None:
-                intervals = np.stack([interval for _, interval in preds], axis=0)
+                intervals = np.stack([interval for _, interval in preds],
+                                     axis=0)
                 intervals = intervals.mean(0)
                 preds = np.stack([pred for pred, _ in preds])
                 preds = preds.mean(0)
@@ -169,5 +173,6 @@ class QuantileRegressionForest(BaseModel):
 
             else:
                 preds = np.mean(preds, axis=0)
-                if onedim: preds = preds[0]
+                if onedim:
+                    preds = preds[0]
                 return preds

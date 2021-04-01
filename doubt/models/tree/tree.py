@@ -22,8 +22,8 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
         Args:
             X (array-like or sparse matrix):
                 The input samples, of shape [n_samples, n_features].
-                Internally, it will be converted to ``dtype=np.float32`` and
-                if a sparse matrix is provided to a sparse ``csr_matrix``.
+                Internally, it will be converted to `dtype=np.float32` and
+                if a sparse matrix is provided to a sparse `csr_matrix`.
             uncertainty (float or None, optional):
                 Value ranging from 0 to 1. If None then no prediction intervals
                 will be returned. Defaults to None.
@@ -70,8 +70,8 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
         Args:
             X (array-like or sparse matrix)
                 The training input samples, of shape [n_samples, n_features].
-                Internally, it will be converted to ``dtype=np.float32`` and
-                if a sparse matrix is provided to a sparse ``csc_matrix``.
+                Internally, it will be converted to `dtype=np.float32` and
+                if a sparse matrix is provided to a sparse `csc_matrix`.
             y (array-like):
                 The target values (class labels) as integers or strings, of
                 shape [n_samples] or [n_samples, n_outputs].
@@ -121,8 +121,8 @@ class QuantileRegressionTree(DecisionTreeRegressor, BaseTreeQuantileRegressor):
             absolute error. Defaults to 'mse'.
         splitter (string, optional):
             The strategy used to choose the split at each node. Supported
-            strategies are 'best' to choose the best split and 'random' to choose
-            the best random split. Defaults to 'best'.
+            strategies are 'best' to choose the best split and 'random' to
+            choose the best random split. Defaults to 'best'.
         max_features (int, float, string or None, optional):
             The number of features to consider when looking for the best split:
             - If int, then consider `max_features` features at each split.
@@ -134,12 +134,12 @@ class QuantileRegressionTree(DecisionTreeRegressor, BaseTreeQuantileRegressor):
             - If 'log2', then `max_features=log2(n_features)`.
             - If None, then `max_features=n_features`.
             Note: the search for a split does not stop until at least one
-            valid partition of the node samples is found, even if it requires to
-            effectively inspect more than ``max_features`` features. Defaults
-            to None.
+            valid partition of the node samples is found, even if it requires
+            to effectively inspect more than `max_features` features.
+            Defaults to None.
         max_depth (int or None, optional):
-            The maximum depth of the tree. If None, then nodes are expanded until
-            all leaves are pure or until all leaves contain less than
+            The maximum depth of the tree. If None, then nodes are expanded
+            until all leaves are pure or until all leaves contain less than
             min_samples_split samples. Defaults to None.
         min_samples_split (int or float, optional):
             The minimum number of samples required to split an internal node:
@@ -158,14 +158,14 @@ class QuantileRegressionTree(DecisionTreeRegressor, BaseTreeQuantileRegressor):
             the input samples) required to be at a leaf node. Samples have
             equal weight when sample_weight is not provided. Defaults to 0.0.
         max_leaf_nodes (int or None, optional):
-            Grow a tree with ``max_leaf_nodes`` in best-first fashion.
+            Grow a tree with `max_leaf_nodes` in best-first fashion.
             Best nodes are defined as relative reduction in impurity.
             If None then unlimited number of leaf nodes. Defaults to None.
         random_seed (int, RandomState instance or None, optional):
-            If int, random_state is the seed used by the random number generator;
-            If RandomState instance, random_state is the random number generator;
-            If None, the random number generator is the RandomState instance used
-            by `np.random`. Defaults to None.
+            If int, random_state is the seed used by the random number
+            generator; If RandomState instance, random_state is the random
+            number generator; If None, the random number generator is the
+            RandomState instance used by `np.random`. Defaults to None.
 
     Attributes:
         feature_importances_ (array):
@@ -176,9 +176,9 @@ class QuantileRegressionTree(DecisionTreeRegressor, BaseTreeQuantileRegressor):
         max_features_ (int):
             The inferred value of max_features.
         n_features_ (int):
-            The number of features when ``fit`` is performed.
+            The number of features when `fit` is performed.
         n_outputs_ (int):
-            The number of outputs when ``fit`` is performed.
+            The number of outputs when `fit` is performed.
         tree_ (Tree object):
             The underlying Tree object.
         y_train_ (array-like):

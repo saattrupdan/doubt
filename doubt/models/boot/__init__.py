@@ -1,1 +1,1 @@
-from .boot import Boot
+from .boot import Boot # noqa

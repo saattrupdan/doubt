@@ -1,24 +1,24 @@
-from .airfoil import Airfoil
-from .bike_sharing_daily import BikeSharingDaily
-from .bike_sharing_hourly import BikeSharingHourly
-from .blog import Blog
-from .concrete import Concrete
-from .cpu import CPU
-from .facebook_comments import FacebookComments
-from .facebook_metrics import FacebookMetrics
-from .fish_bioconcentration import FishBioconcentration
-from .fish_toxicity import FishToxicity
-from .forest_fire import ForestFire
-from .gas_turbine import GasTurbine
-from .nanotube import Nanotube
-from .new_taipei_housing import NewTaipeiHousing
-from .parkinsons import Parkinsons
-from .power_plant import PowerPlant
-from .protein import Protein
-from .servo import Servo
-from .solar_flare import SolarFlare
-from .space_shuttle import SpaceShuttle
-from .stocks import Stocks
-from .superconductivity import Superconductivity
-from .tehran_housing import TehranHousing
-from .yacht import Yacht
+from .airfoil import Airfoil # noqa
+from .bike_sharing_daily import BikeSharingDaily # noqa
+from .bike_sharing_hourly import BikeSharingHourly # noqa
+from .blog import Blog # noqa
+from .concrete import Concrete # noqa
+from .cpu import CPU # noqa
+from .facebook_comments import FacebookComments # noqa
+from .facebook_metrics import FacebookMetrics # noqa
+from .fish_bioconcentration import FishBioconcentration # noqa
+from .fish_toxicity import FishToxicity # noqa
+from .forest_fire import ForestFire # noqa
+from .gas_turbine import GasTurbine # noqa
+from .nanotube import Nanotube # noqa
+from .new_taipei_housing import NewTaipeiHousing # noqa
+from .parkinsons import Parkinsons # noqa
+from .power_plant import PowerPlant # noqa
+from .protein import Protein # noqa
+from .servo import Servo # noqa
+from .solar_flare import SolarFlare # noqa
+from .space_shuttle import SpaceShuttle # noqa
+from .stocks import Stocks # noqa
+from .superconductivity import Superconductivity # noqa
+from .tehran_housing import TehranHousing # noqa
+from .yacht import Yacht # noqa

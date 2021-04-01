@@ -158,8 +158,9 @@ class FishBioconcentration(BaseDataset):
 
         # Encode SMILE strings
         for idx in range(max_smile):
-            fn = lambda txt: smile_symbols.index(txt[idx])
-            df[f'smiles_{idx}'] = df.smiles.map(fn)
+            def fix_smiles(txt: str):
+                return smile_symbols.index(txt[idx])
+            df[f'smiles_{idx}'] = df.smiles.map(fix_smiles)
 
         # Drop original SMILE feature
         df = df.drop(columns='smiles')

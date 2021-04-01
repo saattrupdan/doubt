@@ -1,6 +1,5 @@
 '''Base class for data sets'''
 
-from pathlib import Path
 import warnings
 import requests
 import abc
@@ -120,8 +119,9 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
         trgts = type(self).trgts
 
         if test_size is not None:
-            if random_seed is not None: np.random.seed(random_seed)
-            test_idxs = np.random.random(size = (nrows,)) < test_size
+            if random_seed is not None:
+                np.random.seed(random_seed)
+            test_idxs = np.random.random(size=(nrows,)) < test_size
             train_idxs = ~test_idxs
 
             X_train = self._data.iloc[train_idxs, feats].values

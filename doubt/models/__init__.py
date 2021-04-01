@@ -1,8 +1,5 @@
-from .boot import Boot
-
-from .linear import QuantileLinearRegression
-
-from .tree import QuantileRegressionTree
-from .tree import QuantileRegressionForest
-
-from .nn import QuantileNeuralNetwork
+from .boot import Boot # noqa
+from .linear import QuantileLinearRegression # noqa
+from .tree import QuantileRegressionTree # noqa
+from .tree import QuantileRegressionForest # noqa
+from .nn import QuantileNeuralNetwork # noqa

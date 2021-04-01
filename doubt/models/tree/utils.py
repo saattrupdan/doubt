@@ -41,7 +41,8 @@ def weighted_percentile(arr: NumericArray,
             are of different lengths.
 
     References:
-        [1]: https://en.wikipedia.org/wiki/Percentile#The_weighted_percentile_method
+        [1]: https://en.wikipedia.org/wiki/Percentile
+                #The_weighted_percentile_method
     '''
     # Ensure that quantile is set properly
     if quantile > 1 or quantile < 0:
@@ -103,4 +104,5 @@ def weighted_percentile(arr: NumericArray,
 
     # Add the corresponding proportion from `sorted_arr[start]` to
     # `sorted_arr[start + 1]`, to `sorted_arr[start]`.
-    return sorted_arr[start] + fraction * (sorted_arr[start + 1] - sorted_arr[start])
+    return sorted_arr[start] + fraction * \
+        (sorted_arr[start + 1] - sorted_arr[start])

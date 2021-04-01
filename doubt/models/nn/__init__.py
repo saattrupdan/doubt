@@ -1,1 +1,1 @@
-from .nn import QuantileNeuralNetwork
+from .nn import QuantileNeuralNetwork # noqa
