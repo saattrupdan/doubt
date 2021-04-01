@@ -1,6 +1,9 @@
 # Virtual environment
 **/.venv
 
+# Environment variables
+**/.env
+
 # VIm swap files
 **/*.swp
 
