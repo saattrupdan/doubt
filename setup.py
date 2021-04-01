@@ -22,5 +22,11 @@ setup(name='doubt',
                    'Programming Language :: Python :: 3.8'],
       packages=find_packages(exclude=('tests',)),
       include_package_data=True,
-      install_requires=['numpy', 'scipy', 'scikit-learn', 'requests',
-                        'PyYAML', 'tables', 'openpyxl'])
+      install_requires=['numpy>=1.20',
+                        'scipy>=1.6',
+                        'scikit-learn>=0.24',
+                        'requests>=2.25',
+                        'PyYAML>=5.4',
+                        'tables>=3.6',
+                        'openpyxl>=3.0',
+                        'statsmodels>=0.12'])
