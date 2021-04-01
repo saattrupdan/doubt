@@ -6,6 +6,7 @@ release-major:
 	python bump_version.py --major && \
 	git add doubt/__init__.py && \
 	git commit -m 'feat: New major release' && \
+	git pull origin master & \
 	git push --tags origin master && \
 	python setup.py sdist bdist_wheel && \
 	twine upload dist/*
@@ -15,6 +16,7 @@ release-minor:
 	python bump_version.py --minor && \
 	git add doubt/__init__.py && \
 	git commit -m 'feat: New minor release' && \
+	git pull origin master & \
 	git push --tags origin master && \
 	python setup.py sdist bdist_wheel && \
 	twine upload dist/*
@@ -24,6 +26,7 @@ release-patch:
 	python bump_version.py --patch && \
 	git add doubt/__init__.py && \
 	git commit -m 'feat: New patch release' && \
+	git pull origin master & \
 	git push --tags origin master && \
 	python setup.py sdist bdist_wheel && \
 	twine upload dist/*
