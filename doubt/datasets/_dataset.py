@@ -12,10 +12,10 @@ import pandas as pd
 
 BASE_DATASET_DESCRIPTION = '''
     Parameters:
-        cache (str or None):
-            The name of the cache. It will be saved to ``cache``.h5 in the
+        cache (str or None, optional):
+            The name of the cache. It will be saved to `cache` in the
             current working directory. If None then no cache will be saved.
-            Defaults to '.cache'.
+            Defaults to '.dataset_cache'.
 
     Attributes:
         shape (tuple of integers):
@@ -39,8 +39,8 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
     feats: Iterable
     trgts: Iterable
 
-    def __init__(self, cache: Optional[str] = '.cache'):
-        self._cache = pd.HDFStore(f'{cache}.h5') if cache is not None else {}
+    def __init__(self, cache: Optional[str] = '.dataset_cache'):
+        self.cache = cache
         self._data = self.get_data()
         self.shape = self._data.shape
         self.columns = self._data.columns
@@ -61,14 +61,15 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
         name = name.lower().strip('_')
 
         try:
-            data = self._cache[name]
-        except KeyError:
+            if self.cache is not None:
+                data = pd.read_hdf(self.cache, name)
+        except (FileNotFoundError, KeyError):
             with warnings.catch_warnings():
                 warnings.simplefilter('ignore')
                 response = requests.get(self.url, verify=False)
             data = self._prep_data(response.content)
-            if self._cache != {}:
-                data.to_hdf(self._cache, name)
+            if self.cache is not None:
+                data.to_hdf(self.cache, name)
         return data
 
     def to_pandas(self) -> pd.DataFrame:
@@ -81,8 +82,6 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
         return self._data.head(n)
 
     def close(self):
-        if self._cache != {}:
-            self._cache.close()
         del self._data
         del self
 
