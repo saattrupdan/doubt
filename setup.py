@@ -1,6 +1,5 @@
 from setuptools import setup, find_packages
 
-# TODO: Include extras_requires, with neural network stuff
 
 setup(name='doubt',
       maintainer='Dan Saattrup Nielsen',
@@ -10,6 +9,12 @@ setup(name='doubt',
       description='Bringing back uncertainty to machine learning',
       license='new BSD',
       url='https://github.com/saattrupdan/doubt',
-      version='alpha',
+      version='beta',
       zip_safe=False,
-      install_requires=['numpy', 'scipy', 'scikit-learn'])
+      install_requires=['numpy',
+                        'scipy',
+                        'scikit-learn',
+                        'requests',
+                        'PyYAML',
+                        'tables',
+                        'openpyxl'])
