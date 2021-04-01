@@ -67,9 +67,8 @@ class Boot:
 
         # Input is a model
         if callable(input) or hasattr(input, 'predict'):
-            self.mode = 'model'
-            self.model_fit = input.fit
-            self.model_predict = input if callable(input) else input.predict
+            self._model_fit = input.fit
+            self._model_predict = input if callable(input) else input.predict
             self.fit = MethodType(fit, self)
             self.predict = MethodType(predict, self)
 
@@ -165,7 +164,7 @@ def predict(self,
         [3]: https://web.stanford.edu/~hastie/ElemStatLearn/
     '''
     if uncertainty is None:
-        return self.model_predict(X)
+        return self._model_predict(X)
 
     if not hasattr(self, 'X_train') or self.X_train is None:
         raise RuntimeError('This model has not been fitted yet! Call fit() '
@@ -195,14 +194,14 @@ def predict(self,
 
         X_train = self.X_train[train_idxs, :]
         y_train = self.y_train[train_idxs]
-        self.model_fit(X_train, y_train)
+        self._model_fit(X_train, y_train)
 
         X_val = self.X_train[val_idxs, :]
         y_val = self.y_train[val_idxs]
-        preds = self.model_predict(X_val)
+        preds = self._model_predict(X_val)
 
         val_residuals.append(y_val - preds)
-        bootstrap_preds.append(self.model_predict(X))
+        bootstrap_preds.append(self._model_predict(X))
 
     bootstrap_preds = np.stack(bootstrap_preds, axis=0)
     bootstrap_preds -= np.mean(bootstrap_preds, axis=0)
@@ -220,7 +219,7 @@ def predict(self,
     quantiles = np.quantile(C, q=[uncertainty/2, 1-uncertainty/2], axis=0)
     quantiles = np.transpose(quantiles)
 
-    preds = self.model_predict(X)
+    preds = self._model_predict(X)
 
     if onedim:
         return preds[0], (preds + quantiles)[0]
@@ -242,8 +241,8 @@ def fit(self, X: FloatArray, y: FloatArray):
     self.X_train = X
     self.y_train = y
 
-    self.model_fit(X, y)
-    preds = self.model_predict(X)
+    self._model_fit(X, y)
+    preds = self._model_predict(X)
     self.train_residuals = np.quantile(y - preds, q=np.arange(0, 1, .01))
 
     permuted = np.random.permutation(y) - np.random.permutation(preds)
