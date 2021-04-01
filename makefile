@@ -23,6 +23,6 @@ release-patch:
 	make release
 
 release:
-	git push --tags && \
+	git push --tags origin master && \
 	python setup.py sdist bdist_wheel && \
 	twine upload dist/*
