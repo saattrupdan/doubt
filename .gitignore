@@ -4,6 +4,9 @@
 # VIm swap files
 **/*.swp
 
+# Vim plugins config
+**/.vim
+
 # Python compiled files
 **/*.pyc
 
