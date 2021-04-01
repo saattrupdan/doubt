@@ -51,7 +51,7 @@ class Boot:
         >>> X, y = PowerPlant().split()
         >>> linreg = Boot(LinearRegression())
         >>> linreg = linreg.fit(X, y)
-        >>> linreg.predict([10, 30, 1000, 50])
+        >>> linreg.predict([10, 30, 1000, 50], uncertainty=0.05)
         (481.9203102126274, array([473.43314309, 490.0313962 ]))
 
     Sources:
@@ -133,7 +133,7 @@ def compute_statistic(self,
 def predict(self,
             X: FloatArray,
             n_boots: Optional[int] = None,
-            uncertainty: float = .05
+            uncertainty: Optional[float] = None
             ) -> Tuple[Union[float, FloatArray], FloatArray]:
     '''Compute bootstrapped predictions.
 
@@ -146,23 +146,27 @@ def predict(self,
             The array containing the data set, either of shape (f,)
             or (n, f), with n being the number of samples and f being
             the number of features.
-        n_boots (int or None):
+        n_boots (int or None, optional):
             The number of resamples to bootstrap. If None then it is set
             to the square root of the data set. Defaults to None
-        uncertainty (float):
-            The uncertainty used to compute the confidence interval
-            of the bootstrapped statistic. Not used if `return_all` is
-            set to True. Defaults to 0.05.
+        uncertainty (float or None, optional):
+            The uncertainty used to compute the prediction interval
+            of the bootstrapped prediction. If None then no prediction
+            intervals are returned. Defaults to None.
 
     Returns:
-        pair of float arrays:
-            The bootstrapped predictions and the confidence intervals
+        float array or pair of float arrays:
+            The bootstrapped predictions, and the confidence intervals if
+            `uncertainty` is not None.
 
     References:
         [1]: https://saattrupdan.github.io/2020-03-01-bootstrap-prediction/
         [2]: https://core.ac.uk/download/pdf/42735868.pdf
         [3]: https://web.stanford.edu/~hastie/ElemStatLearn/
     '''
+    if uncertainty is None:
+        return self.model_predict(X)
+
     if not hasattr(self, 'X_train') or self.X_train is None:
         raise RuntimeError('This model has not been fitted yet! Call fit() '
                            'before predicting new samples.')
