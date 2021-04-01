@@ -1,9 +1,15 @@
 from setuptools import setup, find_packages
 from pathlib import Path
+import re
+
+init_file = Path('doubt') / '__init__.py'
+init = init_file.read_text()
+version_regex = r"(?<=__version__ = ')[0-9]+\.[0-9]+\.[0-9]+(?=')"
+version = re.search(version_regex, init)[0]
 
 
 setup(name='doubt',
-      version='1.0.0',
+      version=version,
       description='Bringing back uncertainty to machine learning',
       long_description=Path('README.md').read_text(),
       long_description_content_type='text/markdown',
