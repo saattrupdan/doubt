@@ -6,7 +6,8 @@ from typing import Union, Tuple
 import subprocess
 
 
-def get_current_version(return_tuple: bool = False) -> Union[str, Tuple[int]]:
+def get_current_version(return_tuple: bool = False) \
+                        -> Union[str, Tuple[int, int, int]]:
     '''Fetch the current version without import __init__.py.
 
     Args:
@@ -96,8 +97,7 @@ if __name__ == '__main__':
                         help='Bump the patch version by one.')
     args = parser.parse_args()
 
-    sum_of_versions = args.major + args.minor + args.patch
-    if sum_of_versions != 1:
+    if args.major + args.minor + args.patch != 1:
         raise RuntimeError('Exactly one of --major, --minor and --patch must '
                            'be selected.')
     elif args.major:
