@@ -42,12 +42,19 @@ def set_new_version(major: int, minor: int, patch: int):
             The patch version. This changes when the only new changes are bug
             fixes.
     '''
+    # Get current __init__.py content
     init_file = Path('doubt') / '__init__.py'
     init = init_file.read_text()
+
+    # Replace __version__ in __init__.py with the new one
     version_regex = r"(?<=__version__ = ')[0-9]+\.[0-9]+\.[0-9]+(?=')"
     new_init = re.sub(version_regex, f'{major}.{minor}.{patch}', init)
     with init_file.open('w') as f:
         f.write(new_init)
+
+    # Add to version control
+    subprocess.run(['git', 'add', '__init__.py'])
+    subprocess.run(['git', 'commit', '-m', f'feat: v{major}.{minor}.{patch}'])
 
 
 def create_version_tag():
