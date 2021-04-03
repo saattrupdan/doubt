@@ -127,6 +127,16 @@ class QuantileRegressionForest(BaseModel):
             )
         ]
 
+    def __repr__(self) -> str:
+        txt = 'QuantileRegressionForest('
+        attributes = ['n_estimators', 'criterion', 'splitter', 'max_features',
+                      'max_depth', 'min_samples_split', 'min_samples_leaf',
+                      'min_weight_fraction_leaf', 'max_leaf_nodes', 'n_jobs',
+                      'random_seed']
+        for attr in attributes:
+            txt += f'                         {attr}={getattr(self, attr)},'
+        return txt + ')'
+
     def fit(self, X, y):
         ''' Fit decision trees in parallel. '''
         n = X.shape[0]

@@ -67,18 +67,30 @@ class Boot:
 
         # Input is a model
         if callable(input) or hasattr(input, 'predict'):
+            self._model_name = input.__class__.__name__
             self._model_fit = input.fit
             self._model_predict = input if callable(input) else input.predict
             self.fit = MethodType(fit, self)
             self.predict = MethodType(predict, self)
+            self.__repr__ = MethodType(model_repr, self)
 
         # Input is a dataset
         elif hasattr(input, '__getitem__'):
             self.data = np.asarray(input)
             self.compute_statistic = MethodType(compute_statistic, self)
+            self.__repr__ = MethodType(dataset_repr, self)
 
         else:
             raise TypeError('Input not recognised.')
+
+
+def dataset_repr(self) -> str:
+    return (f'Boot(dataset_shape={self.data.shape}, '
+                 f'random_seed={self.random_seed})')
+
+
+def model_repr(self) -> str:
+    return f'Boot(model={self._model_name}, random_seed={self.random_seed})'
 
 
 def compute_statistic(self,

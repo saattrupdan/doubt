@@ -48,6 +48,10 @@ class QuantileLinearRegression(BaseModel):
         self.q_bias = np.empty((2,))
         self.q_slope: Optional[FloatArray] = None
 
+    def __repr__(self) -> str:
+        return (f'QuantileLinearRegression(uncertainty={self.uncertainty}, '
+                f'max_iter={self.max_iter}, n_jobs={self.n_jobs})')
+
     def fit(self, X: FloatArray, y: FloatArray):
         '''Fit the model.
 
