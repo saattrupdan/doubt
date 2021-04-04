@@ -128,7 +128,7 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
             X_test = self._data.iloc[test_idxs, feats].values
             y_test = self._data.iloc[test_idxs, trgts].values.squeeze()
 
-            return X_train, y_train, X_test, y_test
+            return X_train, X_test, y_train, y_test
 
         else:
             X = self._data.iloc[:, feats].values
