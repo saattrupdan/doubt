@@ -45,9 +45,9 @@ class QuantileLinearRegression(BaseModel):
         self.uncertainty = uncertainty
         self.max_iter = max_iter
         self.n_jobs = n_jobs
-        self.linreg = LinearRegression(n_jobs=n_jobs)
-        self.q_bias = np.empty((2,))
-        self.q_slope: Optional[FloatArray] = None
+        self._linreg = LinearRegression(n_jobs=n_jobs)
+        self._q_bias = np.empty((2,))
+        self._q_slope: Optional[FloatArray] = None
 
     def __repr__(self) -> str:
         return (f'QuantileLinearRegression(uncertainty={self.uncertainty}, '
@@ -62,21 +62,21 @@ class QuantileLinearRegression(BaseModel):
             y (float array):
                 The target matrix.
         '''
-        self.linreg.fit(X, y)
+        self._linreg.fit(X, y)
 
         n = X.shape[0]
         X = np.concatenate((np.ones((n, 1)), X), axis=1)
 
         if self.uncertainty is not None:
             statsmodels_qreg = QuantReg(y, X)
-            self.q_slope = np.empty((2, X.shape[1] - 1))
+            self._q_slope = np.empty((2, X.shape[1] - 1))
             lower_q = self.uncertainty / 2.
             upper_q = 1. - lower_q
             for i, quantile in enumerate([lower_q, upper_q]):
                 result = statsmodels_qreg.fit(q=quantile,
                                               max_iter=self.max_iter)
-                self.q_bias[i] = result.params[0]
-                self.q_slope[i] = result.params[1:]
+                self._q_bias[i] = result.params[0]
+                self._q_slope[i] = result.params[1:]
 
         return self
 
@@ -97,9 +97,9 @@ class QuantileLinearRegression(BaseModel):
         onedim = (len(X.shape) == 1)
         if onedim:
             X = np.expand_dims(X, 0)
-        preds = self.linreg.predict(X).squeeze()
-        lower = np.sum(self.q_slope[0] * X, axis=1) + self.q_bias[0]
-        upper = np.sum(self.q_slope[1] * X, axis=1) + self.q_bias[1]
+        preds = self._linreg.predict(X).squeeze()
+        lower = np.sum(self._q_slope[0] * X, axis=1) + self._q_bias[0]
+        upper = np.sum(self._q_slope[1] * X, axis=1) + self._q_bias[1]
         intervals = np.stack([lower, upper], axis=1).squeeze()
         if onedim:
             preds = preds.item()
