@@ -29,6 +29,7 @@ wrap it in a `Boot` to enable predicting with prediction intervals:
 
 ```python
 >>> from sklearn.linear_model import LinearRegression
+>>> from doubt import Boot
 >>> from doubt.datasets import PowerPlant
 >>>
 >>> X, y = PowerPlant().split()
