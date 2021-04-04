@@ -96,7 +96,7 @@ class Stocks(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((195, 12), (195, 6), (57, 12), (57, 6))
 
@@ -112,8 +112,8 @@ class Stocks(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00390/stock%20portfolio%20performance%20data%20set.xlsx'
 
-    feats = range(12)
-    trgts = range(12, 18)
+    features = range(12)
+    targets = range(12, 18)
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

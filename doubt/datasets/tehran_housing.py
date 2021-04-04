@@ -61,7 +61,7 @@ class TehranHousing(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((287, 107), (287, 2), (84, 107), (84, 2))
 
@@ -77,8 +77,8 @@ class TehranHousing(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00437/Residential-Building-Data-Set.xlsx'
 
-    feats = range(107)
-    trgts = [107, 108]
+    features = range(107)
+    targets = [107, 108]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

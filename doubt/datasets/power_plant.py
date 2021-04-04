@@ -68,7 +68,7 @@ class PowerPlant(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((7615, 4), (7615,), (1953, 4), (1953,))
 
@@ -84,8 +84,8 @@ class PowerPlant(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00294/CCPP.zip'
 
-    feats = range(4)
-    trgts = [4]
+    features = range(4)
+    targets = [4]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

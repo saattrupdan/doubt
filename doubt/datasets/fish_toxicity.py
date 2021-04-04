@@ -56,7 +56,7 @@ class FishToxicity(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((701, 6), (701,), (207, 6), (207,))
 
@@ -72,8 +72,8 @@ class FishToxicity(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00504/qsar_fish_toxicity.csv'
 
-    feats = range(6)
-    trgts = [6]
+    features = range(6)
+    targets = [6]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

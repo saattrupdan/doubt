@@ -56,7 +56,7 @@ class CPU(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((158, 8), (158,), (51, 8), (51,))
 
@@ -72,8 +72,8 @@ class CPU(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'cpu-performance/machine.data'
 
-    feats = range(8)
-    trgts = [8]
+    features = range(8)
+    targets = [8]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

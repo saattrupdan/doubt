@@ -71,7 +71,7 @@ class ForestFire(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((400, 12), (400,), (117, 12), (117,))
 
@@ -87,8 +87,8 @@ class ForestFire(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'forest-fires/forestfires.csv'
 
-    feats = range(12)
-    trgts = [12]
+    features = range(12)
+    targets = [12]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

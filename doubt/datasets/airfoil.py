@@ -45,7 +45,7 @@ class Airfoil(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((1179, 5), (1179,), (324, 5), (324,))
 
@@ -61,8 +61,8 @@ class Airfoil(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00291/airfoil_self_noise.dat'
 
-    feats = range(5)
-    trgts = [5]
+    features = range(5)
+    targets = [5]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

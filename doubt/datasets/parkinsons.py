@@ -93,7 +93,7 @@ class Parkinsons(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((4668, 20), (4668, 2), (1207, 20), (1207, 2))
 
@@ -109,8 +109,8 @@ class Parkinsons(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'parkinsons/telemonitoring/parkinsons_updrs.data'
 
-    feats = range(20)
-    trgts = [20, 21]
+    features = range(20)
+    targets = [20, 21]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

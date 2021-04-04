@@ -86,7 +86,7 @@ class Boot:
 
 def dataset_repr(self) -> str:
     return (f'Boot(dataset_shape={self.data.shape}, '
-                 f'random_seed={self.random_seed})')
+            f'random_seed={self.random_seed})')
 
 
 def model_repr(self) -> str:

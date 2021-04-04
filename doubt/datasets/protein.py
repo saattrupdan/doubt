@@ -59,7 +59,7 @@ class Protein(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((36606, 9), (36606,), (9124, 9), (9124,))
 
@@ -75,8 +75,8 @@ class Protein(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00265/CASP.csv'
 
-    feats = range(9)
-    trgts = [9]
+    features = range(9)
+    targets = [9]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

@@ -66,7 +66,7 @@ class Servo(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((128, 4), (128,), (39, 4), (39,))
 
@@ -82,8 +82,8 @@ class Servo(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           'servo/servo.data'
 
-    feats = range(4)
-    trgts = [4]
+    features = range(4)
+    targets = [4]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

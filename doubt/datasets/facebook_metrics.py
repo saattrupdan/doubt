@@ -77,7 +77,7 @@ class FacebookMetrics(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((386, 7), (386, 11), (114, 7), (114, 11))
 
@@ -93,8 +93,8 @@ class FacebookMetrics(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00368/Facebook_metrics.zip'
 
-    feats = range(7)
-    trgts = range(7, 18)
+    features = range(7)
+    targets = range(7, 18)
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

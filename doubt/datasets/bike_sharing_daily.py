@@ -89,7 +89,7 @@ class BikeSharingDaily(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((562, 12), (562, 3), (169, 12), (169, 3))
 
@@ -105,8 +105,8 @@ class BikeSharingDaily(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00275/Bike-Sharing-Dataset.zip'
 
-    feats = range(12)
-    trgts = [12, 13, 14]
+    features = range(12)
+    targets = [12, 13, 14]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

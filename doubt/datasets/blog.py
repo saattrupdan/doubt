@@ -105,7 +105,7 @@ class Blog(BaseDataset):
 
         Perform a train/test split, also outputting NumPy arrays:
         >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, y_train, X_test, y_test = train_test_split
+        >>> X_train, X_test, y_train, y_test = train_test_split
         >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
         ((41932, 279), (41932,), (10465, 279), (10465,))
 
@@ -121,8 +121,8 @@ class Blog(BaseDataset):
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
           '00304/BlogFeedback.zip'
 
-    feats = range(279)
-    trgts = [279]
+    features = range(279)
+    targets = [279]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
