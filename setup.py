@@ -23,5 +23,6 @@ setup(name='doubt',
                         'requests>=2.25',
                         'PyYAML>=5.4',
                         'tables>=3.6',
+                        'xlrd>=2.0',
                         'openpyxl>=3.0',
                         'statsmodels>=0.12'])
