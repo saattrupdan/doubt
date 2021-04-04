@@ -54,7 +54,7 @@ def set_new_version(major: int, minor: int, patch: int):
         f.write(new_init)
 
     # Add to version control
-    subprocess.run(['git', 'add', '__init__.py'])
+    subprocess.run(['git', 'add', 'doubt/__init__.py'])
     subprocess.run(['git', 'commit', '-m', f'feat: v{major}.{minor}.{patch}'])
 
 
