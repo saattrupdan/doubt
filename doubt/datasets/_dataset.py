@@ -22,13 +22,11 @@ BASE_DATASET_DESCRIPTION = '''
             Dimensions of the data set
         columns (list of strings):
             List of column names in the data set
-
-    Class attributes:
         url (string):
             The url where the raw data files can be downloaded
-        feats (iterable):
+        features (iterable):
             The column indices of the feature variables
-        trgts (iterable):
+        targets (iterable):
             The column indices of the target variables
 '''
 
@@ -36,8 +34,8 @@ BASE_DATASET_DESCRIPTION = '''
 class BaseDataset(object, metaclass=abc.ABCMeta):
 
     url: str
-    feats: Iterable
-    trgts: Iterable
+    features: Iterable
+    targets: Iterable
 
     def __init__(self, cache: Optional[str] = '.dataset_cache'):
         self.cache = cache
@@ -114,8 +112,8 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
             the tuple (X, y) of numpy arrays is returned.
         '''
         nrows = len(self._data)
-        feats = type(self).feats
-        trgts = type(self).trgts
+        features = type(self).features
+        targets = type(self).targets
 
         if test_size is not None:
             if random_seed is not None:
@@ -123,14 +121,14 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
             test_idxs = np.random.random(size=(nrows,)) < test_size
             train_idxs = ~test_idxs
 
-            X_train = self._data.iloc[train_idxs, feats].values
-            y_train = self._data.iloc[train_idxs, trgts].values.squeeze()
-            X_test = self._data.iloc[test_idxs, feats].values
-            y_test = self._data.iloc[test_idxs, trgts].values.squeeze()
+            X_train = self._data.iloc[train_idxs, features].values
+            y_train = self._data.iloc[train_idxs, targets].values.squeeze()
+            X_test = self._data.iloc[test_idxs, features].values
+            y_test = self._data.iloc[test_idxs, targets].values.squeeze()
 
             return X_train, X_test, y_train, y_test
 
         else:
-            X = self._data.iloc[:, feats].values
-            y = self._data.iloc[:, trgts].values.squeeze()
+            X = self._data.iloc[:, features].values
+            y = self._data.iloc[:, targets].values.squeeze()
             return X, y
