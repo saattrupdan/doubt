@@ -72,13 +72,13 @@ class Boot:
             self._model_predict = input if callable(input) else input.predict
             self.fit = MethodType(fit, self)
             self.predict = MethodType(predict, self)
-            self.__repr__ = MethodType(model_repr, self)
+            type(self).__repr__ = MethodType(model_repr, self)
 
         # Input is a dataset
         elif hasattr(input, '__getitem__'):
             self.data = np.asarray(input)
             self.compute_statistic = MethodType(compute_statistic, self)
-            self.__repr__ = MethodType(dataset_repr, self)
+            type(self).__repr__ = MethodType(dataset_repr, self)
 
         else:
             raise TypeError('Input not recognised.')
