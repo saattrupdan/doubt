@@ -44,6 +44,7 @@ class QuantileLinearRegression(BaseModel):
                  n_jobs: int = -1):
         self.uncertainty = uncertainty
         self.max_iter = max_iter
+        self.n_jobs = n_jobs
         self.linreg = LinearRegression(n_jobs=n_jobs)
         self.q_bias = np.empty((2,))
         self.q_slope: Optional[FloatArray] = None
@@ -90,7 +91,7 @@ class QuantileLinearRegression(BaseModel):
 
         Returns:
             pair of float arrays:
-                The bootstrapped predictions and the confidence intervals
+                The predictions and the prediction intervals
         '''
         X = np.asarray(X)
         onedim = (len(X.shape) == 1)
