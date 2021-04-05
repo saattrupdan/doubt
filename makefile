@@ -6,7 +6,10 @@ release-major:
 	python bump_version.py --major && \
 	git pull origin master && \
 	git push origin dev && \
-	git push --tags origin master && \
+	git checkout master && \
+	git merge dev && \
+	git push --tags && \
+	git checkout dev && \
 	python setup.py sdist bdist_wheel && \
 	twine upload dist/*
 
@@ -15,7 +18,10 @@ release-minor:
 	python bump_version.py --minor && \
 	git pull origin master && \
 	git push origin dev && \
-	git push --tags origin master && \
+	git checkout master && \
+	git merge dev && \
+	git push --tags && \
+	git checkout dev && \
 	python setup.py sdist bdist_wheel && \
 	twine upload dist/*
 
@@ -24,6 +30,9 @@ release-patch:
 	python bump_version.py --patch && \
 	git pull origin master && \
 	git push origin dev && \
-	git push --tags origin master && \
+	git checkout master && \
+	git merge dev && \
+	git push --tags && \
+	git checkout dev && \
 	python setup.py sdist bdist_wheel && \
 	twine upload dist/*
