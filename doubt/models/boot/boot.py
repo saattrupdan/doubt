@@ -221,7 +221,7 @@ def predict(self,
     val_residuals = np.quantile(val_residuals, q=np.arange(0, 1, .01))
 
     # Compute the .632+ bootstrap estimate for the sample noise and bias
-    generalisation = np.abs(val_residuals - self.train_residuals)
+    generalisation = np.abs(val_residuals.mean() - self.train_residuals.mean())
     relative_overfitting_rate = np.mean(generalisation / self.no_info_val)
     weight = .632 / (1 - .368 * relative_overfitting_rate)
     residuals = (1 - weight) * self.train_residuals + weight * val_residuals
