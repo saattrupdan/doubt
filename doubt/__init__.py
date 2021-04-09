@@ -1,4 +1,4 @@
-__version__ = '2.0.1' # noqa
+__version__ = '2.0.2' # noqa
 
 from .models import QuantileRegressionTree # noqa
 from .models import QuantileRegressionForest # noqa
