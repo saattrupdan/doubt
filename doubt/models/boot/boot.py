@@ -52,7 +52,7 @@ class Boot:
         >>> linreg = Boot(LinearRegression())
         >>> linreg = linreg.fit(X, y)
         >>> linreg.predict([10, 30, 1000, 50], uncertainty=0.05)
-        (481.9203102126274, array([473.43314309, 490.0313962 ]))
+        (481.9203102126274, array([473.43314297, 490.03139625]))
 
     Sources:
         [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements
