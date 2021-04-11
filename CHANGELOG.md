@@ -8,7 +8,27 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [v2.1.0]
+## [Unreleased]
+### Added
+-
+
+### Changed
+-
+
+### Deprecated
+-
+
+### Removed
+-
+
+### Fixed
+-
+
+### Security
+-
+
+
+## [v2.1.0] - 2021-04-11
 ### Added
 - Implemented `score` method to `QuantileLinearRegression`, which either
   outputs the mean negative pinball loss function, or the R^2 value
@@ -23,7 +43,7 @@ and this project adheres to
 - Removed docstring comments about closing datasets after use, as this is
   automatic
 
-## [v2.0.2]
+## [v2.0.2] - 2021-04-09
 ### Fixed
 - Small mistake in the computation of the prediction intervals in
   `Boot.predict`, where the definition of `generalisation` should be the
@@ -32,12 +52,12 @@ and this project adheres to
   intervals. Thanks to Bryan Shalloway for catching this mistake.
 
 
-## [v2.0.1]
+## [v2.0.1] - 2021-04-04
 ### Fixed
 - `Boot.__repr__` was not working properly
 
 
-## [v2.0.0]
+## [v2.0.0] - 2021-04-04
 ### Added
 - Added proper `__repr__` descriptions to all models
 
