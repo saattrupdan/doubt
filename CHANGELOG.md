@@ -1,6 +1,6 @@
-# Change log
+# Changelog
 
-## v2.1.0
+## [v2.1.0]
 
 - Implemented `score` method to `QuantileLinearRegression`, which either
   outputs the mean negative pinball loss function, or the R^2 value
@@ -11,7 +11,7 @@
 - Removed docstring comments about closing datasets after use, as this is
   automatic
 
-## v2.0.2
+## [v2.0.2]
 
 - Small mistake in the computation of the prediction intervals in
   `Boot.predict`, where the definition of `generalisation` should be the
@@ -20,12 +20,12 @@
   intervals. Thanks to Bryan Shalloway for catching this mistake.
 
 
-## v2.0.1
+## [v2.0.1]
 
 - `Boot.__repr__` was not working properly
 
 
-## v2.0.0
+## [v2.0.0]
 
 - Changed the ordering of `Dataset.split` to `X_train`, `X_test`, `y_train`
   and `y_test`, to agree with `scikit-learn`
