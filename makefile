@@ -1,6 +1,10 @@
 include .env
 export $(shell sed 's/=.*//' .env)
 
+documentation:
+	sphinx-apidoc -o docs/source --force doubt && \
+	make -C docs html
+
 release-major:
 	pytest && \
 	python bump_version.py --major && \
