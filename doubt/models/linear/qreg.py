@@ -99,11 +99,12 @@ class QuantileLinearRegression(BaseModel):
                 except ValueError as e:
                     if str(e).startswith('operands could not be broadcast '
                                          'together with shapes'):
-                        raise RuntimeError(
-                        'Your feature matrix seems to be singular, in which '
-                        'case quantile linear regression cannot be performed. '
-                        'A common reason for this is duplicated or '
-                        'near-duplicated features.')
+                        raise RuntimeError('Your feature matrix seems to be '
+                                           'singular, in which case quantile '
+                                           'linear regression cannot be '
+                                           'performed. A common reason for '
+                                           'this is duplicated or '
+                                           'near-duplicated features.')
                     else:
                         raise e
 
@@ -181,7 +182,7 @@ class QuantileLinearRegression(BaseModel):
         res = target_arr - prediction_arr
 
         # Compute the pinball loss
-        loss = np.mean(np.maximum(res, np.zeros_like(res)) * quantile + \
+        loss = np.mean(np.maximum(res, np.zeros_like(res)) * quantile +
                        np.maximum(-res, np.zeros_like(res)) * (1 - quantile))
         return float(loss)
 
