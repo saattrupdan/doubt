@@ -73,8 +73,24 @@ class QuantileLinearRegression(BaseModel):
             lower_q = self.uncertainty / 2.
             upper_q = 1. - lower_q
             for i, quantile in enumerate([lower_q, upper_q]):
-                result = statsmodels_qreg.fit(q=quantile,
-                                              max_iter=self.max_iter)
+                try:
+                    result = statsmodels_qreg.fit(q=quantile,
+                                                  max_iter=self.max_iter)
+
+                # Statsmodels cannot model quantile regression on singular
+                # feature matrices. That library raises a non-informative error
+                # message, so raise instead a more descriptive one in that case
+                except ValueError as e:
+                    if str(e).startswith('operands could not be broadcast '
+                                         'together with shapes'):
+                        raise RuntimeError(
+                        'Your feature matrix seems to be singular, in which '
+                        'case quantile linear regression cannot be performed. '
+                        'A common reason for this is duplicated or '
+                        'near-duplicated features.')
+                    else:
+                        raise e
+
                 self._q_bias[i] = result.params[0]
                 self._q_slope[i] = result.params[1:]
 
