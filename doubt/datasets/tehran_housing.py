@@ -69,9 +69,6 @@ class TehranHousing(BaseDataset):
         >>> df = dataset.to_pandas()
         >>> type(df)
         <class 'pandas.core.frame.DataFrame'>
-
-        Remember to close the dataset again after use, to close the cache:
-        >>> dataset.close()
     '''
 
     url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
