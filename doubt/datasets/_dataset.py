@@ -31,7 +31,7 @@ BASE_DATASET_DESCRIPTION = '''
 '''
 
 
-class BaseDataset(object, metaclass=abc.ABCMeta):
+class BaseDataset(abc.ABC):
 
     url: str
     features: Iterable
@@ -92,10 +92,14 @@ class BaseDataset(object, metaclass=abc.ABCMeta):
     def __repr__(self) -> str:
         return repr(self._data)
 
+    def _repr_html_(self):
+        return self._data._repr_html_()
+
     def split(self,
               test_size: Optional[float] = None,
-              random_seed: Optional[float] = None) -> Tuple[np.ndarray]:
-        '''Split dataset into features and targets and optionally also train/test.
+              random_seed: Optional[float] = None
+              ) -> Tuple[np.ndarray, np.ndarray]:
+        '''Split dataset into features and targets and optionally train/test.
 
         Args:
             test_size (float or None):
