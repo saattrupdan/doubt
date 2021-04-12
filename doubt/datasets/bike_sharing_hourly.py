@@ -101,11 +101,11 @@ class BikeSharingHourly(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00275/Bike-Sharing-Dataset.zip'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00275/Bike-Sharing-Dataset.zip')
 
-    features = range(13)
-    targets = [13, 14, 15]
+    _features = range(13)
+    _targets = [13, 14, 15]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

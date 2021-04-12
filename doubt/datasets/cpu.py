@@ -66,11 +66,11 @@ class CPU(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          'cpu-performance/machine.data'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            'cpu-performance/machine.data')
 
-    features = range(8)
-    targets = [8]
+    _features = range(8)
+    _targets = [8]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

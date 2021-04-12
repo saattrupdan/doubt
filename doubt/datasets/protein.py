@@ -69,11 +69,11 @@ class Protein(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00265/CASP.csv'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00265/CASP.csv')
 
-    features = range(9)
-    targets = [9]
+    _features = range(9)
+    _targets = [9]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

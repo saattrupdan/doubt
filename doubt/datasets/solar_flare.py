@@ -90,11 +90,11 @@ class SolarFlare(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          'solar-flare/flare.data2'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            'solar-flare/flare.data2')
 
-    features = range(10)
-    targets = range(10, 13)
+    _features = range(10)
+    _targets = range(10, 13)
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

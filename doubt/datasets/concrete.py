@@ -67,11 +67,11 @@ class Concrete(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          'concrete/compressive/Concrete_Data.xls'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            'concrete/compressive/Concrete_Data.xls')
 
-    features = range(8)
-    targets = [8]
+    _features = range(8)
+    _targets = [8]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

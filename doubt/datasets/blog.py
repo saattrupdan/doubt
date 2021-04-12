@@ -115,11 +115,11 @@ class Blog(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00304/BlogFeedback.zip'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00304/BlogFeedback.zip')
 
-    features = range(279)
-    targets = [279]
+    _features = range(279)
+    _targets = [279]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

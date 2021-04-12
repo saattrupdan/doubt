@@ -102,11 +102,11 @@ class FacebookComments(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00363/Dataset.zip'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00363/Dataset.zip')
 
-    features = range(54)
-    targets = [53]
+    _features = range(54)
+    _targets = [53]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

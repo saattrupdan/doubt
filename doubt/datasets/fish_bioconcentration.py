@@ -102,11 +102,11 @@ class FishBioconcentration(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00511/QSAR_fish_BCF.zip'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00511/QSAR_fish_BCF.zip')
 
-    features = range(128)
-    targets = [128]
+    _features = range(128)
+    _targets = [128]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

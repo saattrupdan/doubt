@@ -81,11 +81,11 @@ class ForestFire(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          'forest-fires/forestfires.csv'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            'forest-fires/forestfires.csv')
 
-    features = range(12)
-    targets = [12]
+    _features = range(12)
+    _targets = [12]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

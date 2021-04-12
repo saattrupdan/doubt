@@ -132,11 +132,11 @@ class Superconductivity(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00464/superconduct.zip'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00464/superconduct.zip')
 
-    features = range(81)
-    targets = [81]
+    _features = range(81)
+    _targets = [81]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

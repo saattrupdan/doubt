@@ -121,11 +121,11 @@ class GasTurbine(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00316/UCI%20CBM%20Dataset.zip'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00316/UCI%20CBM%20Dataset.zip')
 
-    features = range(16)
-    targets = [16, 17]
+    _features = range(16)
+    _targets = [16, 17]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

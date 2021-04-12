@@ -78,11 +78,11 @@ class PowerPlant(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00294/CCPP.zip'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00294/CCPP.zip')
 
-    features = range(4)
-    targets = [4]
+    _features = range(4)
+    _targets = [4]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

@@ -64,11 +64,11 @@ class NewTaipeiHousing(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00477/Real%20estate%20valuation%20data%20set.xlsx'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00477/Real%20estate%20valuation%20data%20set.xlsx')
 
-    features = range(6)
-    targets = [6]
+    _features = range(6)
+    _targets = [6]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

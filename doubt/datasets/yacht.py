@@ -70,11 +70,11 @@ class Yacht(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00243/yacht_hydrodynamics.data'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00243/yacht_hydrodynamics.data')
 
-    features = range(6)
-    targets = [6]
+    _features = range(6)
+    _targets = [6]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

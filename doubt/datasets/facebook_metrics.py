@@ -87,11 +87,11 @@ class FacebookMetrics(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00368/Facebook_metrics.zip'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00368/Facebook_metrics.zip')
 
-    features = range(7)
-    targets = range(7, 18)
+    _features = range(7)
+    _targets = range(7, 18)
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

@@ -76,11 +76,11 @@ class Servo(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          'servo/servo.data'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            'servo/servo.data')
 
-    features = range(4)
-    targets = [4]
+    _features = range(4)
+    _targets = [4]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

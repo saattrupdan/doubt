@@ -103,11 +103,11 @@ class Parkinsons(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          'parkinsons/telemonitoring/parkinsons_updrs.data'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            'parkinsons/telemonitoring/parkinsons_updrs.data')
 
-    features = range(20)
-    targets = [20, 21]
+    _features = range(20)
+    _targets = [20, 21]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

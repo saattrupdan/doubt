@@ -71,11 +71,11 @@ class TehranHousing(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00437/Residential-Building-Data-Set.xlsx'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00437/Residential-Building-Data-Set.xlsx')
 
-    features = range(107)
-    targets = [107, 108]
+    _features = range(107)
+    _targets = [107, 108]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

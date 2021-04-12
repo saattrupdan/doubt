@@ -88,11 +88,11 @@ class Nanotube(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00448/carbon_nanotubes.csv'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00448/carbon_nanotubes.csv')
 
-    features = range(5)
-    targets = [5, 6, 7]
+    _features = range(5)
+    _targets = [5, 6, 7]
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.

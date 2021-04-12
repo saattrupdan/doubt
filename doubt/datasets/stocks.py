@@ -106,11 +106,11 @@ class Stocks(BaseDataset):
         <class 'pandas.core.frame.DataFrame'>
     '''
 
-    url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/'\
-          '00390/stock%20portfolio%20performance%20data%20set.xlsx'
+    _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
+            '00390/stock%20portfolio%20performance%20data%20set.xlsx')
 
-    features = range(12)
-    targets = range(12, 18)
+    _features = range(12)
+    _targets = range(12, 18)
 
     def _prep_data(self, data: bytes) -> pd.DataFrame:
         ''' Prepare the data set.
