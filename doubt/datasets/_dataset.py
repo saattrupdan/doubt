@@ -18,24 +18,20 @@ BASE_DATASET_DESCRIPTION = '''
             Defaults to '.dataset_cache'.
 
     Attributes:
+        cache (str or None):
+            The name of the cache.
         shape (tuple of integers):
             Dimensions of the data set
         columns (list of strings):
             List of column names in the data set
-        url (string):
-            The url where the raw data files can be downloaded
-        features (iterable):
-            The column indices of the feature variables
-        targets (iterable):
-            The column indices of the target variables
 '''
 
 
 class BaseDataset(abc.ABC):
 
-    url: str
-    features: Iterable
-    targets: Iterable
+    _url: str
+    _features: Iterable
+    _targets: Iterable
 
     def __init__(self, cache: Optional[str] = '.dataset_cache'):
         self.cache = cache
@@ -64,7 +60,7 @@ class BaseDataset(abc.ABC):
         except (FileNotFoundError, KeyError):
             with warnings.catch_warnings():
                 warnings.simplefilter('ignore')
-                response = requests.get(self.url, verify=False)
+                response = requests.get(self._url, verify=False)
             data = self._prep_data(response.content)
             if self.cache is not None:
                 data.to_hdf(self.cache, name)
@@ -116,8 +112,8 @@ class BaseDataset(abc.ABC):
             the tuple (X, y) of numpy arrays is returned.
         '''
         nrows = len(self._data)
-        features = type(self).features
-        targets = type(self).targets
+        features = self._features
+        targets = self._targets
 
         if test_size is not None:
             if random_seed is not None:
