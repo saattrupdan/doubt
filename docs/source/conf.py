@@ -33,8 +33,8 @@ release = 'v2.1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc', # Documentation from docstrings
-    'sphinx.ext.napoleon' # Using Google-style docstrings
+    'sphinx.ext.autodoc',  # Documentation from docstrings
+    'sphinx.ext.napoleon'  # Using Google-style docstrings
 ]
 
 # Add any paths that contain templates here, relative to this directory.
