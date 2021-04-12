@@ -44,26 +44,30 @@ class CPU(BaseDataset):
         https://archive.ics.uci.edu/ml/datasets/Computer+Hardware
 
     Examples:
-        Load in the data set:
-        >>> dataset = CPU()
-        >>> dataset.shape
-        (209, 9)
+        Load in the data set::
 
-        Split the data set into features and targets, as NumPy arrays:
-        >>> X, y = dataset.split()
-        >>> X.shape, y.shape
-        ((209, 8), (209,))
+            >>> dataset = CPU()
+            >>> dataset.shape
+            (209, 9)
 
-        Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, X_test, y_train, y_test = train_test_split
-        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((158, 8), (158,), (51, 8), (51,))
+        Split the data set into features and targets, as NumPy arrays::
 
-        Output the underlying Pandas DataFrame:
-        >>> df = dataset.to_pandas()
-        >>> type(df)
-        <class 'pandas.core.frame.DataFrame'>
+            >>> X, y = dataset.split()
+            >>> X.shape, y.shape
+            ((209, 8), (209,))
+
+        Perform a train/test split, also outputting NumPy arrays::
+
+            >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
+            >>> X_train, X_test, y_train, y_test = train_test_split
+            >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+            ((158, 8), (158,), (51, 8), (51,))
+
+        Output the underlying Pandas DataFrame::
+
+            >>> df = dataset.to_pandas()
+            >>> type(df)
+            <class 'pandas.core.frame.DataFrame'>
     '''
 
     _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'

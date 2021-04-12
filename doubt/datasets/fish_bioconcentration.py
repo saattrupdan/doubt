@@ -80,26 +80,30 @@ class FishBioconcentration(BaseDataset):
         https://archive.ics.uci.edu/ml/datasets/QSAR+fish+bioconcentration+factor+%28BCF%29
 
     Examples:
-        Load in the data set:
-        >>> dataset = FishBioconcentration()
-        >>> dataset.shape
-        (1054, 129)
+        Load in the data set::
 
-        Split the data set into features and targets, as NumPy arrays:
-        >>> X, y = dataset.split()
-        >>> X.shape, y.shape
-        ((1054, 128), (1054,))
+            >>> dataset = FishBioconcentration()
+            >>> dataset.shape
+            (1054, 129)
 
-        Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, X_test, y_train, y_test = train_test_split
-        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((819, 128), (819,), (235, 128), (235,))
+        Split the data set into features and targets, as NumPy arrays::
 
-        Output the underlying Pandas DataFrame:
-        >>> df = dataset.to_pandas()
-        >>> type(df)
-        <class 'pandas.core.frame.DataFrame'>
+            >>> X, y = dataset.split()
+            >>> X.shape, y.shape
+            ((1054, 128), (1054,))
+
+        Perform a train/test split, also outputting NumPy arrays::
+
+            >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
+            >>> X_train, X_test, y_train, y_test = train_test_split
+            >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+            ((819, 128), (819,), (235, 128), (235,))
+
+        Output the underlying Pandas DataFrame::
+
+            >>> df = dataset.to_pandas()
+            >>> type(df)
+            <class 'pandas.core.frame.DataFrame'>
     '''
 
     _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'

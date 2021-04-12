@@ -47,26 +47,30 @@ class Protein(BaseDataset):
         https://archive.ics.uci.edu/ml/datasets/Physicochemical+Properties+of+Protein+Tertiary+Structure
 
     Examples:
-        Load in the data set:
-        >>> dataset = Protein()
-        >>> dataset.shape
-        (45730, 10)
+        Load in the data set::
 
-        Split the data set into features and targets, as NumPy arrays:
-        >>> X, y = dataset.split()
-        >>> X.shape, y.shape
-        ((45730, 9), (45730,))
+            >>> dataset = Protein()
+            >>> dataset.shape
+            (45730, 10)
 
-        Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, X_test, y_train, y_test = train_test_split
-        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((36606, 9), (36606,), (9124, 9), (9124,))
+        Split the data set into features and targets, as NumPy arrays::
 
-        Output the underlying Pandas DataFrame:
-        >>> df = dataset.to_pandas()
-        >>> type(df)
-        <class 'pandas.core.frame.DataFrame'>
+            >>> X, y = dataset.split()
+            >>> X.shape, y.shape
+            ((45730, 9), (45730,))
+
+        Perform a train/test split, also outputting NumPy arrays::
+
+            >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
+            >>> X_train, X_test, y_train, y_test = train_test_split
+            >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+            ((36606, 9), (36606,), (9124, 9), (9124,))
+
+        Output the underlying Pandas DataFrame::
+
+            >>> df = dataset.to_pandas()
+            >>> type(df)
+            <class 'pandas.core.frame.DataFrame'>
     '''
 
     _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'

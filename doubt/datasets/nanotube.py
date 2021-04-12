@@ -66,26 +66,30 @@ class Nanotube(BaseDataset):
         https://doi.org/10.17341/gazimmfd.337642
 
     Examples:
-        Load in the data set:
-        >>> dataset = Nanotube()
-        >>> dataset.shape
-        (10721, 8)
+        Load in the data set::
 
-        Split the data set into features and targets, as NumPy arrays:
-        >>> X, y = dataset.split()
-        >>> X.shape, y.shape
-        ((10721, 5), (10721, 3))
+            >>> dataset = Nanotube()
+            >>> dataset.shape
+            (10721, 8)
 
-        Perform a train/test split, also outputting NumPy arrays:
-        >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
-        >>> X_train, X_test, y_train, y_test = train_test_split
-        >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-        ((8542, 5), (8542, 3), (2179, 5), (2179, 3))
+        Split the data set into features and targets, as NumPy arrays::
 
-        Output the underlying Pandas DataFrame:
-        >>> df = dataset.to_pandas()
-        >>> type(df)
-        <class 'pandas.core.frame.DataFrame'>
+            >>> X, y = dataset.split()
+            >>> X.shape, y.shape
+            ((10721, 5), (10721, 3))
+
+        Perform a train/test split, also outputting NumPy arrays::
+
+            >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
+            >>> X_train, X_test, y_train, y_test = train_test_split
+            >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
+            ((8542, 5), (8542, 3), (2179, 5), (2179, 3))
+
+        Output the underlying Pandas DataFrame::
+
+            >>> df = dataset.to_pandas()
+            >>> type(df)
+            <class 'pandas.core.frame.DataFrame'>
     '''
 
     _url = ('https://archive.ics.uci.edu/ml/machine-learning-databases/'
