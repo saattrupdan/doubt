@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v2.2.1] - 2021-04-16
 ### Fixed
 - A handful of docstring style changes to yield a cleaner Sphinx documentation
 
