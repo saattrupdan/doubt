@@ -8,24 +8,9 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v2.2.0] - 2021-04-16
 ### Added
--
-
-### Changed
--
-
-### Deprecated
--
-
-### Removed
--
-
-### Fixed
--
-
-### Security
--
+- Sphinx documentation
 
 
 ## [v2.1.0] - 2021-04-11
