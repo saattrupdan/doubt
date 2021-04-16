@@ -7,6 +7,7 @@ documentation:
 
 release-major:
 	pytest && \
+	make documentation && \
 	python bump_version.py --major && \
 	git pull origin master && \
 	git push && \
@@ -20,6 +21,7 @@ release-major:
 
 release-minor:
 	pytest && \
+	make documentation && \
 	python bump_version.py --minor && \
 	git pull origin master && \
 	git push && \
@@ -33,6 +35,7 @@ release-minor:
 
 release-patch:
 	pytest && \
+	make documentation && \
 	python bump_version.py --patch && \
 	git pull origin master && \
 	git push && \
