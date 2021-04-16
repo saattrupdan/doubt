@@ -52,12 +52,12 @@ class BikeSharingHourly(BaseDataset):
         workingday (int):
             Working day, 1 if day is neither weekend nor holiday, otherwise 0
         weathersit (int): Weather, encoded as follows:
-            1: Clear, few clouds, partly cloudy
-            2: Mist and cloudy, mist and broken clouds, mist and few clouds
-            3: Light snow, light rain and thunderstorm and scattered clouds,
-               light rain and scattered clouds
-            4: Heavy rain and ice pallets and thunderstorm and mist, or snow
-               and fog
+
+            1. Clear, few clouds, partly cloudy
+            2. Mist and cloudy, mist and broken clouds, mist and few clouds
+            3. Light snow, light rain and thunderstorm and scattered clouds, light rain and scattered clouds
+            4. Heavy rain and ice pallets and thunderstorm and mist, or snow and fog
+
         temp (float):
             Max-min normalised temperature in Celsius, from -8 to +39
         atemp (float):

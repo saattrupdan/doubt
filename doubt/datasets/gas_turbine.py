@@ -31,9 +31,11 @@ class GasTurbine(BaseDataset):
     and turbines.
 
     The propulsion system behaviour has been described with this parameters:
+
         - Ship speed (linear function of the lever position lp).
         - Compressor degradation coefficient kMc.
         - Turbine degradation coefficient kMt.
+
     so that each possible degradation state can be described by a combination
     of this triple (lp,kMt,kMc).
 
