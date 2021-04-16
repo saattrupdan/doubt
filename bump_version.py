@@ -64,7 +64,7 @@ def set_new_version(major: int, minor: int, patch: int):
 
     # Add version to CHANGELOG
     today = dt.date.today().strftime('%Y-%m-%d')
-    new_changelog = re.sub('[Unreleased].*$', f'[v{version}] - {today}',
+    new_changelog = re.sub(r'\[Unreleased\].*', f'[v{version}] - {today}',
                            changelog)
     changelog_path.write_text(new_changelog)
 
@@ -72,11 +72,6 @@ def set_new_version(major: int, minor: int, patch: int):
     subprocess.run(['git', 'add', 'doubt/__init__.py'])
     subprocess.run(['git', 'add', 'CHANGELOG.md'])
     subprocess.run(['git', 'commit', '-m', f'feat: v{version}'])
-
-
-def create_version_tag():
-    '''Creates a tag of the form v[MAJOR].[MINOR].[PATCH]'''
-    version = get_current_version(return_tuple=False)
     subprocess.run(['git', 'tag', f'v{version}'])
 
 
@@ -84,21 +79,18 @@ def bump_major():
     '''Add one to the major version'''
     major, minor, patch = get_current_version(return_tuple=True)
     set_new_version(major + 1, 0, 0)
-    create_version_tag()
 
 
 def bump_minor():
     '''Add one to the minor version'''
     major, minor, patch = get_current_version(return_tuple=True)
     set_new_version(major, minor + 1, 0)
-    create_version_tag()
 
 
 def bump_patch():
     '''Add one to the patch version'''
     major, minor, patch = get_current_version(return_tuple=True)
     set_new_version(major, minor, patch + 1)
-    create_version_tag()
 
 
 if __name__ == '__main__':
