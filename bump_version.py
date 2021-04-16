@@ -4,6 +4,7 @@ from pathlib import Path
 import re
 from typing import Union, Tuple
 import subprocess
+import datetime as dt
 
 
 def get_current_version(return_tuple: bool = False) \
@@ -43,19 +44,33 @@ def set_new_version(major: int, minor: int, patch: int):
             The patch version. This changes when the only new changes are bug
             fixes.
     '''
+    version = f'{major}.{minor}.{patch}'
+
+    # Ensure that CHANGELOG has an [Unreleased] entry
+    changelog_path = Path('CHANGELOG.md')
+    changelog = changelog_path.read_text()
+    if '[Unreleased]' not in changelog:
+        raise RuntimeError('No [Unreleased] entry in CHANGELOG.md.')
+
     # Get current __init__.py content
     init_file = Path('doubt') / '__init__.py'
     init = init_file.read_text()
 
     # Replace __version__ in __init__.py with the new one
     version_regex = r"(?<=__version__ = ')[0-9]+\.[0-9]+\.[0-9]+(?=')"
-    new_init = re.sub(version_regex, f'{major}.{minor}.{patch}', init)
+    new_init = re.sub(version_regex, version, init)
     with init_file.open('w') as f:
         f.write(new_init)
 
+    # Add version to CHANGELOG
+    today = dt.date.today().strftime('%Y-%m-%d')
+    new_changelog = re.sub('[Unreleased].*$', f'[v{version}] - {today}',
+                           changelog)
+    changelog_path.write_text(new_changelog)
+
     # Add to version control
     subprocess.run(['git', 'add', 'doubt/__init__.py'])
-    subprocess.run(['git', 'commit', '-m', f'feat: v{major}.{minor}.{patch}'])
+    subprocess.run(['git', 'commit', '-m', f'feat: v{version}'])
 
 
 def create_version_tag():
