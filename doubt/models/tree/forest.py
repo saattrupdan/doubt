@@ -71,21 +71,23 @@ class QuantileRegressionForest(BaseModel):
             RandomState instance used by `np.random`. Defaults to None.
 
     Examples:
-        Fitting and predicting follows scikit-learn syntax:
-        >>> from doubt.datasets import Concrete
-        >>> X, y = Concrete().split()
-        >>> forest = QuantileRegressionForest(random_seed=42, max_leaf_nodes=8)
-        >>> forest.fit(X, y).predict(X).shape
-        (1030,)
-        >>> preds = forest.predict(np.ones(8))
-        >>> 16 < preds < 17
-        True
+        Fitting and predicting follows scikit-learn syntax::
+
+            >>> from doubt.datasets import Concrete
+            >>> X, y = Concrete().split()
+            >>> forest = QuantileRegressionForest(random_seed=42, max_leaf_nodes=8)
+            >>> forest.fit(X, y).predict(X).shape
+            (1030,)
+            >>> preds = forest.predict(np.ones(8))
+            >>> 16 < preds < 17
+            True
 
         Instead of only returning the prediction, we can also return a
-        prediction interval:
-        >>> preds, interval = forest.predict(np.ones(8), uncertainty=0.25)
-        >>> interval[0] < preds < interval[1]
-        True
+        prediction interval::
+
+            >>> preds, interval = forest.predict(np.ones(8), uncertainty=0.25)
+            >>> interval[0] < preds < interval[1]
+            True
     '''
     def __init__(self,
                  n_estimators: int = 100,

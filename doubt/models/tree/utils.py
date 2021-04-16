@@ -40,9 +40,8 @@ def weighted_percentile(arr: NumericArray,
             If `quantile` is not between 0.0 and 1.0, or if `arr` and `weights`
             are of different lengths.
 
-    References:
-        [1]: https://en.wikipedia.org/wiki/Percentile
-                #The_weighted_percentile_method
+    Sources:
+        [1]: https://en.wikipedia.org/wiki/Percentile#The_weighted_percentile_method
     '''
     # Ensure that quantile is set properly
     if quantile > 1 or quantile < 0:

@@ -27,15 +27,16 @@ class QuantileLinearRegression(BaseModel):
             to -1 then all CPU cores will be used. Defaults to -1.
 
     Examples:
-        Fitting and predicting follows scikit-learn syntax:
-        >>> from doubt.datasets import Concrete
-        >>> X, y = Concrete().split(random_seed=42)
-        >>> model = QuantileLinearRegression(uncertainty=0.05)
-        >>> model.fit(X, y).predict(X)[0].shape
-        (1030,)
-        >>> pred, interval = model.predict([500, 0, 0, 100, 2, 1000, 500, 20])
-        >>> pred, interval[0], interval[1]
-        (52.672378992388026, 30.418533804253457, 106.94238881241851)
+        Fitting and predicting follows scikit-learn syntax::
+
+            >>> from doubt.datasets import Concrete
+            >>> X, y = Concrete().split(random_seed=42)
+            >>> model = QuantileLinearRegression(uncertainty=0.05)
+            >>> model.fit(X, y).predict(X)[0].shape
+            (1030,)
+            >>> pred, interval = model.predict([500, 0, 0, 100, 2, 1000, 500, 20])
+            >>> pred, interval[0], interval[1]
+            (52.672378992388026, 30.418533804253457, 106.94238881241851)
     '''
     def __init__(self,
                  uncertainty: float = 0.05,

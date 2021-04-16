@@ -19,10 +19,10 @@ class Boot:
     and `tensorflow`, and the bootstrapped model can then produce predictions
     with prediction intervals.
 
-    The bootstrapped confidence intervals are computed using the .632+ estimate
-    from [1], with the caveat that the no-information error rate that is used
-    here is an approximation, to avoid n^2 running time. The bootstrapped
-    prediction intervals are computed using the method from [2].
+    The bootstrapped prediction intervals are computed using the an extension
+    of method from [2] which also takes validation error into account. To
+    remedy this, the .632+ bootstrap estimate from [1] has been used. Read
+    more in [3].
 
     Args:
         input (float array or model):
@@ -34,25 +34,28 @@ class Boot:
 
     Examples:
         Compute the bootstrap distribution of the mean, with a 95% confidence
-        interval:
-        >>> from doubt.datasets import FishToxicity
-        >>> X, y = FishToxicity().split()
-        >>> boot = Boot(y, random_seed=42)
-        >>> boot.compute_statistic(np.mean)
-        (4.064430616740088, array([3.99133279, 4.15605735]))
+        interval::
 
-        Alternatively, we can output the whole bootstrap distribution:
-        >>> boot.compute_statistic(np.mean, n_boots=3, return_all=True)
-        (4.064430616740088, array([4.10546476, 4.02547137, 4.03936894]))
+            >>> from doubt.datasets import FishToxicity
+            >>> X, y = FishToxicity().split()
+            >>> boot = Boot(y, random_seed=42)
+            >>> boot.compute_statistic(np.mean)
+            (4.064430616740088, array([3.99133279, 4.15605735]))
 
-        Wrap a scikit-learn model and get prediction intervals:
-        >>> from sklearn.linear_model import LinearRegression
-        >>> from doubt.datasets import PowerPlant
-        >>> X, y = PowerPlant().split()
-        >>> linreg = Boot(LinearRegression())
-        >>> linreg = linreg.fit(X, y)
-        >>> linreg.predict([10, 30, 1000, 50], uncertainty=0.05)
-        (481.9203102126274, array([473.43314297, 490.03139625]))
+        Alternatively, we can output the whole bootstrap distribution::
+
+            >>> boot.compute_statistic(np.mean, n_boots=3, return_all=True)
+            (4.064430616740088, array([4.10546476, 4.02547137, 4.03936894]))
+
+        Wrap a scikit-learn model and get prediction intervals::
+
+            >>> from sklearn.linear_model import LinearRegression
+            >>> from doubt.datasets import PowerPlant
+            >>> X, y = PowerPlant().split()
+            >>> linreg = Boot(LinearRegression())
+            >>> linreg = linreg.fit(X, y)
+            >>> linreg.predict([10, 30, 1000, 50], uncertainty=0.05)
+            (481.9203102126274, array([473.43314297, 490.03139625]))
 
     Sources:
         [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements
@@ -61,6 +64,7 @@ class Boot:
         [2]: Kumar, S., & Srivistava, A. N. (2012). Bootstrap prediction
              intervals in non-parametric regression with applications to
              anomaly detection.
+        [3]: https://saattrupdan.github.io/2020-03-01-bootstrap-prediction/
     '''
     def __init__(self, input: object, random_seed: Optional[float] = None):
         self.random_seed = random_seed
@@ -72,24 +76,24 @@ class Boot:
             self._model_predict = input if callable(input) else input.predict
             self.fit = MethodType(fit, self)
             self.predict = MethodType(predict, self)
-            type(self).__repr__ = MethodType(model_repr, self)
+            type(self).__repr__ = MethodType(_model_repr, self)
 
         # Input is a dataset
         elif hasattr(input, '__getitem__'):
             self.data = np.asarray(input)
             self.compute_statistic = MethodType(compute_statistic, self)
-            type(self).__repr__ = MethodType(dataset_repr, self)
+            type(self).__repr__ = MethodType(_dataset_repr, self)
 
         else:
             raise TypeError('Input not recognised.')
 
 
-def dataset_repr(self) -> str:
+def _dataset_repr(self) -> str:
     return (f'Boot(dataset_shape={self.data.shape}, '
             f'random_seed={self.random_seed})')
 
 
-def model_repr(self) -> str:
+def _model_repr(self) -> str:
     return f'Boot(model={self._model_name}, random_seed={self.random_seed})'
 
 
@@ -148,10 +152,6 @@ def predict(self,
             ) -> Tuple[Union[float, FloatArray], FloatArray]:
     '''Compute bootstrapped predictions.
 
-    This is an extension of the prediction method calculation in [2], which
-    also takes validation error into account. To remedy this, the .632+
-    bootstrap estimate from [3] has been used. Read more in [1].
-
     Args:
         X (float array):
             The array containing the data set, either of shape (f,)
@@ -169,11 +169,6 @@ def predict(self,
         float array or pair of float arrays:
             The bootstrapped predictions, and the confidence intervals if
             `uncertainty` is not None.
-
-    References:
-        [1]: https://saattrupdan.github.io/2020-03-01-bootstrap-prediction/
-        [2]: https://core.ac.uk/download/pdf/42735868.pdf
-        [3]: https://web.stanford.edu/~hastie/ElemStatLearn/
     '''
     if uncertainty is None:
         return self._model_predict(X)
@@ -244,9 +239,11 @@ def fit(self, X: FloatArray, y: FloatArray):
 
     Args:
         X (float array):
-            The feature matrix.
+            The array containing the data set, either of shape (f,)
+            or (n, f), with n being the number of samples and f being
+            the number of features.
         y (float array):
-            The target matrix.
+            The array containing the target values, of shape (n,)
     '''
     X = np.asarray(X)
     y = np.asarray(y)
