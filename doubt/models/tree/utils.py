@@ -41,7 +41,8 @@ def weighted_percentile(arr: NumericArray,
             are of different lengths.
 
     Sources:
-        [1]: https://en.wikipedia.org/wiki/Percentile#The_weighted_percentile_method
+        [1]: https://en.wikipedia.org/wiki/Percentile\
+#The_weighted_percentile_method
     '''
     # Ensure that quantile is set properly
     if quantile > 1 or quantile < 0:

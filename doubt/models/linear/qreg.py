@@ -34,7 +34,8 @@ class QuantileLinearRegression(BaseModel):
             >>> model = QuantileLinearRegression(uncertainty=0.05)
             >>> model.fit(X, y).predict(X)[0].shape
             (1030,)
-            >>> pred, interval = model.predict([500, 0, 0, 100, 2, 1000, 500, 20])
+            >>> x = [500, 0, 0, 100, 2, 1000, 500, 20]
+            >>> pred, interval = model.predict(x)
             >>> pred, interval[0], interval[1]
             (52.672378992388026, 30.418533804253457, 106.94238881241851)
     '''

@@ -27,7 +27,9 @@ class QuantileRegressionForest(BaseModel):
             The number of features to consider when looking for the best split:
 
             - If int, then consider `max_features` features at each split.
-            - If float, then `max_features` is a percentage and `int(max_features * n_features)` features are considered at each split.
+            - If float, then `max_features` is a percentage and
+              `int(max_features * n_features)` features are considered at
+              each split.
             - If 'auto', then `max_features=n_features`.
             - If 'sqrt', then `max_features=sqrt(n_features)`.
             - If 'log2', then `max_features=log2(n_features)`.
@@ -45,13 +47,17 @@ class QuantileRegressionForest(BaseModel):
             The minimum number of samples required to split an internal node:
 
             - If int, then consider `min_samples_split` as the minimum number.
-            - If float, then `min_samples_split` is a percentage and `ceil(min_samples_split * n_samples)` are the minimum number of samples for each split. Defaults to 2.
+            - If float, then `min_samples_split` is a percentage and
+              `ceil(min_samples_split * n_samples)` are the minimum number of
+              samples for each split. Defaults to 2.
 
         min_samples_leaf (int or float, optional):
             The minimum number of samples required to be at a leaf node:
 
             - If int, then consider `min_samples_leaf` as the minimum number.
-            - If float, then `min_samples_leaf` is a percentage and `ceil(min_samples_leaf * n_samples)` are the minimum number of samples for each node. Defaults to 1.
+            - If float, then `min_samples_leaf` is a percentage and
+              `ceil(min_samples_leaf * n_samples)` are the minimum number of
+              samples for each node. Defaults to 1.
 
         min_weight_fraction_leaf (float, optional):
             The minimum weighted fraction of the sum total of weights (of all
@@ -75,7 +81,8 @@ class QuantileRegressionForest(BaseModel):
 
             >>> from doubt.datasets import Concrete
             >>> X, y = Concrete().split()
-            >>> forest = QuantileRegressionForest(random_seed=42, max_leaf_nodes=8)
+            >>> forest = QuantileRegressionForest(random_seed=42,
+            ...                                   max_leaf_nodes=8)
             >>> forest.fit(X, y).predict(X).shape
             (1030,)
             >>> preds = forest.predict(np.ones(8))
