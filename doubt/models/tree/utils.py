@@ -3,6 +3,7 @@
 import numpy as np
 from typing import Sequence, Union, Optional
 
+
 NumericArray = Sequence[Union[float, int]]
 
 

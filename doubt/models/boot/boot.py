@@ -170,7 +170,7 @@ def predict(self,
             X: FloatArray,
             n_boots: Optional[int] = None,
             uncertainty: Optional[float] = None
-            ) -> Tuple[Union[float, FloatArray], FloatArray]:
+            ) -> Tuple[Union[float, np.ndarray], np.ndarray]:
     '''Compute bootstrapped predictions.
 
     Args:

@@ -2,10 +2,10 @@
 
 from sklearn.tree import BaseDecisionTree, DecisionTreeRegressor
 from sklearn.utils import check_array, check_X_y
-from typing import Optional, Union, Sequence
+from typing import Optional, Union, Sequence, Tuple
 import numpy as np
-
 from .utils import weighted_percentile
+
 
 FloatArray = Sequence[float]
 NumericArray = Sequence[Union[float, int]]
