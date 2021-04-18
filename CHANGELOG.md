@@ -9,6 +9,11 @@ and this project adheres to
 
 
 ## [Unreleased]
+### Added
+- Added `quantiles` argument to `QuantileRegressionTree` and `Boot`, as an
+  alternative to specifying `uncertainty`, if you want to return specific
+  quantiles
+
 ### Changed
 - Updated Numpy random number generation to [their new API](https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator)
 
