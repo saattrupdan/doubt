@@ -68,6 +68,7 @@ class Boot:
     '''
     def __init__(self, input: object, random_seed: Optional[float] = None):
         self.random_seed = random_seed
+        self.rng = np.random.default_rng(random_seed)
 
         # Input is a model
         if callable(input) or hasattr(input, 'predict'):
@@ -123,9 +124,6 @@ def compute_statistic(self,
             The bootstrapped statistic and either the confidence interval
             or all of the bootstrapped statistics
     '''
-    if self.random_seed is not None:
-        np.random.seed(self.random_seed)
-
     n = self.data.shape[0]
 
     if n_boots is None:
@@ -133,7 +131,7 @@ def compute_statistic(self,
 
     statistics = np.empty((n_boots,), dtype=float)
     for b in range(n_boots):
-        boot_idxs = np.random.choice(range(n), size=n, replace=True)
+        boot_idxs = self.rng.choice(range(n), size=n, replace=True)
         statistics[b] = statistic(self.data[boot_idxs])
 
     if return_all:
@@ -177,9 +175,6 @@ def predict(self,
         raise RuntimeError('This model has not been fitted yet! Call fit() '
                            'before predicting new samples.')
 
-    if self.random_seed is not None:
-        np.random.seed(self.random_seed)
-
     X = np.asarray(X)
     n = self.X_train.shape[0]
 
@@ -196,7 +191,7 @@ def predict(self,
     bootstrap_preds = []
     val_residuals = []
     for _ in range(n_boots):
-        train_idxs = np.random.choice(range(n), size=n, replace=True)
+        train_idxs = self.rng.choice(range(n), size=n, replace=True)
         val_idxs = [idx for idx in range(n) if idx not in train_idxs]
 
         X_train = self.X_train[train_idxs, :]
@@ -254,7 +249,7 @@ def fit(self, X: FloatArray, y: FloatArray):
     preds = self._model_predict(X)
     self.train_residuals = np.quantile(y - preds, q=np.arange(0, 1, .01))
 
-    permuted = np.random.permutation(y) - np.random.permutation(preds)
+    permuted = self.rng.permutation(y) - self.rng.permutation(preds)
     no_info_error = np.mean(np.abs(permuted))
     self.no_info_val = np.abs(no_info_error - self.train_residuals)
     return self

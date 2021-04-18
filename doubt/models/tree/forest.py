@@ -9,7 +9,7 @@ from joblib import Parallel, delayed
 
 
 class QuantileRegressionForest(BaseModel):
-    ''' A random forest for regression which can output quantiles as well.
+    '''A random forest for regression which can output quantiles as well.
 
     Args:
         n_estimators (int):
@@ -121,6 +121,7 @@ class QuantileRegressionForest(BaseModel):
         self.max_leaf_nodes = max_leaf_nodes
         self.n_jobs = n_jobs
         self.random_seed = random_seed
+        self.rng = np.random.default_rng(random_seed)
 
         self._estimators = n_estimators * [
             QuantileRegressionTree(
@@ -147,15 +148,11 @@ class QuantileRegressionForest(BaseModel):
         return txt + ')'
 
     def fit(self, X, y):
-        ''' Fit decision trees in parallel. '''
+        '''Fit decision trees in parallel'''
         n = X.shape[0]
 
-        if self.random_seed is not None:
-            np.random.seed(self.random_seed)
-
         # Get bootstrap resamples of the data set
-        bidxs = np.random.choice(n, size=(self.n_estimators, n),
-                                 replace=True)
+        bidxs = self.rng.choice(n, size=(self.n_estimators, n), replace=True)
 
         # Fit trees in parallel on the bootstrapped resamples
         with Parallel(n_jobs=self.n_jobs) as parallel:
@@ -166,7 +163,7 @@ class QuantileRegressionForest(BaseModel):
         return self
 
     def predict(self, X, uncertainty: Optional[float] = None):
-        ''' Perform predictions. '''
+        '''Perform predictions'''
 
         # Ensure that X is two-dimensional
         onedim = (len(X.shape) == 1)

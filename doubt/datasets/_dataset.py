@@ -111,14 +111,15 @@ class BaseDataset(abc.ABC):
             (X_train, y_train, X_test, y_test) is returned, and otherwise
             the tuple (X, y) of numpy arrays is returned.
         '''
+        # Initialise random number generator
+        rng = np.random.default_rng(random_seed)
+
         nrows = len(self._data)
         features = self._features
         targets = self._targets
 
         if test_size is not None:
-            if random_seed is not None:
-                np.random.seed(random_seed)
-            test_idxs = np.random.random(size=(nrows,)) < test_size
+            test_idxs = rng.random(size=(nrows,)) < test_size
             train_idxs = ~test_idxs
 
             X_train = self._data.iloc[train_idxs, features].values
