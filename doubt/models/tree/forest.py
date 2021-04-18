@@ -121,7 +121,6 @@ class QuantileRegressionForest(BaseModel):
         self.max_leaf_nodes = max_leaf_nodes
         self.n_jobs = n_jobs
         self.random_seed = random_seed
-        self.rng = np.random.default_rng(random_seed)
 
         self._estimators = n_estimators * [
             QuantileRegressionTree(
@@ -149,10 +148,13 @@ class QuantileRegressionForest(BaseModel):
 
     def fit(self, X, y):
         '''Fit decision trees in parallel'''
+        # Initialise random number generator
+        rng = np.random.default_rng(self.random_seed)
+
         n = X.shape[0]
 
         # Get bootstrap resamples of the data set
-        bidxs = self.rng.choice(n, size=(self.n_estimators, n), replace=True)
+        bidxs = rng.choice(n, size=(self.n_estimators, n), replace=True)
 
         # Fit trees in parallel on the bootstrapped resamples
         with Parallel(n_jobs=self.n_jobs) as parallel:

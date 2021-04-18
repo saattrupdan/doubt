@@ -40,22 +40,22 @@ class Boot:
             >>> X, y = FishToxicity().split()
             >>> boot = Boot(y, random_seed=42)
             >>> boot.compute_statistic(np.mean)
-            (4.064430616740088, array([3.99133279, 4.15605735]))
+            (4.064430616740088, array([3.97621225, 4.16582087]))
 
         Alternatively, we can output the whole bootstrap distribution::
 
             >>> boot.compute_statistic(np.mean, n_boots=3, return_all=True)
-            (4.064430616740088, array([4.10546476, 4.02547137, 4.03936894]))
+            (4.064430616740088, array([4.05705947, 4.06197577, 4.05728414]))
 
         Wrap a scikit-learn model and get prediction intervals::
 
             >>> from sklearn.linear_model import LinearRegression
             >>> from doubt.datasets import PowerPlant
             >>> X, y = PowerPlant().split()
-            >>> linreg = Boot(LinearRegression())
+            >>> linreg = Boot(LinearRegression(), random_seed=42)
             >>> linreg = linreg.fit(X, y)
             >>> linreg.predict([10, 30, 1000, 50], uncertainty=0.05)
-            (481.9203102126274, array([473.43314297, 490.03139625]))
+            (482.1448631065803, array([473.65222798, 490.28859283]))
 
     Sources:
         [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements
@@ -68,7 +68,6 @@ class Boot:
     '''
     def __init__(self, input: object, random_seed: Optional[float] = None):
         self.random_seed = random_seed
-        self.rng = np.random.default_rng(random_seed)
 
         # Input is a model
         if callable(input) or hasattr(input, 'predict'):
@@ -124,6 +123,9 @@ def compute_statistic(self,
             The bootstrapped statistic and either the confidence interval
             or all of the bootstrapped statistics
     '''
+    # Initialise random number generator
+    rng = np.random.default_rng(self.random_seed)
+
     n = self.data.shape[0]
 
     if n_boots is None:
@@ -131,7 +133,7 @@ def compute_statistic(self,
 
     statistics = np.empty((n_boots,), dtype=float)
     for b in range(n_boots):
-        boot_idxs = self.rng.choice(range(n), size=n, replace=True)
+        boot_idxs = rng.choice(range(n), size=n, replace=True)
         statistics[b] = statistic(self.data[boot_idxs])
 
     if return_all:
@@ -168,6 +170,9 @@ def predict(self,
             The bootstrapped predictions, and the confidence intervals if
             `uncertainty` is not None.
     '''
+    # Initialise random number generator
+    rng = np.random.default_rng(self.random_seed)
+
     if uncertainty is None:
         return self._model_predict(X)
 
@@ -191,7 +196,7 @@ def predict(self,
     bootstrap_preds = []
     val_residuals = []
     for _ in range(n_boots):
-        train_idxs = self.rng.choice(range(n), size=n, replace=True)
+        train_idxs = rng.choice(range(n), size=n, replace=True)
         val_idxs = [idx for idx in range(n) if idx not in train_idxs]
 
         X_train = self.X_train[train_idxs, :]
@@ -240,6 +245,9 @@ def fit(self, X: FloatArray, y: FloatArray):
         y (float array):
             The array containing the target values, of shape (n,)
     '''
+    # Initialise random number generator
+    rng = np.random.default_rng(self.random_seed)
+
     X = np.asarray(X)
     y = np.asarray(y)
     self.X_train = X
@@ -249,7 +257,7 @@ def fit(self, X: FloatArray, y: FloatArray):
     preds = self._model_predict(X)
     self.train_residuals = np.quantile(y - preds, q=np.arange(0, 1, .01))
 
-    permuted = self.rng.permutation(y) - self.rng.permutation(preds)
+    permuted = rng.permutation(y) - rng.permutation(preds)
     no_info_error = np.mean(np.abs(permuted))
     self.no_info_val = np.abs(no_info_error - self.train_residuals)
     return self
