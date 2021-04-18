@@ -101,7 +101,9 @@ def compute_statistic(self,
                       statistic: Callable[[NumericArray], float],
                       n_boots: Optional[int] = None,
                       uncertainty: float = .05,
-                      return_all: bool = False) -> Tuple[float, FloatArray]:
+                      quantiles: Optional[Sequence[float]] = None,
+                      return_all: bool = False
+                      ) -> Union[float, Tuple[float, np.ndarray]]:
     '''Compute bootstrapped statistic.
 
     Args:
@@ -113,36 +115,55 @@ def compute_statistic(self,
         uncertainty (float):
             The uncertainty used to compute the confidence interval
             of the bootstrapped statistic. Not used if `return_all` is
-            set to True. Defaults to 0.05.
+            set to True or if `quantiles` is not None. Defaults to 0.05.
+        quantiles (sequence of floats or None, optional):
+            List of quantiles to output, as an alternative to the
+            `uncertainty` argument, and will not be used if that argument
+            is set. If None then `uncertainty` is used. Defaults to None.
         return_all (bool):
             Whether all bootstrapped statistics should be returned instead
             of the confidence interval. Defaults to False.
 
     Returns:
-        pair of a float and an array of floats:
-            The bootstrapped statistic and either the confidence interval
-            or all of the bootstrapped statistics
+        a float or a pair of a float and an array of floats:
+            The statistic, and if `uncertainty` is set then also
+            the confidence interval, or if `quantiles` is set then also the
+            specified quantiles, or if `return_all` is set then also all of the
+            bootstrapped statistics.
     '''
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
 
+    # Compute the statistic
+    stat = statistic(self.data)
+
+    # Get the number of data points
     n = self.data.shape[0]
 
+    # Set default value of the number of bootstrap samples if `n_boots` is not
+    # set
     if n_boots is None:
         n_boots = np.sqrt(n).astype(int)
 
+    # Compute the bootstrapped statistics
     statistics = np.empty((n_boots,), dtype=float)
     for b in range(n_boots):
         boot_idxs = rng.choice(range(n), size=n, replace=True)
         statistics[b] = statistic(self.data[boot_idxs])
 
     if return_all:
-        return statistic(self.data), statistics
+        return stat, statistics
     else:
-        lower = uncertainty / 2
-        upper = 1. - lower
-        interval = np.quantile(statistics, q=(lower, upper))
-        return statistic(self.data), interval
+        # If uncertainty is set then set `quantiles` to be the two ends of the
+        # confidence interval
+        if uncertainty is not None:
+            quantiles = [uncertainty / 2, 1. - (uncertainty / 2)]
+        else:
+            quantiles = list(quantiles)
+
+        # Compute the quantile values
+        quantile_vals = np.quantile(statistics, q=quantiles)
+        return stat, quantile_vals
 
 
 def predict(self,
