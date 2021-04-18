@@ -16,7 +16,9 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
     def predict(self,
                 X: NumericArray,
                 uncertainty: Optional[float] = None,
-                check_input: bool = True):
+                quantiles: Optional[Sequence[float]] = None,
+                check_input: bool = True
+                ) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
         '''Predict regression value for X.
 
         Args:
@@ -27,35 +29,50 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
             uncertainty (float or None, optional):
                 Value ranging from 0 to 1. If None then no prediction intervals
                 will be returned. Defaults to None.
+            quantiles (sequence of floats or None, optional):
+                List of quantiles to output, as an alternative to the
+                `uncertainty` argument, and will not be used if that argument
+                is set. If None then `uncertainty` is used. Defaults to None.
             check_input (boolean, optional):
                 Allow to bypass several input checking. Don't use this
                 parameter unless you know what you do. Defaults to True.
 
         Returns:
-            y (array):
-                Array of shape = [n_samples]. If quantile is set to None,
-                then return E(Y | X). Else return y such that
-                F(Y=y | x) = quantile.
+            Array or pair of arrays:
+                Either array with predictions, of shape [n_samples,], or a pair
+                of arrays with the first one being the predictions and the
+                second one being the desired quantiles/intervals, of shape
+                [n_samples, 2] if `uncertainty` is not None, and
+                [n_samples, n_quantiles] if `quantiles` is not None.
         '''
         # Apply method requires X to be of dtype np.float32
         X = check_array(X, dtype=np.float32, accept_sparse='csc')
         preds = super().predict(X, check_input=check_input)
 
-        if uncertainty is not None:
-            lower = uncertainty / 2
-            upper = 1 - lower
-            intervals = np.empty((X.shape[0], 2))
+        if uncertainty is not None or quantiles is not None:
 
+            # Define list of quantiles that we want to output
+            if uncertainty is not None:
+                quantiles = [uncertainty / 2, 1 - (uncertainty / 2)]
+            else:
+                quantiles = list(quantiles)
+
+            # Collect the leaves in the tree
             X_leaves = self.apply(X)
             unique_leaves = np.unique(X_leaves)
 
-            for leaf in unique_leaves:
-                intervals[X_leaves == leaf, 0] = weighted_percentile(
-                    self.y_train_[self.y_train_leaves_ == leaf], lower)
-                intervals[X_leaves == leaf, 1] = weighted_percentile(
-                    self.y_train_[self.y_train_leaves_ == leaf], upper)
-            return preds, intervals
+            # Initialise quantile values
+            quantile_vals = np.empty((X.shape[0], len(quantiles)))
 
+            # Populate the quantile values
+            for leaf in unique_leaves:
+                for idx, quantile in enumerate(quantiles):
+                    X_leaf = (X_leaves == leaf)
+                    y_leaf = self.y_train_[self.y_train_leaves_ == leaf]
+                    quantile_vals[X_leaf, idx] = weighted_percentile(y_leaf,
+                                                                     quantile)
+
+            return preds, quantile_vals
         else:
             return preds
 
