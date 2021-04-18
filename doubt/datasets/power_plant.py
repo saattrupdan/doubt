@@ -73,7 +73,7 @@ class PowerPlant(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((7615, 4), (7615,), (1953, 4), (1953,))
+            ((7633, 4), (7633,), (1935, 4), (1935,))
 
         Output the underlying Pandas DataFrame::
 

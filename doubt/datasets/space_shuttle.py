@@ -81,7 +81,7 @@ class SpaceShuttle(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((16, 4), (16,), (7, 4), (7,))
+            ((20, 4), (20,), (3, 4), (3,))
 
         Output the underlying Pandas DataFrame::
 

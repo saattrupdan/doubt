@@ -127,7 +127,7 @@ class Superconductivity(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((17018, 81), (17018,), (4245, 81), (4245,))
+            ((17004, 81), (17004,), (4259, 81), (4259,))
 
         Output the underlying Pandas DataFrame::
 

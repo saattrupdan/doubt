@@ -64,7 +64,7 @@ class Protein(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((36606, 9), (36606,), (9124, 9), (9124,))
+            ((36580, 9), (36580,), (9150, 9), (9150,))
 
         Output the underlying Pandas DataFrame::
 

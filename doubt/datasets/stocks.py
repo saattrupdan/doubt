@@ -101,7 +101,7 @@ class Stocks(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((195, 12), (195, 6), (57, 12), (57, 6))
+            ((197, 12), (197, 6), (55, 12), (55, 6))
 
         Output the underlying Pandas DataFrame::
 

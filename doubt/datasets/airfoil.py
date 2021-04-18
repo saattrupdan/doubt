@@ -56,7 +56,7 @@ class Airfoil(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((1179, 5), (1179,), (324, 5), (324,))
+            ((1181, 5), (1181,), (322, 5), (322,))
 
         Output the underlying Pandas DataFrame::
 

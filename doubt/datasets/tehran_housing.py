@@ -66,7 +66,7 @@ class TehranHousing(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((287, 107), (287, 2), (84, 107), (84, 2))
+            ((288, 107), (288, 2), (83, 107), (83, 2))
 
         Output the underlying Pandas DataFrame::
 

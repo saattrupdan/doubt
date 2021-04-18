@@ -83,7 +83,7 @@ class Nanotube(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((8542, 5), (8542, 3), (2179, 5), (2179, 3))
+            ((8541, 5), (8541, 3), (2180, 5), (2180, 3))
 
         Output the underlying Pandas DataFrame::
 

@@ -118,7 +118,7 @@ class GasTurbine(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((9520, 16), (9520, 2), (2414, 16), (2414, 2))
+            ((9516, 16), (9516, 2), (2418, 16), (2418, 2))
 
         Output the underlying Pandas DataFrame::
 

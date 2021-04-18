@@ -65,7 +65,7 @@ class Yacht(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((241, 6), (241,), (67, 6), (67,))
+            ((235, 6), (235,), (73, 6), (73,))
 
         Output the underlying Pandas DataFrame::
 

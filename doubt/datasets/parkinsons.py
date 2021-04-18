@@ -98,7 +98,7 @@ class Parkinsons(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((4668, 20), (4668, 2), (1207, 20), (1207, 2))
+            ((4659, 20), (4659, 2), (1216, 20), (1216, 2))
 
         Output the underlying Pandas DataFrame::
 

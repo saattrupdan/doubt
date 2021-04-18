@@ -76,7 +76,7 @@ class ForestFire(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((400, 12), (400,), (117, 12), (117,))
+            ((401, 12), (401,), (116, 12), (116,))
 
         Output the underlying Pandas DataFrame::
 

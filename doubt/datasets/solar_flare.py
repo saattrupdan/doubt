@@ -85,7 +85,7 @@ class SolarFlare(BaseDataset):
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((831, 10), (831, 3), (235, 10), (235, 3))
+            ((837, 10), (837, 3), (229, 10), (229, 3))
 
         Output the underlying Pandas DataFrame::
 
