@@ -3,7 +3,7 @@
 from .._model import BaseModel
 from .tree import QuantileRegressionTree
 
-from typing import Optional, Union
+from typing import Optional, Union, Tuple, Sequence
 import numpy as np
 from joblib import Parallel, delayed
 
@@ -164,8 +164,34 @@ class QuantileRegressionForest(BaseModel):
             )
         return self
 
-    def predict(self, X, uncertainty: Optional[float] = None):
-        '''Perform predictions'''
+    def predict(self,
+                X: Sequence[Union[float, int]],
+                uncertainty: Optional[float] = None,
+                quantiles: Optional[Sequence[float]] = None
+                ) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
+        '''Predict regression value for X.
+
+        Args:
+            X (array-like or sparse matrix):
+                The input samples, of shape [n_samples, n_features].
+                Internally, it will be converted to `dtype=np.float32` and
+                if a sparse matrix is provided to a sparse `csr_matrix`.
+            uncertainty (float or None, optional):
+                Value ranging from 0 to 1. If None then no prediction intervals
+                will be returned. Defaults to None.
+            quantiles (sequence of floats or None, optional):
+                List of quantiles to output, as an alternative to the
+                `uncertainty` argument, and will not be used if that argument
+                is set. If None then `uncertainty` is used. Defaults to None.
+
+        Returns:
+            Array or pair of arrays:
+                Either array with predictions, of shape [n_samples,], or a pair
+                of arrays with the first one being the predictions and the
+                second one being the desired quantiles/intervals, of shape
+                [2, n_samples] if `uncertainty` is not None, and
+                [n_quantiles, n_samples] if `quantiles` is not None.
+        '''
 
         # Ensure that X is two-dimensional
         onedim = (len(X.shape) == 1)
@@ -175,19 +201,21 @@ class QuantileRegressionForest(BaseModel):
         with Parallel(n_jobs=self.n_jobs) as parallel:
 
             preds = parallel(
-                delayed(estimator.predict)(X, uncertainty)
+                delayed(estimator.predict)(X, uncertainty=uncertainty,
+                                           quantiles=quantiles)
                 for estimator in self._estimators
             )
-            if uncertainty is not None:
-                intervals = np.stack([interval for _, interval in preds],
-                                     axis=0)
-                intervals = intervals.mean(0)
+
+            if uncertainty is not None or quantiles is not None:
+                quantile_vals = np.stack([interval for _, interval in preds],
+                                         axis=0)
+                quantile_vals = quantile_vals.mean(0)
                 preds = np.stack([pred for pred, _ in preds])
                 preds = preds.mean(0)
                 if onedim:
                     preds = preds[0]
-                    intervals = intervals[0]
-                return preds, intervals
+                    quantile_vals = quantile_vals[0]
+                return preds, quantile_vals
 
             else:
                 preds = np.mean(preds, axis=0)
