@@ -8,6 +8,11 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Changed
+- Updated Numpy random number generation to [their new API](https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator)
+
+
 ## [v2.2.1] - 2021-04-16
 ### Fixed
 - A handful of docstring style changes to yield a cleaner Sphinx documentation
