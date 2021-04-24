@@ -3,7 +3,9 @@
 from typing import Optional, Union, Tuple, Sequence, Callable
 import numpy as np
 from types import MethodType
+import copy
 
+FloatMatrix = Sequence[Sequence[float]]
 FloatArray = Sequence[float]
 NumericArray = Sequence[Union[float, int]]
 
@@ -71,9 +73,8 @@ class Boot:
 
         # Input is a model
         if callable(input) or hasattr(input, 'predict'):
-            self._model_name = input.__class__.__name__
-            self._model_fit = input.fit
-            self._model_predict = input if callable(input) else input.predict
+            self._model = input
+            self._model_fit_predict = MethodType(_model_fit_predict, self)
             self.fit = MethodType(fit, self)
             self.predict = MethodType(predict, self)
             type(self).__repr__ = MethodType(_model_repr, self)
@@ -88,13 +89,45 @@ class Boot:
             raise TypeError('Input not recognised.')
 
 
+def _model_fit_predict(self,
+                       X_train: FloatMatrix,
+                       y_train: FloatArray,
+                       X_test: FloatMatrix) -> np.ndarray:
+    '''Fit the underlying model and perform predictions with it.
+
+    This requires `self._model` to be set and that it is either callable or
+    have a `predict` method.
+
+    Args:
+        X_train (float matrix):
+            Feature matrix for training, of shape
+            (n_train_samples, n_features).
+        y_train (float array):
+            Target array, of shape (n_train_samples,).
+        X_test (float matrix):
+            Feature matrix for predicting, of shape
+            (n_test_samples, n_features).
+
+    Returns:
+        Numpy array:
+            Predictions, of shape (n_test_samples,)
+    '''
+    model = copy.deepcopy(self._model)
+    model.fit(X_train, y_train)
+    if callable(model):
+        return model(X_test)
+    else:
+        return model.predict(X_test)
+
+
 def _dataset_repr(self) -> str:
     return (f'Boot(dataset_shape={self.data.shape}, '
             f'random_seed={self.random_seed})')
 
 
 def _model_repr(self) -> str:
-    return f'Boot(model={self._model_name}, random_seed={self.random_seed})'
+    model_name = self._model.__class__.__name__
+    return f'Boot(model={model_name}, random_seed={self.random_seed})'
 
 
 def compute_statistic(self,
@@ -220,17 +253,20 @@ def predict(self,
         train_idxs = rng.choice(range(n), size=n, replace=True)
         val_idxs = [idx for idx in range(n) if idx not in train_idxs]
 
+        # TODO: Can't these validation residuals just be calculated in fit?
         X_train = self.X_train[train_idxs, :]
         y_train = self.y_train[train_idxs]
-        self._model_fit(X_train, y_train)
-
         X_val = self.X_train[val_idxs, :]
         y_val = self.y_train[val_idxs]
-        preds = self._model_predict(X_val)
-
+        preds = self._model_fit_predict(X_train, y_train, X_val)
         val_residuals.append(y_val - preds)
+
+        # TODO: These predictions should be on validation data.
+        #       Initialise array and assign only the validation indices here.
+        #       The rest of the array should be NaNs
         bootstrap_preds.append(self._model_predict(X))
 
+    # TODO: Instead of np.mean, use np.nanmean here, to ignore the NaNs
     bootstrap_preds = np.stack(bootstrap_preds, axis=0)
     bootstrap_preds -= np.mean(bootstrap_preds, axis=0)
     val_residuals = np.concatenate(val_residuals)
@@ -243,6 +279,7 @@ def predict(self,
     residuals = (1 - weight) * self.train_residuals + weight * val_residuals
 
     # Construct the C set and get the quantiles
+    # TODO: Instead of np.quantile, use np.nanquantile, to ignore the NaNs
     C = np.array([m + o for m in bootstrap_preds for o in residuals])
     quantiles = np.quantile(C, q=[uncertainty/2, 1-uncertainty/2], axis=0)
     quantiles = np.transpose(quantiles)
@@ -274,8 +311,7 @@ def fit(self, X: FloatArray, y: FloatArray):
     self.X_train = X
     self.y_train = y
 
-    self._model_fit(X, y)
-    preds = self._model_predict(X)
+    preds = self._model_fit_predict(X, y, X)
     self.train_residuals = np.quantile(y - preds, q=np.arange(0, 1, .01))
 
     permuted = rng.permutation(y) - rng.permutation(preds)
