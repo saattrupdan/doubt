@@ -1,15 +1,12 @@
-'''Linear models'''
+'''Quantile linear regression'''
 
 from .._model import BaseModel
+from .quantile_loss import quantile_loss
 
 from sklearn.linear_model import LinearRegression
 from statsmodels.regression.quantile_regression import QuantReg
 import numpy as np
-
 from typing import Sequence, Union, Tuple
-
-
-FloatArray = Union[Sequence[float], np.ndarray]
 
 
 class QuantileLinearRegression(BaseModel):
@@ -54,7 +51,7 @@ class QuantileLinearRegression(BaseModel):
         return (f'QuantileLinearRegression(uncertainty={self.uncertainty}, '
                 f'max_iter={self.max_iter}, n_jobs={self.n_jobs})')
 
-    def fit(self, X: FloatArray, y: FloatArray):
+    def fit(self, X: Sequence[float], y: Sequence[float]):
         '''Fit the model.
 
         Args:
@@ -65,7 +62,7 @@ class QuantileLinearRegression(BaseModel):
             y (float array):
                 The target array, of shape (n,).
         '''
-        # Convert inputs to NumPy arrays
+        # Convert inputs to Numpy arrays
         X_arr = np.asarray(X)
         y_arr = np.asarray(y)
 
@@ -116,11 +113,12 @@ class QuantileLinearRegression(BaseModel):
         return self
 
     def predict(self,
-                X: FloatArray) -> Tuple[Union[float, np.ndarray], np.ndarray]:
+                X: Sequence[float]
+                ) -> Tuple[Union[float, np.ndarray], np.ndarray]:
         '''Compute model predictions.
 
         Args:
-            X (float array):
+            X (float matrix):
                 The array containing the data set, either of shape (n,) or
                 (n, f), with n being the number of samples and f being the
                 number of features.
@@ -130,7 +128,7 @@ class QuantileLinearRegression(BaseModel):
                 The predictions, of shape (n,), and the prediction intervals,
                 of shape (n, 2).
         '''
-        # Convert inputs to NumPy array
+        # Convert inputs to Numpy array
         X_arr = np.asarray(X)
 
         # If input is one-dimensional, then add a dimension to it
@@ -155,40 +153,7 @@ class QuantileLinearRegression(BaseModel):
 
         return preds, intervals
 
-    @staticmethod
-    def _pinball_loss(target: FloatArray,
-                      prediction: FloatArray,
-                      quantile: float) -> float:
-        '''Implementation of the pinball loss.
-
-        This is computed as quantile(target - prediction) if
-        target >= prediction, and (1 - quantile)(prediction - target)
-        otherwise.
-
-        Args:
-            target (float array):
-                The target array, of shape (n,).
-            prediction (float array):
-                The predictions, of shape (n,).
-            quantile (float):
-                The quantile. Needs to be between 0.0 and 1.0.
-
-        Returns:
-            float: The negative pinball loss.
-        '''
-        # Convert inputs to NumPy arrays
-        target_arr = np.asarray(target)
-        prediction_arr = np.asarray(prediction)
-
-        # Compute the residuals
-        res = target_arr - prediction_arr
-
-        # Compute the pinball loss
-        loss = np.mean(np.maximum(res, np.zeros_like(res)) * quantile +
-                       np.maximum(-res, np.zeros_like(res)) * (1 - quantile))
-        return float(loss)
-
-    def score(self, X: FloatArray, y: FloatArray) -> float:
+    def score(self, X: Sequence[float], y: Sequence[float]) -> float:
         '''Compute either the R^2 value or the negative pinball loss.
 
         If `uncertainty` is not set in the constructor then the R^2 value will
@@ -218,7 +183,7 @@ class QuantileLinearRegression(BaseModel):
 
         # If `uncertainty` has been specified then compute pinball loss
         else:
-            # Convert inputs to NumPy arrays
+            # Convert inputs to Numpy arrays
             X_arr = np.asarray(X)
             y_arr = np.asarray(y)
 
@@ -228,6 +193,6 @@ class QuantileLinearRegression(BaseModel):
 
             # Get the predictions
             _, intervals = self.predict(X_arr)
-            lower_loss = self._pinball_loss(y_arr, intervals[:, 0], lower_q)
-            upper_loss = self._pinball_loss(y_arr, intervals[:, 1], upper_q)
+            lower_loss = quantile_loss(y_arr, intervals[:, 0], lower_q)
+            upper_loss = quantile_loss(y_arr, intervals[:, 1], upper_q)
             return -(lower_loss + upper_loss) / 2
