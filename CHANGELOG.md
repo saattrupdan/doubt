@@ -8,6 +8,11 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Removed
+- `QuantileLinearRegression` has been removed, and `QuantileRegressor` should
+  be used instead
+
 ## [v2.3.0] - 2021-04-25
 ### Added
 - Added `quantiles` argument to `QuantileRegressionTree` and `Boot`, as an
@@ -15,9 +20,6 @@ and this project adheres to
   quantiles.
 - Added general `QuantileRegressor`, which can wrap any general linear model
   for quantile predictions.
-- `QuantileLinearRegression` now uses the above `QuantileRegressor`, which is
-  both faster than the `statsmodels` implementation while retaining its
-  accuracy, and can also deal with singular feature matrices.
 
 ### Fixed
 - The predictions in `Boot.predict` were based on a fitting of the model to one
