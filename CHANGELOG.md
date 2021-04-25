@@ -15,9 +15,9 @@ and this project adheres to
   quantiles.
 - Added general `QuantileRegressor`, which can wrap any general linear model
   for quantile predictions.
-- `QuantileLinearRegression` now uses the above `QuantileRegressor` if the
-  feature matrix is singular, as the analytic methods cannot be used in that
-  case.
+- `QuantileLinearRegression` now uses the above `QuantileRegressor`, which is
+  both faster than the `statsmodels` implementation while retaining its
+  accuracy, and can also deal with singular feature matrices.
 
 ### Fixed
 - The predictions in `Boot.predict` were based on a fitting of the model to one
@@ -29,6 +29,9 @@ and this project adheres to
 - Updated Numpy random number generation to [their new API](https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator)
 - All residuals in `Boot` are now calculated during fitting, which should
   decrease the prediction times a tiny bit.
+
+### Removed
+- Package no longer relies on `statsmodels`
 
 
 ## [v2.2.1] - 2021-04-16
