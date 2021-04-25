@@ -9,9 +9,15 @@ and this project adheres to
 
 
 ## [v3.0.0] - 2021-04-25
+### Added
+- Added `__repr__` to `QuantileRegressor`
+
+
+## [v3.0.0] - 2021-04-25
 ### Removed
 - `QuantileLinearRegression` has been removed, and `QuantileRegressor` should
   be used instead
+
 
 ## [v2.3.0] - 2021-04-25
 ### Added
