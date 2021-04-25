@@ -30,3 +30,7 @@
 # Jupyter notebooks for testing
 **/*.ipynb
 **/ipynb_checkpoints
+
+# Ignore rst files except index.rst
+!**/index.rst
+**/*.rst
