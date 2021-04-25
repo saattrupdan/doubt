@@ -227,72 +227,67 @@ def predict(self,
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
 
-    if uncertainty is None:
-        return self._model_predict(X)
+    # Ensure that input feature matrix is a Numpy array
+    X = np.asarray(X)
 
+    # Get the full non-bootstrapped predictions of `X`
+    preds = self._model(X) if callable(self._model) else self._model.predict(X)
+
+    # If `uncertainty` is not set then simply return the predictions of the
+    # underlying model
+    if uncertainty is None:
+        return preds
+
+    # Ensure that the underlying model has been fitted before predicting. This
+    # is only a requirement if `uncertainty` is set, as we need access to
+    # `self.X_train`
     if not hasattr(self, 'X_train') or self.X_train is None:
         raise RuntimeError('This model has not been fitted yet! Call fit() '
                            'before predicting new samples.')
 
-    X = np.asarray(X)
-    n = self.X_train.shape[0]
+    # Store the number of data points in the training and test datasets
+    n_train = self.X_train.shape[0]
+    n_test = X.shape[0]
 
+    # If `X` is one-dimensional then expand it to two dimensions and save the
+    # information, so that we can ensure the output is also one-dimensional
     onedim = (len(X.shape) == 1)
     if onedim:
         X = np.expand_dims(X, 0)
 
-    # The authors choose the number of bootstrap samples as the square
-    # root of the number of samples
+    # The authors chose the number of bootstrap samples as the square root of
+    # the number of samples in the training dataset
     if n_boots is None:
-        n_boots = np.sqrt(n).astype(int)
+        n_boots = np.sqrt(n_train).astype(int)
 
     # Compute the m_i's and the validation residuals
-    bootstrap_preds = []
-    val_residuals = []
-    for _ in range(n_boots):
-        train_idxs = rng.choice(range(n), size=n, replace=True)
-        val_idxs = [idx for idx in range(n) if idx not in train_idxs]
-
-        # TODO: Can't these validation residuals just be calculated in fit?
+    bootstrap_preds = np.empty((n_boots, n_test))
+    for boot_idx in range(n_boots):
+        train_idxs = rng.choice(range(n_train), size=n_train, replace=True)
         X_train = self.X_train[train_idxs, :]
         y_train = self.y_train[train_idxs]
-        X_val = self.X_train[val_idxs, :]
-        y_val = self.y_train[val_idxs]
-        preds = self._model_fit_predict(X_train, y_train, X_val)
-        val_residuals.append(y_val - preds)
 
-        # TODO: These predictions should be on validation data.
-        #       Initialise array and assign only the validation indices here.
-        #       The rest of the array should be NaNs
-        bootstrap_preds.append(self._model_predict(X))
+        bootstrap_pred = self._model_fit_predict(X_train, y_train, X)
+        bootstrap_preds[boot_idx] = bootstrap_pred
 
-    # TODO: Instead of np.mean, use np.nanmean here, to ignore the NaNs
-    bootstrap_preds = np.stack(bootstrap_preds, axis=0)
+    # Centre the bootstrapped predictions across the bootstrap dimension
     bootstrap_preds -= np.mean(bootstrap_preds, axis=0)
-    val_residuals = np.concatenate(val_residuals)
-    val_residuals = np.quantile(val_residuals, q=np.arange(0, 1, .01))
 
-    # Compute the .632+ bootstrap estimate for the sample noise and bias
-    generalisation = np.abs(val_residuals.mean() - self.train_residuals.mean())
-    relative_overfitting_rate = np.mean(generalisation / self.no_info_val)
-    weight = .632 / (1 - .368 * relative_overfitting_rate)
-    residuals = (1 - weight) * self.train_residuals + weight * val_residuals
+    # Add up the bootstrap predictions and the hybrid train/val residuals
+    C = np.array([m + o for m in bootstrap_preds for o in self.residuals])
 
-    # Construct the C set and get the quantiles
-    # TODO: Instead of np.quantile, use np.nanquantile, to ignore the NaNs
-    C = np.array([m + o for m in bootstrap_preds for o in residuals])
-    quantiles = np.quantile(C, q=[uncertainty/2, 1-uncertainty/2], axis=0)
-    quantiles = np.transpose(quantiles)
+    # Calculate the desired quantiles
+    q = [uncertainty / 2, 1 - uncertainty / 2]
+    quantiles = np.transpose(np.quantile(C, q=q, axis=0))
 
-    preds = self._model_predict(X)
-
+    # Return the predictions and the desired quantiles
     if onedim:
         return preds[0], (preds + quantiles)[0]
     else:
         return preds, np.expand_dims(preds, axis=1) + quantiles
 
 
-def fit(self, X: FloatArray, y: FloatArray):
+def fit(self, X: FloatArray, y: FloatArray, n_boots: Optional[int] = None):
     '''Fits the model to the data.
 
     Args:
@@ -302,19 +297,62 @@ def fit(self, X: FloatArray, y: FloatArray):
             the number of features.
         y (float array):
             The array containing the target values, of shape (n,)
+        n_boots (int or None):
+            The number of resamples to bootstrap. If None then it is set
+            to the square root of the data set. Defaults to None
     '''
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
 
+    # Set the number of data points in the dataset
+    n = X.shape[0]
+
+    # Set default value of `n_boots` if it is not set
+    if n_boots is None:
+        n_boots = np.sqrt(n).astype(int)
+
+    # Ensure that `X` and `y` are Numpy arrays
     X = np.asarray(X)
     y = np.asarray(y)
     self.X_train = X
     self.y_train = y
 
-    preds = self._model_fit_predict(X, y, X)
-    self.train_residuals = np.quantile(y - preds, q=np.arange(0, 1, .01))
+    # Fit the underlying model and get predictions on the training dataset
+    self._model.fit(X, y)
+    preds = self._model(X) if callable(self._model) else self._model.predict(X)
 
+    # Calculate the training residuals and aggregate them into quantiles, to
+    # enable comparison with the validation residuals
+    train_residuals = np.quantile(y - preds, q=np.arange(0, 1, .01))
+
+    # Compute the m_i's and the validation residuals
+    val_residuals = []
+    for boot_idx in range(n_boots):
+        train_idxs = rng.choice(range(n), size=n, replace=True)
+        val_idxs = [idx for idx in range(n) if idx not in train_idxs]
+
+        X_train = X[train_idxs, :]
+        y_train = y[train_idxs]
+        X_val = X[val_idxs, :]
+        y_val = y[val_idxs]
+
+        boot_preds = self._model_fit_predict(X_train, y_train, X_val)
+        val_residuals.append(y_val - boot_preds)
+
+    # Aggregate the validation residuals into quantiles, to enable comparison
+    # with the training residuals
+    val_residuals = np.concatenate(val_residuals)
+    val_residuals = np.quantile(val_residuals, q=np.arange(0, 1, .01))
+
+    # Compute the no-information value
     permuted = rng.permutation(y) - rng.permutation(preds)
     no_info_error = np.mean(np.abs(permuted))
-    self.no_info_val = np.abs(no_info_error - self.train_residuals)
+    no_info_val = np.abs(no_info_error - train_residuals)
+
+    # Compute the .632+ bootstrap estimate for the sample noise and bias
+    generalisation = np.abs(val_residuals.mean() - train_residuals.mean())
+    relative_overfitting_rate = np.mean(generalisation / no_info_val)
+    weight = .632 / (1 - .368 * relative_overfitting_rate)
+    self.residuals = (1 - weight) * train_residuals + weight * val_residuals
+
     return self
