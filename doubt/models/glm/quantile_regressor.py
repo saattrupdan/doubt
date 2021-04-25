@@ -81,7 +81,7 @@ class QuantileRegressor(BaseModel):
 
         # Default quantiles to the prediction interval
         if quantiles is None:
-            self.quantiles = [self.uncertainty / 2, 1 - (self.uncertainty / 2)]
+            self.quantiles = [uncertainty / 2, 1 - (uncertainty / 2)]
         else:
             self.quantiles = list(quantiles)
 
@@ -250,3 +250,10 @@ class QuantileRegressor(BaseModel):
             losses = [quantile_loss(y_arr, quantile_vals[:, i], q)
                       for i, q in enumerate(self.quantiles)]
             return -np.mean(losses)
+
+    def __repr__(self) -> str:
+        model_name = self._model.__class__.__name__
+        return (f'QuantileRegressor(model={model_name},\n'
+                f'                  quantiles={self.quantiles})\n'
+                f'                  alpha={self.alpha})\n'
+                f'                  max_iter={self.max_iter}))')
