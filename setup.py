@@ -24,5 +24,4 @@ setup(name='doubt',
                         'PyYAML>=5.4',
                         'tables>=3.6',
                         'xlrd>=2.0',
-                        'openpyxl>=3.0',
-                        'statsmodels>=0.12'])
+                        'openpyxl>=3.0'])
