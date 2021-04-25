@@ -31,7 +31,5 @@ def quantile_loss(predictions: Sequence[float],
     loss = np.mean(np.maximum(res, np.zeros_like(res)) * quantile +
                    np.maximum(-res, np.zeros_like(res)) * (1 - quantile))
 
-    print(loss)
-
     # Ensure that loss is of type float and return it
     return float(loss)
