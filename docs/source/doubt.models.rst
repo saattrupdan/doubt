@@ -8,7 +8,7 @@ Subpackages
    :maxdepth: 4
 
    doubt.models.boot
-   doubt.models.linear
+   doubt.models.glm
    doubt.models.tree
 
 Module contents
