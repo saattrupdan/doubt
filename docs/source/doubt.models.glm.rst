@@ -4,14 +4,6 @@ doubt.models.glm package
 Submodules
 ----------
 
-doubt.models.glm.linear module
-------------------------------
-
-.. automodule:: doubt.models.glm.linear
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 doubt.models.glm.quantile\_loss module
 --------------------------------------
 
