@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [v3.0.0] - 2021-04-25
+## [Unreleased]
 ### Removed
 - `QuantileLinearRegression` has been removed, and `QuantileRegressor` should
   be used instead
