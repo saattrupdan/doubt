@@ -12,10 +12,23 @@ and this project adheres to
 ### Added
 - Added `quantiles` argument to `QuantileRegressionTree` and `Boot`, as an
   alternative to specifying `uncertainty`, if you want to return specific
-  quantiles
+  quantiles.
+- Added general `QuantileRegressor`, which can wrap any general linear model
+  for quantile predictions.
+- `QuantileLinearRegression` now uses the above `QuantileRegressor` if the
+  feature matrix is singular, as the analytic methods cannot be used in that
+  case.
+
+### Fixed
+- The predictions in `Boot.predict` were based on a fitting of the model to one
+  of the bootstrapped datasets. It is now based on the entire dataset, which in
+  particular means that the predictions will be deterministic. The intervals
+  will still be stochastic, as they should be.
 
 ### Changed
 - Updated Numpy random number generation to [their new API](https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator)
+- All residuals in `Boot` are now calculated during fitting, which should
+  decrease the prediction times a tiny bit.
 
 
 ## [v2.2.1] - 2021-04-16
