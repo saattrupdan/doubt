@@ -57,7 +57,7 @@ class Boot:
             >>> linreg = Boot(LinearRegression(), random_seed=42)
             >>> linreg = linreg.fit(X, y)
             >>> linreg.predict([10, 30, 1000, 50], uncertainty=0.05)
-            (482.1448631065803, array([473.65222798, 490.28859283]))
+            (481.99688920651676, array([473.50425407, 490.14061895]))
 
     Sources:
         [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements
@@ -236,6 +236,12 @@ def predict(self,
     # Ensure that input feature matrix is a Numpy array
     X = np.asarray(X)
 
+    # If `X` is one-dimensional then expand it to two dimensions and save the
+    # information, so that we can ensure the output is also one-dimensional
+    onedim = (len(X.shape) == 1)
+    if onedim:
+        X = np.expand_dims(X, 0)
+
     # Get the full non-bootstrapped predictions of `X`
     preds = self._model(X) if callable(self._model) else self._model.predict(X)
 
@@ -254,12 +260,6 @@ def predict(self,
     # Store the number of data points in the training and test datasets
     n_train = self.X_train.shape[0]
     n_test = X.shape[0]
-
-    # If `X` is one-dimensional then expand it to two dimensions and save the
-    # information, so that we can ensure the output is also one-dimensional
-    onedim = (len(X.shape) == 1)
-    if onedim:
-        X = np.expand_dims(X, 0)
 
     # The authors chose the number of bootstrap samples as the square root of
     # the number of samples in the training dataset
