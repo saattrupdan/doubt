@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [v2.3.0] - 2021-04-25
+## [Unreleased]
 ### Added
 - Added `quantiles` argument to `QuantileRegressionTree` and `Boot`, as an
   alternative to specifying `uncertainty`, if you want to return specific
