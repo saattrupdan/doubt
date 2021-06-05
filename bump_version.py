@@ -46,11 +46,17 @@ def set_new_version(major: int, minor: int, patch: int):
     '''
     version = f'{major}.{minor}.{patch}'
 
-    # Ensure that CHANGELOG has an [Unreleased] entry
+    # Get current changelog and ensure that it has an [Unreleased] entry
     changelog_path = Path('CHANGELOG.md')
     changelog = changelog_path.read_text()
     if '[Unreleased]' not in changelog:
         raise RuntimeError('No [Unreleased] entry in CHANGELOG.md.')
+
+    # Add version to CHANGELOG
+    today = dt.date.today().strftime('%Y-%m-%d')
+    new_changelog = re.sub(r'\[Unreleased\].*', f'[v{version}] - {today}',
+                           changelog)
+    changelog_path.write_text(new_changelog)
 
     # Get current __init__.py content
     init_file = Path('doubt') / '__init__.py'
@@ -62,15 +68,20 @@ def set_new_version(major: int, minor: int, patch: int):
     with init_file.open('w') as f:
         f.write(new_init)
 
-    # Add version to CHANGELOG
-    today = dt.date.today().strftime('%Y-%m-%d')
-    new_changelog = re.sub(r'\[Unreleased\].*', f'[v{version}] - {today}',
-                           changelog)
-    changelog_path.write_text(new_changelog)
+    # Get current Sphinx conf.py content
+    sphinx_conf_file = Path('docs') / 'source' / 'conf.py'
+    sphinx_conf = sphinx_conf_file.read_text()
+
+    # Replace `release` in conf.py with the new one
+    version_regex = r"(?<=release = ')v[0-9]+\.[0-9]+\.[0-9]+(?=')"
+    new_sphinx_conf = re.sub(version_regex, version, sphinx_conf)
+    with sphinx_conf_file.open('w') as f:
+        f.write(new_sphinx_conf)
 
     # Add to version control
     subprocess.run(['git', 'add', 'doubt/__init__.py'])
     subprocess.run(['git', 'add', 'CHANGELOG.md'])
+    subprocess.run(['git', 'add', 'docs/source/conf.py'])
     subprocess.run(['git', 'commit', '-m', f'feat: v{version}'])
     subprocess.run(['git', 'tag', f'v{version}'])
 

@@ -24,7 +24,7 @@ copyright = '2021, Dan Saattrup Nielsen'
 author = 'Dan Saattrup Nielsen'
 
 # The full version, including alpha/beta/rc tags
-release = 'v2.1.0'
+release = 'v3.0.0'
 
 
 # -- General configuration ---------------------------------------------------
