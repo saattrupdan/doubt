@@ -173,4 +173,7 @@ class FishBioconcentration(BaseDataset):
         cols += ['logbcf']
         df = df[cols]
 
+        # Ensure that the `logkow` column is numeric
+        df['logkow'] = pd.to_numeric(df.logkow)
+
         return df
