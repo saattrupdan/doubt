@@ -13,6 +13,10 @@ and this project adheres to
 - Updated `README` to include generalised linear models, rather than only
   mentioning linear regression.
 
+### Fixed
+- Removed mention of `PyTorch` model support, as that has not been implemented
+  yet
+
 
 ## [v4.1.0] - 2021-07-26
 ### Changed

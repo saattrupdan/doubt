@@ -17,7 +17,7 @@ pip install doubt
 
 ## Features
 
-- Bootstrap wrapper for all Scikit-Learn and PyTorch models
+- Bootstrap wrapper for all Scikit-Learn models
     - Can also be used to calculate usual bootstrapped statistics of a dataset
 - Quantile Regression for all generalised linear models
 - Quantile Regression Forests
@@ -26,7 +26,7 @@ pip install doubt
 
 ## Quick Start
 
-If you already have a model in Scikit-Learn or PyTorch, then you can simply
+If you already have a model in Scikit-Learn, then you can simply
 wrap it in a `Boot` to enable predicting with prediction intervals:
 
 ```python
