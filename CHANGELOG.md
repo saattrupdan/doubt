@@ -7,10 +7,12 @@ The format is based on
 and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+
 ## [Unreleased]
 ### Fixed
 The `logkow` feature in the `FishBioconcentration` dataset is now converted
 into a float, rather than a string.
+
 
 ## [v3.0.0] - 2021-04-25
 ### Added
