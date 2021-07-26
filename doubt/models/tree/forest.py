@@ -148,8 +148,12 @@ class QuantileRegressionForest(BaseModel):
                       'max_depth', 'min_samples_split', 'min_samples_leaf',
                       'min_weight_fraction_leaf', 'max_leaf_nodes', 'n_jobs',
                       'random_seed']
-        for attr in attributes:
-            txt += f'                         {attr}={getattr(self, attr)},'
+        for idx, attr in enumerate(attributes):
+            if idx > 0:
+                txt += '                         '
+            txt += f'{attr}={getattr(self, attr)}'
+            if idx < len(attributes) - 1:
+                txt += ',\n'
         return txt + ')'
 
     def fit(self, X, y, verbose: Optional[bool] = None):
