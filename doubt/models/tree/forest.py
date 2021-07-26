@@ -236,6 +236,10 @@ class QuantileRegressionForest(BaseModel):
                 [2, n_samples] if `uncertainty` is not None, and
                 [n_quantiles, n_samples] if `quantiles` is not None.
         '''
+        # Set the verbose argument if it has not been set
+        if verbose is None:
+            verbose = self.verbose
+
         # Ensure that X is two-dimensional
         onedim = (len(X.shape) == 1)
         if onedim:
