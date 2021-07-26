@@ -19,7 +19,7 @@ pip install doubt
 
 - Bootstrap wrapper for all Scikit-Learn and PyTorch models
     - Can also be used to calculate usual bootstrapped statistics of a dataset
-- (Linear) Quantile Regression
+- Quantile Regression for all generalised linear models
 - Quantile Regression Forests
 - A uniform dataset API, with 24 regression datasets and counting
 
