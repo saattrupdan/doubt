@@ -10,8 +10,9 @@ and this project adheres to
 
 ## [Unreleased]
 ### Fixed
-The `logkow` feature in the `FishBioconcentration` dataset is now converted
+- The `logkow` feature in the `FishBioconcentration` dataset is now converted
 into a float, rather than a string.
+- Typo in example script in `README`
 
 
 ## [v3.0.0] - 2021-04-25
