@@ -77,8 +77,8 @@ class QuantileRegressionForest(BaseModel):
             number generator; If None, the random number generator is the
             RandomState instance used by `np.random`. Defaults to None.
         verbose (bool, optional):
-            Whether extra output should be printed during training. Defaults to
-            False.
+            Whether extra output should be printed during training and
+            inference. Defaults to False.
 
     Examples:
         Fitting and predicting follows scikit-learn syntax::
@@ -185,6 +185,7 @@ class QuantileRegressionForest(BaseModel):
         # Get bootstrap resamples of the data set
         bidxs = rng.choice(n, size=(self.n_estimators, n), replace=True)
 
+        # Set up progress bar if requested
         if verbose:
             itr = tqdm(self._estimators, desc='Fitting trees')
         else:
@@ -205,7 +206,8 @@ class QuantileRegressionForest(BaseModel):
     def predict(self,
                 X: Sequence[Union[float, int]],
                 uncertainty: Optional[float] = None,
-                quantiles: Optional[Sequence[float]] = None
+                quantiles: Optional[Sequence[float]] = None,
+                verbose: Optional[bool] = None
                 ) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
         '''Predict regression value for X.
 
@@ -221,6 +223,10 @@ class QuantileRegressionForest(BaseModel):
                 List of quantiles to output, as an alternative to the
                 `uncertainty` argument, and will not be used if that argument
                 is set. If None then `uncertainty` is used. Defaults to None.
+            verbose (bool or None, optional):
+                Whether extra output should be printed during inference. If
+                None then the initialised value of the `verbose` parameter will
+                be used. Defaults to None.
 
         Returns:
             Array or pair of arrays:
@@ -230,18 +236,22 @@ class QuantileRegressionForest(BaseModel):
                 [2, n_samples] if `uncertainty` is not None, and
                 [n_quantiles, n_samples] if `quantiles` is not None.
         '''
-
         # Ensure that X is two-dimensional
         onedim = (len(X.shape) == 1)
         if onedim:
             X = np.expand_dims(X, 0)
 
-        with Parallel(n_jobs=self.n_jobs) as parallel:
+        # Set up progress bar if requested
+        if verbose:
+            itr = tqdm(self._estimators, desc='Getting tree predictions')
+        else:
+            itr = self._estimators
 
+        with Parallel(n_jobs=self.n_jobs) as parallel:
             preds = parallel(
                 delayed(estimator.predict)(X, uncertainty=uncertainty,
                                            quantiles=quantiles)
-                for estimator in self._estimators
+                for estimator in itr
             )
 
             if uncertainty is not None or quantiles is not None:

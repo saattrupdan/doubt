@@ -9,8 +9,12 @@ and this project adheres to
 
 
 ## [Unreleased]
+### Changed
+- The `verbose` argument to `QuantileRegressionForest` also displays a progress
+  bar during inference now.
+
 ### Fixed
-- Fixed `QuantileRegressionForest.__repr__`
+- Fixed `QuantileRegressionForest.__repr__`.
 
 
 ## [v4.0.0] - 2021-07-26
