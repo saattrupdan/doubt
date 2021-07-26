@@ -49,7 +49,7 @@ class QuantileRegressor(BaseModel):
             >>> x = [500, 0, 0, 100, 2, 1000, 500, 20]
             >>> pred, interval = model.predict(x)
             >>> pred, interval
-            (78.50224243713615, array([ 19.27889046, 172.71407256]))
+            (78.50224243713622, array([ 19.27889844, 172.71408196]))
 
     Sources:
         [1]: Songfeng Zheng (2011). Gradient Descent Algorithms for
