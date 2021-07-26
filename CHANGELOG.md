@@ -9,6 +9,15 @@ and this project adheres to
 
 
 ## [Unreleased]
+### Added
+- Added a `verbose` argument to `QuantileRegressionForest`, which displays a
+  progress bar during training.
+
+### Changed
+- The default value of `QuantileRegressionForest.min_samples_leaf` has changed
+  from 1 to 5, to ensure that the quantiles can always be computed sensibly
+  with the default setting.
+
 ### Fixed
 - The `logkow` feature in the `FishBioconcentration` dataset is now converted
 into a float, rather than a string.

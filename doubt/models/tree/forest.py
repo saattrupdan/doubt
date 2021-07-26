@@ -6,13 +6,14 @@ from .tree import QuantileRegressionTree
 from typing import Optional, Union, Tuple, Sequence
 import numpy as np
 from joblib import Parallel, delayed
+from tqdm.auto import tqdm
 
 
 class QuantileRegressionForest(BaseModel):
     '''A random forest for regression which can output quantiles as well.
 
     Args:
-        n_estimators (int):
+        n_estimators (int, optional):
             The number of trees in the forest. Defaults to 100.
         criterion (string, optional):
             The function to measure the quality of a split. Supported criteria
@@ -57,7 +58,7 @@ class QuantileRegressionForest(BaseModel):
             - If int, then consider `min_samples_leaf` as the minimum number.
             - If float, then `min_samples_leaf` is a percentage and
               `ceil(min_samples_leaf * n_samples)` are the minimum number of
-              samples for each node. Defaults to 1.
+              samples for each node. Defaults to 5.
 
         min_weight_fraction_leaf (float, optional):
             The minimum weighted fraction of the sum total of weights (of all
@@ -67,7 +68,7 @@ class QuantileRegressionForest(BaseModel):
             Grow a tree with ``max_leaf_nodes`` in best-first fashion.
             Best nodes are defined as relative reduction in impurity.
             If None then unlimited number of leaf nodes. Defaults to None.
-        n_jobs (int):
+        n_jobs (int, optional):
             The number of CPU cores used in fitting and predicting. If -1 then
             all available CPU cores will be used. Defaults to -1.
         random_seed (int, RandomState instance or None, optional):
@@ -75,6 +76,9 @@ class QuantileRegressionForest(BaseModel):
             generator; If RandomState instance, random_state is the random
             number generator; If None, the random number generator is the
             RandomState instance used by `np.random`. Defaults to None.
+        verbose (bool, optional):
+            Whether extra output should be printed during training. Defaults to
+            False.
 
     Examples:
         Fitting and predicting follows scikit-learn syntax::
@@ -103,11 +107,12 @@ class QuantileRegressionForest(BaseModel):
                  max_features: Optional[Union[int, float, str]] = None,
                  max_depth: Optional[int] = None,
                  min_samples_split: Union[int, float] = 2,
-                 min_samples_leaf: Union[int, float] = 1,
+                 min_samples_leaf: Union[int, float] = 5,
                  min_weight_fraction_leaf: float = 0.,
                  max_leaf_nodes: Optional[int] = None,
                  n_jobs: int = -1,
-                 random_seed: Optional[int] = None):
+                 random_seed: Optional[int] = None,
+                 verbose: bool = False):
 
         self.n_estimators = n_estimators
         self.min_samples_leaf = min_samples_leaf
@@ -121,6 +126,7 @@ class QuantileRegressionForest(BaseModel):
         self.max_leaf_nodes = max_leaf_nodes
         self.n_jobs = n_jobs
         self.random_seed = random_seed
+        self.verbose = verbose
 
         self._estimators = n_estimators * [
             QuantileRegressionTree(
@@ -146,22 +152,50 @@ class QuantileRegressionForest(BaseModel):
             txt += f'                         {attr}={getattr(self, attr)},'
         return txt + ')'
 
-    def fit(self, X, y):
-        '''Fit decision trees in parallel'''
+    def fit(self, X, y, verbose: Optional[bool] = None):
+        '''Fit decision trees in parallel.
+
+        Args:
+            X (array-like or sparse matrix):
+                The input samples, of shape [n_samples, n_features].
+                Internally, it will be converted to `dtype=np.float32` and
+                if a sparse matrix is provided to a sparse `csr_matrix`.
+            y (array-like):
+                The target values (class labels) as integers or strings, of
+                shape [n_samples] or [n_samples, n_outputs].
+            verbose (bool or None, optional):
+                Whether extra output should be printed during training. If None
+                then the initialised value of the `verbose` parameter will be
+                used. Defaults to None.
+        '''
+        # Set the verbose argument if it has not been set
+        if verbose is None:
+            verbose = self.verbose
+
         # Initialise random number generator
         rng = np.random.default_rng(self.random_seed)
 
+        # Store the number of training samples
         n = X.shape[0]
 
         # Get bootstrap resamples of the data set
         bidxs = rng.choice(n, size=(self.n_estimators, n), replace=True)
 
+        if verbose:
+            itr = tqdm(self._estimators, desc='Fitting trees')
+        else:
+            itr = self._estimators
+
         # Fit trees in parallel on the bootstrapped resamples
         with Parallel(n_jobs=self.n_jobs) as parallel:
             self._estimators = parallel(
                 delayed(estimator.fit)(X[bidxs[b, :], :], y[bidxs[b, :]])
-                for b, estimator in enumerate(self._estimators)
+                for b, estimator in enumerate(itr)
             )
+
+        if verbose:
+            itr.close()
+
         return self
 
     def predict(self,
