@@ -36,7 +36,7 @@ wrap it in a `Boot` to enable predicting with prediction intervals:
 >>>
 >>> X, y = PowerPlant().split()
 >>> clf = Boot(LinearRegression())
->>> clf = linreg.fit(X, y)
+>>> clf = clf.fit(X, y)
 >>> clf.predict([10, 30, 1000, 50], uncertainty=0.05)
 (481.9203102126274, array([473.43314309, 490.0313962 ]))
 ```
