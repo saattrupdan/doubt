@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v4.1.0] - 2021-07-26
 ### Changed
 - The `verbose` argument to `QuantileRegressionForest` also displays a progress
   bar during inference now.
