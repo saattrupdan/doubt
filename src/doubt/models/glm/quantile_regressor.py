@@ -43,12 +43,12 @@ class QuantileRegressor:
             (1030,)
             >>> x = [500, 0, 0, 100, 2, 1000, 500, 20]
             >>> preds, (start, end) = model.predict(x)
-            >>> round(preds, 2)
-            78.5
-            >>> round(start, 2)
-            22.64
-            >>> round(end, 0)
-            109.0
+            >>> 78 < preds < 79
+            True
+            >>> 22 < start < 23
+            True
+            >>> 108 < end < 112
+            True
 
     Sources:
         [1]: Songfeng Zheng (2011). Gradient Descent Algorithms for
