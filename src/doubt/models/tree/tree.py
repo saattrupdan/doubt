@@ -1,6 +1,6 @@
 """Quantile regression trees"""
 
-from typing import Optional, Sequence, Tuple, Union
+from typing import Optional, Tuple, Union
 
 import numpy as np
 from sklearn.tree import BaseDecisionTree, DecisionTreeRegressor
@@ -14,7 +14,7 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
         self,
         X: np.ndarray,
         uncertainty: Optional[float] = None,
-        quantiles: Optional[Sequence[float]] = None,
+        quantiles: Optional[np.ndarray] = None,
         check_input: bool = True,
     ) -> Union[np.ndarray, Tuple[np.ndarray, np.ndarray]]:
         """Predict regression value for X.
@@ -79,7 +79,6 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
         y: np.ndarray,
         sample_weight: Optional[np.ndarray] = None,
         check_input: bool = True,
-        X_idx_sorted: Optional[np.ndarray] = None,
     ):
         """Build a decision tree classifier from the training set (X, y).
 
@@ -101,12 +100,6 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
             check_input (boolean, optional):
                 Allow to bypass several input checking. Don't use this
                 parameter unless you know what you do. Defaults to True.
-            X_idx_sorted (array-like or None, optional):
-                The indexes of the sorted training input samples, of shape
-                [n_samples, n_features]. If many tree are grown on the same
-                dataset, this allows the ordering to be cached between trees.
-                If None, the data will be sorted here. Don't use this
-                parameter unless you know what to do. Defaults to None.
         """
         # y passed from a forest is 2-D. This is to silence the annoying
         # data-conversion warnings.
@@ -123,7 +116,6 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
             y,
             sample_weight=sample_weight,
             check_input=check_input,
-            X_idx_sorted=X_idx_sorted,
         )
         self.y_train_ = y
 
@@ -137,10 +129,10 @@ class QuantileRegressionTree(DecisionTreeRegressor, BaseTreeQuantileRegressor):
 
     Args:
         criterion (string, optional):
-            The function to measure the quality of a split. Supported criteria
-            are 'mse' for the mean squared error, which is equal to variance
-            reduction as feature selection criterion, and 'mae' for the mean
-            absolute error. Defaults to 'mse'.
+            The function to measure the quality of a split. Supported criteria are
+            'squared_error' for the mean squared error, which is equal to variance
+            reduction as feature selection criterion, and 'absolute_error' for the mean
+            absolute error. Defaults to 'squared_error'.
         splitter (string, optional):
             The strategy used to choose the split at each node. Supported
             strategies are 'best' to choose the best split and 'random' to
@@ -212,7 +204,7 @@ class QuantileRegressionTree(DecisionTreeRegressor, BaseTreeQuantileRegressor):
 
     def __init__(
         self,
-        criterion: str = "mse",
+        criterion: str = "squared_error",
         splitter: str = "best",
         max_features: Optional[Union[int, float, str]] = None,
         max_depth: Optional[int] = None,

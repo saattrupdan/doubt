@@ -1,6 +1,6 @@
 """Quantile regression forests"""
 
-from typing import Optional, Sequence, Tuple, Union
+from typing import Optional, Tuple, Union
 
 import numpy as np
 from joblib import Parallel, delayed
@@ -16,10 +16,10 @@ class QuantileRegressionForest:
         n_estimators (int, optional):
             The number of trees in the forest. Defaults to 100.
         criterion (string, optional):
-            The function to measure the quality of a split. Supported criteria
-            are 'mse' for the mean squared error, which is equal to variance
-            reduction as feature selection criterion, and 'mae' for the mean
-            absolute error. Defaults to 'mse'.
+            The function to measure the quality of a split. Supported criteria are
+            'squared_error' for the mean squared error, which is equal to variance
+            reduction as feature selection criterion, and 'absolute_error' for the mean
+            absolute error. Defaults to 'squared_error'.
         splitter (string, optional):
             The strategy used to choose the split at each node. Supported
             strategies are 'best' to choose the best split and 'random' to
@@ -85,8 +85,7 @@ class QuantileRegressionForest:
 
             >>> from doubt.datasets import Concrete
             >>> X, y = Concrete().split()
-            >>> forest = QuantileRegressionForest(random_seed=42,
-            ...                                   max_leaf_nodes=8)
+            >>> forest = QuantileRegressionForest(random_seed=42, max_leaf_nodes=8)
             >>> forest.fit(X, y).predict(X).shape
             (1030,)
             >>> preds = forest.predict(np.ones(8))
@@ -104,7 +103,7 @@ class QuantileRegressionForest:
     def __init__(
         self,
         n_estimators: int = 100,
-        criterion: str = "mse",
+        criterion: str = "squared_error",
         splitter: str = "best",
         max_features: Optional[Union[int, float, str]] = None,
         max_depth: Optional[int] = None,
