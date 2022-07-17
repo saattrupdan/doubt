@@ -40,17 +40,6 @@ def set_new_version(major: int, minor: int, patch: int):
     """
     version = f"{major}.{minor}.{patch}"
 
-    # Update the version in the `pyproject.toml` file
-    pyproject_path = Path("pyproject.toml")
-    pyproject = pyproject_path.read_text()
-    pyproject = re.sub(
-        r'version = "[^"]+"',
-        f'version = "{version}"',
-        pyproject,
-        count=1,
-    )
-    pyproject_path.write_text(pyproject)
-
     # Get current changelog and ensure that it has an [Unreleased] entry
     changelog_path = Path("CHANGELOG.md")
     changelog = changelog_path.read_text()
@@ -61,6 +50,17 @@ def set_new_version(major: int, minor: int, patch: int):
     today = dt.date.today().strftime("%Y-%m-%d")
     new_changelog = re.sub(r"\[Unreleased\].*", f"[v{version}] - {today}", changelog)
     changelog_path.write_text(new_changelog)
+
+    # Update the version in the `pyproject.toml` file
+    pyproject_path = Path("pyproject.toml")
+    pyproject = pyproject_path.read_text()
+    pyproject = re.sub(
+        r'version = "[^"]+"',
+        f'version = "{version}"',
+        pyproject,
+        count=1,
+    )
+    pyproject_path.write_text(pyproject)
 
     # Add to version control
     subprocess.run(["git", "add", "CHANGELOG.md"])
