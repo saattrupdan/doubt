@@ -1,10 +1,12 @@
 """Bootstrap wrapper for datasets and models"""
 
 import copy
+import multiprocessing as mp
 from types import MethodType
 from typing import Callable, Optional, Tuple, Union
 
 import numpy as np
+from joblib import Parallel, delayed
 
 
 class Boot:
@@ -69,7 +71,6 @@ class Boot:
         # Input is a model
         if callable(input) or hasattr(input, "predict"):
             self._model = input
-            self._model_fit_predict = MethodType(_model_fit_predict, self)
             self.fit = MethodType(fit, self)
             self.predict = MethodType(predict, self)
             type(self).__repr__ = MethodType(_model_repr, self)  # type: ignore
@@ -85,7 +86,7 @@ class Boot:
 
 
 def _model_fit_predict(
-    self, X_train: np.ndarray, y_train: np.ndarray, X_test: np.ndarray
+    model, X_train: np.ndarray, y_train: np.ndarray, X_test: np.ndarray
 ) -> np.ndarray:
     """Fit the underlying model and perform predictions with it.
 
@@ -93,6 +94,8 @@ def _model_fit_predict(
     `predict` method.
 
     Args:
+        model (object with `fit` and `predict` methods):
+            The model to fit and predict with.
         X_train (float matrix):
             Feature matrix for training, of shape
             (n_train_samples, n_features).
@@ -106,7 +109,7 @@ def _model_fit_predict(
         Numpy array:
             Predictions, of shape (n_test_samples,)
     """
-    model = copy.deepcopy(self._model)
+    model = copy.deepcopy(model)
     model.fit(X_train, y_train)
     if callable(model):
         return model(X_test)
@@ -164,17 +167,15 @@ def compute_statistic(
     stat = statistic(self.data)
 
     # Get the number of data points
-    n = self.data.shape[0]
+    n = int(self.data.shape[0])
 
     # Set default value of the number of bootstrap samples if `n_boots` is not set
     if n_boots is None:
-        n_boots = np.sqrt(n).astype(int)
+        n_boots = int(np.sqrt(n).astype(int))
 
     # Compute the bootstrapped statistics
-    statistics = np.empty((n_boots,), dtype=float)
-    for b in range(n_boots):
-        boot_idxs = rng.choice(range(n), size=n, replace=True)
-        statistics[b] = statistic(self.data[boot_idxs])
+    boot_idxs = rng.choice(n, size=(n_boots, n), replace=True)
+    statistics = np.apply_along_axis(statistic, 1, self.data[boot_idxs])
 
     if return_all:
         return stat, statistics
@@ -251,22 +252,29 @@ def predict(
 
     # Store the number of data points in the training and test datasets
     n_train = self.X_train.shape[0]
-    n_test = X.shape[0]
 
     # The authors chose the number of bootstrap samples as the square root of the
     # number of samples in the training dataset
     if n_boots is None:
-        n_boots = np.sqrt(n_train).astype(int)
+        n_boots = int(np.sqrt(n_train).astype(int))
 
     # Compute the m_i's and the validation residuals
-    bootstrap_preds = np.empty((n_boots, n_test))
-    for boot_idx in range(n_boots):
-        train_idxs = rng.choice(range(n_train), size=n_train, replace=True)
-        X_train = self.X_train[train_idxs, :]
-        y_train = self.y_train[train_idxs]
+    train_idxs = rng.choice(n_train, size=(n_boots, n_train), replace=True)
 
-        bootstrap_pred = self._model_fit_predict(X_train, y_train, X)
-        bootstrap_preds[boot_idx] = bootstrap_pred
+    # Run the worker function in parallel
+    with Parallel(n_jobs=mp.cpu_count() - 1) as parallel:
+        bootstrap_preds_list = parallel(
+            delayed(_model_fit_predict)(
+                model=self._model,
+                X_train=self.X_train[train_idxs[boot_idx], :],
+                y_train=self.y_train[train_idxs[boot_idx]],
+                X_test=X,
+            )
+            for boot_idx in range(n_boots)
+        )
+
+    # Convert the list of predictions to a Numpy array
+    bootstrap_preds = np.array(bootstrap_preds_list)
 
     # Centre the bootstrapped predictions across the bootstrap dimension
     bootstrap_preds -= np.mean(bootstrap_preds, axis=0)
@@ -336,7 +344,9 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None):
         X_val = X[val_idxs, :]
         y_val = y[val_idxs]
 
-        boot_preds = self._model_fit_predict(X_train, y_train, X_val)
+        boot_preds = _model_fit_predict(
+            model=self._model, X_train=X_train, y_train=y_train, X_test=X_val
+        )
         val_residuals_list.append(y_val - boot_preds)
 
     # Aggregate the validation residuals into quantiles, to enable comparison with the
