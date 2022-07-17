@@ -10,6 +10,12 @@ Documentation is available on [Read the Docs](https://doubt.readthedocs.io/en/la
 
 ## Installation
 
+If you do not already have HDF5 installed, then start by installing that. On MacOS this
+can be done using `sudo port install hdf5` after
+[MacPorts](https://www.macports.org/install.php) have been installed. On Ubuntu you can
+get HDF5 with `sudo apt-get install python-dev python3-dev libhdf5-serial-dev`. After
+that, you can install `doubt` with `pip`:
+
 ```shell
 pip install doubt
 ```
