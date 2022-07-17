@@ -12,8 +12,6 @@ ______________________________________________________________________
 A Python package to include prediction intervals in the predictions of machine
 learning models, to quantify their uncertainty.
 
-Documentation is available on [Read the Docs](https://doubt.readthedocs.io/en/latest/).
-
 
 ## Installation
 
