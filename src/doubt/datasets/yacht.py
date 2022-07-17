@@ -19,7 +19,7 @@ class Yacht(BaseDataset):
     estimating the required propulsive power. Essential inputs include the
     basic hull dimensions and the boat velocity.
 
-    The Delft data set comprises 308 full-scale experiments, which were
+    The Delft data set comprises 251 full-scale experiments, which were
     performed at the Delft Ship Hydromechanics Laboratory for that purpose.
 
     These experiments include 22 different hull forms, derived from a parent
@@ -53,20 +53,20 @@ class Yacht(BaseDataset):
 
             >>> dataset = Yacht()
             >>> dataset.shape
-            (308, 7)
+            (251, 7)
 
         Split the data set into features and targets, as NumPy arrays::
 
             >>> X, y = dataset.split()
             >>> X.shape, y.shape
-            ((308, 6), (308,))
+            ((251, 6), (251,))
 
         Perform a train/test split, also outputting NumPy arrays::
 
             >>> train_test_split = dataset.split(test_size=0.2, random_seed=42)
             >>> X_train, X_test, y_train, y_test = train_test_split
             >>> X_train.shape, y_train.shape, X_test.shape, y_test.shape
-            ((235, 6), (235,), (73, 6), (73,))
+            ((196, 6), (196,), (55, 6), (55,))
 
         Output the underlying Pandas DataFrame::
 
@@ -105,5 +105,11 @@ class Yacht(BaseDataset):
             "froude_no",
             "resistance",
         ]
-        df = pd.read_csv(txt_file, header=None, sep=" ", names=cols)
+        df = pd.read_csv(
+            txt_file,
+            header=None,
+            sep=" ",
+            names=cols,
+            on_bad_lines="skip",
+        )
         return df
