@@ -2,6 +2,13 @@
 
 *Bringing back uncertainty to machine learning.*
 
+______________________________________________________________________
+[![PyPI Status](https://badge.fury.io/py/doubt.svg)](https://pypi.org/project/doubt/)
+[![Documentation](https://img.shields.io/badge/docs-passing-green)](https://saattrupdan.github.io/doubt/doubt.html)
+[![License](https://img.shields.io/github/license/saattrupdan/doubt)](https://github.com/saattrupdan/doubt/blob/main/LICENSE)
+[![LastCommit](https://img.shields.io/github/last-commit/saattrupdan/doubt)](https://github.com/saattrupdan/doubt/commits/main)
+[![Code Coverage](https://img.shields.io/badge/Coverage-68%25-yellow.svg)](https://github.com/saattrupdan/doubt/tree/dev/tests)
+
 A Python package to include prediction intervals in the predictions of machine
 learning models, to quantify their uncertainty.
 
