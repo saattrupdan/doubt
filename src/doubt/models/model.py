@@ -1,4 +1,4 @@
-"""Base class for estimators."""
+"""Protocol class for estimators."""
 
 from typing import Protocol, Tuple, Union
 
