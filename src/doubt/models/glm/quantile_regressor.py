@@ -45,8 +45,8 @@ class QuantileRegressor:
             >>> preds, interval = model.predict(x)
             >>> round(preds, 2)
             78.5
-            >>> np.around(interval, 2)
-            array([ 22.64, 109.46])
+            >>> np.around(interval, 0)
+            array([ 23., 109.])
 
     Sources:
         [1]: Songfeng Zheng (2011). Gradient Descent Algorithms for
