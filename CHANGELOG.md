@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v4.2.0] - 2022-07-17
 ### Added
 - The `QuantileRegressionForest` now has a `feature_importances_` attribute.
 
