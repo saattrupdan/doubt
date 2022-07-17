@@ -47,8 +47,8 @@ class QuantileRegressor:
             78.5
             >>> round(start, 2)
             22.64
-            >>> round(end, 2)
-            109.46
+            >>> round(end, 0)
+            109.0
 
     Sources:
         [1]: Songfeng Zheng (2011). Gradient Descent Algorithms for
