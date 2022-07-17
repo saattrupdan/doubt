@@ -97,3 +97,6 @@ docs/doubt/
 docs/index.html
 docs/doubt.html
 docs/search.json
+
+# Datasets
+.dataset_cache
