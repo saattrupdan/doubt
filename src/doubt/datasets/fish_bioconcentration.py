@@ -145,18 +145,14 @@ class FishBioconcentration(BaseDataset):
         )
 
         # Drop NaNs
-        df = df.dropna()
+        df = df.dropna().reset_index(drop=True)
 
         # Encode KOW types
         kow_types = ["pred", "exp"]
         df["kow_exp"] = df.kow_exp.map(lambda txt: kow_types.index(txt))
 
-        # Get maximum SMILE string length and pull out all the SMILE string
-        # symbols, along with a '-' symbol for padding
+        # Get maximum SMILE string length
         max_smile = max(len(smile_string) for smile_string in df.smiles)
-        smile_symbols = ["x"] + sorted(
-            {symbol for smile_string in df.smiles for symbol in set(smile_string)}
-        )
 
         # Pad SMILE strings
         df["smiles"] = [
@@ -164,13 +160,16 @@ class FishBioconcentration(BaseDataset):
             for smile_string in df.smiles
         ]
 
-        # Encode SMILE strings
-        for idx in range(max_smile):
+        # Split up the SMILE strings into a matrix
+        smile_df = pd.DataFrame(df.smiles.map(list).values.tolist())
 
-            def fix_smiles(txt: str):
-                return smile_symbols.index(txt[idx])
+        # Set the column values of the SMILE dataframe
+        smile_df.columns = pd.Index(
+            [f"smiles_{idx}" for idx in range(smile_df.shape[1])]
+        )
 
-            df[f"smiles_{idx}"] = df.smiles.map(fix_smiles)
+        # Add the smile dataframe to the original dataframe
+        df = pd.concat([df, smile_df], axis=1)
 
         # Drop original SMILE feature
         df = df.drop(columns="smiles")
