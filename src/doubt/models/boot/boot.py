@@ -67,7 +67,7 @@ class Boot:
             >>> round(preds, 2)
             482.0
             >>> np.around(intervals, 2)
-            array([473.5, 490.14])
+            array([473.5 , 490.14])
 
     Sources:
         [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements of

@@ -50,7 +50,7 @@ addopts = [
 xfail_strict = true
 filterwarnings = ["error"]
 log_cli_level = "info"
-testpaths = ["tests", "src"]
+testpaths = ["tests", "src/doubt"]
 
 [tool.black]
 line-length = 88
