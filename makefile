@@ -60,7 +60,7 @@ clean:
 	@echo "Cleaned repository."
 
 test:
-	@pytest --cov=src/doubt -n 8 tests/
+	@pytest --cov=src/doubt -n 8
 	@readme-cov
 
 tree:
