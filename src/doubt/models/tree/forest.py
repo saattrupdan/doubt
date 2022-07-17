@@ -82,6 +82,7 @@ class QuantileRegressionForest:
         Fitting and predicting follows scikit-learn syntax::
 
             >>> from doubt.datasets import Concrete
+            >>> import numpy as np
             >>> X, y = Concrete().split()
             >>> forest = QuantileRegressionForest(random_seed=42, max_leaf_nodes=8)
             >>> forest.fit(X, y).predict(X).shape
@@ -96,6 +97,11 @@ class QuantileRegressionForest:
             >>> preds, interval = forest.predict(np.ones(8), uncertainty=0.25)
             >>> interval[0] < preds < interval[1]
             True
+
+        We can also get the feature importances for the model::
+
+            >>> np.round(forest.feature_importances_, 1)
+            array([0.4, 0. , 0. , 0.1, 0.1, 0. , 0. , 0.4])
     """
 
     def __init__(
@@ -128,7 +134,7 @@ class QuantileRegressionForest:
         self.random_seed = random_seed
         self.verbose = verbose
 
-        self._estimators = n_estimators * [
+        self.estimators_ = n_estimators * [
             QuantileRegressionTree(
                 criterion=criterion,
                 splitter=splitter,
@@ -141,6 +147,30 @@ class QuantileRegressionForest:
                 random_seed=random_seed,
             )
         ]
+
+    @property
+    def feature_importances_(self) -> np.ndarray:
+        """The impurity-based feature importances.
+
+        The higher, the more important the feature. The importance of a feature is
+        computed as the (normalized) total reduction of the criterion brought by that
+        feature.  It is also known as the Gini importance. Warning: impurity-based
+        feature importances can be misleading for high cardinality features (many
+        unique values).
+
+        Returns:
+            ndarray of shape (n_features,):
+                The values of this array sum to 1, unless all trees are single node
+                trees consisting of only the root node, in which case it will be an
+                array of zeros.
+        """
+        all_importances = Parallel(n_jobs=self.n_jobs, prefer="threads")(
+            delayed(getattr)(tree, "feature_importances_")
+            for tree in self.estimators_
+            if tree.tree_.node_count > 1
+        )
+        all_importances = np.mean(all_importances, axis=0, dtype=np.float64)
+        return all_importances / np.sum(all_importances)
 
     def __repr__(self) -> str:
         txt = "QuantileRegressionForest("
@@ -198,13 +228,13 @@ class QuantileRegressionForest:
 
         # Set up progress bar if requested
         if verbose:
-            itr = tqdm(self._estimators, desc="Fitting trees")
+            itr = tqdm(self.estimators_, desc="Fitting trees")
         else:
-            itr = self._estimators
+            itr = self.estimators_
 
         # Fit trees in parallel on the bootstrapped resamples
         with Parallel(n_jobs=self.n_jobs) as parallel:
-            self._estimators = parallel(
+            self.estimators_ = parallel(
                 delayed(estimator.fit)(X[bidxs[b, :], :], y[bidxs[b, :]])
                 for b, estimator in enumerate(itr)
             )
@@ -259,9 +289,9 @@ class QuantileRegressionForest:
 
         # Set up progress bar if requested
         if verbose:
-            itr = tqdm(self._estimators, desc="Getting tree predictions")
+            itr = tqdm(self.estimators_, desc="Getting tree predictions")
         else:
-            itr = self._estimators
+            itr = self.estimators_
 
         with Parallel(n_jobs=self.n_jobs) as parallel:
             preds = parallel(
