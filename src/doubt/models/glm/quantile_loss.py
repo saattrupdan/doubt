@@ -1,12 +1,10 @@
 """Implementation of the quantile loss function"""
 
-from typing import Sequence
-
 import numpy as np
 
 
 def quantile_loss(
-    predictions: Sequence[float], targets: Sequence[float], quantile: float
+    predictions: np.ndarray, targets: np.ndarray, quantile: float
 ) -> float:
     """Quantile loss function.
 
@@ -39,8 +37,8 @@ def quantile_loss(
 
 
 def smooth_quantile_loss(
-    predictions: Sequence[float],
-    targets: Sequence[float],
+    predictions: np.ndarray,
+    targets: np.ndarray,
     quantile: float,
     alpha: float = 0.4,
 ) -> float:

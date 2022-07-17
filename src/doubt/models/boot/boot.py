@@ -2,7 +2,7 @@
 
 import copy
 from types import MethodType
-from typing import Callable, Optional, Sequence, Tuple, Union
+from typing import Callable, Optional, Tuple, Union
 
 import numpy as np
 
@@ -54,7 +54,7 @@ class Boot:
             >>> linreg = Boot(LinearRegression(), random_seed=42)
             >>> linreg = linreg.fit(X, y)
             >>> linreg.predict([10, 30, 1000, 50], uncertainty=0.05)
-            (481.99688920651676, array([473.50425407, 490.14061895]))
+            (481.9968892065167, array([473.50425407, 490.14061895]))
 
     Sources:
         [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements
@@ -131,7 +131,7 @@ def compute_statistic(
     statistic: Callable[[np.ndarray], float],
     n_boots: Optional[int] = None,
     uncertainty: float = 0.05,
-    quantiles: Optional[Sequence[float]] = None,
+    quantiles: Optional[np.ndarray] = None,
     return_all: bool = False,
 ) -> Union[float, Tuple[float, np.ndarray]]:
     """Compute bootstrapped statistic.
@@ -201,7 +201,7 @@ def predict(
     X: np.ndarray,
     n_boots: Optional[int] = None,
     uncertainty: Optional[float] = None,
-    quantiles: Optional[Sequence[float]] = None,
+    quantiles: Optional[np.ndarray] = None,
 ) -> Tuple[Union[float, np.ndarray], np.ndarray]:
     """Compute bootstrapped predictions.
 

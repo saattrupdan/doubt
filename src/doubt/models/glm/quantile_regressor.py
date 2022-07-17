@@ -1,6 +1,6 @@
 """Quantile regression for generalised linear models"""
 
-from typing import Callable, Optional, Sequence, Tuple, Union
+from typing import Callable, Optional, Tuple, Union
 
 import numpy as np
 from scipy.optimize import minimize
@@ -44,7 +44,7 @@ class QuantileRegressor:
             >>> x = [500, 0, 0, 100, 2, 1000, 500, 20]
             >>> pred, interval = model.predict(x)
             >>> pred, interval
-            (78.50224243713622, array([ 19.27889844, 172.71408196]))
+            (78.50224243713622, array([ 22.64200192, 109.46377377]))
 
     Sources:
         [1]: Songfeng Zheng (2011). Gradient Descent Algorithms for
@@ -57,7 +57,7 @@ class QuantileRegressor:
         model: Union[LinearRegression, _GeneralizedLinearRegressor],
         max_iter: Optional[int] = None,
         uncertainty: float = 0.05,
-        quantiles: Optional[Sequence[float]] = None,
+        quantiles: Optional[np.ndarray] = None,
         alpha: float = 0.4,
     ):
 
@@ -207,7 +207,7 @@ class QuantileRegressor:
 
         return preds, quantile_vals
 
-    def score(self, X: Sequence[float], y: Sequence[float]) -> float:
+    def score(self, X: np.ndarray, y: np.ndarray) -> float:
         """Compute either the R^2 value or the negative pinball loss.
 
         If `uncertainty` is not set in the constructor then the R^2 value will
