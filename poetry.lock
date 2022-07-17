@@ -355,6 +355,18 @@ optional = false
 python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*,!=3.6.*"
 
 [[package]]
+name = "numexpr"
+version = "2.8.3"
+description = "Fast numerical expression evaluator for NumPy"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+numpy = ">=1.13.3"
+packaging = "*"
+
+[[package]]
 name = "numpy"
 version = "1.23.1"
 description = "NumPy is the fundamental package for array computing with Python."
@@ -366,7 +378,7 @@ python-versions = ">=3.8"
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6"
 
@@ -540,7 +552,7 @@ python-versions = ">=3.5"
 name = "pyparsing"
 version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.6.8"
 
@@ -726,6 +738,22 @@ pure-eval = "*"
 tests = ["pytest", "typeguard", "pygments", "littleutils", "cython"]
 
 [[package]]
+name = "tables"
+version = "3.7.0"
+description = "Hierarchical datasets for Python"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+numexpr = ">=2.6.2"
+numpy = ">=1.19.0"
+packaging = "*"
+
+[package.extras]
+doc = ["sphinx (>=1.1)", "sphinx-rtd-theme", "numpydoc", "ipython"]
+
+[[package]]
 name = "threadpoolctl"
 version = "3.1.0"
 description = "threadpoolctl"
@@ -835,7 +863,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.11"
-content-hash = "443fa6e83c008da07d53960e118fecd10fdc96d49acc084bbea8d0ed27ac9065"
+content-hash = "3b2f196158e2a8130cf8dbb13bf2c562cf931b0e351090dfa34c324de6cd7cb2"
 
 [metadata.files]
 appnope = [
@@ -1075,6 +1103,7 @@ nodeenv = [
     {file = "nodeenv-1.7.0-py2.py3-none-any.whl", hash = "sha256:27083a7b96a25f2f5e1d8cb4b6317ee8aeda3bdd121394e5ac54e498028a042e"},
     {file = "nodeenv-1.7.0.tar.gz", hash = "sha256:e0e7f7dfb85fc5394c6fe1e8fa98131a2473e04311a45afb6508f7cf1836fa2b"},
 ]
+numexpr = []
 numpy = []
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
@@ -1258,6 +1287,7 @@ stack-data = [
     {file = "stack_data-0.3.0-py3-none-any.whl", hash = "sha256:aa1d52d14d09c7a9a12bb740e6bdfffe0f5e8f4f9218d85e7c73a8c37f7ae38d"},
     {file = "stack_data-0.3.0.tar.gz", hash = "sha256:77bec1402dcd0987e9022326473fdbcc767304892a533ed8c29888dacb7dddbc"},
 ]
+tables = []
 threadpoolctl = [
     {file = "threadpoolctl-3.1.0-py3-none-any.whl", hash = "sha256:8b99adda265feb6773280df41eece7b2e6561b772d21ffd52e372f999024907b"},
     {file = "threadpoolctl-3.1.0.tar.gz", hash = "sha256:a335baacfaa4400ae1f0d8e3a58d6674d2f8828e3716bb2802c44955ad391380"},
