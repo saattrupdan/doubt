@@ -48,6 +48,9 @@ jobs:
           restore-keys: |
             poetry-${{ matrix.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
+      - name: Install HDF5
+        run: apt-get install libhdf5-serial-dev
+
       - name: Install Dependencies
         run: poetry install
         if: steps.cache.outputs.cache-hit != 'true'
