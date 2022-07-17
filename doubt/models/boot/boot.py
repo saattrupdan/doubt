@@ -16,9 +16,9 @@ class Boot:
     Datasets can be any sequence of numeric input, from which bootstrapped
     statistics can be calculated, with confidence intervals included.
 
-    The models can be any model that is either callable or equipped with
-    a `predict` method, such as all the models in `scikit-learn`, `pytorch`
-    and `tensorflow`, and the bootstrapped model can then produce predictions
+    The models can be any model that has a `fit` method and is either callable
+    or equipped with a `predict` method, such as all the models in
+    `scikit-learn`, and the bootstrapped model can then produce predictions
     with prediction intervals.
 
     The bootstrapped prediction intervals are computed using the an extension
@@ -336,7 +336,7 @@ def fit(self, X: FloatArray, y: FloatArray, n_boots: Optional[int] = None):
 
     # Compute the m_i's and the validation residuals
     val_residuals = []
-    for boot_idx in range(n_boots):
+    for _ in range(n_boots):
         train_idxs = rng.choice(range(n), size=n, replace=True)
         val_idxs = [idx for idx in range(n) if idx not in train_idxs]
 
