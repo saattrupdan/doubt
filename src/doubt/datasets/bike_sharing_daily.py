@@ -10,7 +10,7 @@ import zipfile
 
 import pandas as pd
 
-from ._dataset import BASE_DATASET_DESCRIPTION, BaseDataset
+from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 
 class BikeSharingDaily(BaseDataset):
