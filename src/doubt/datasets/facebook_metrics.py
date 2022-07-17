@@ -140,7 +140,7 @@ class FacebookMetrics(BaseDataset):
             "shares",
             "total_interactions",
         ]
-        df = pd.read_csv(csv_file, sep=";", names=cols, header=0, index_col=False)
+        df = pd.read_csv(csv_file, sep=";", names=cols, header=0, index_col=0)
 
         # Numericalise post type
         post_types = list(df.post_type.unique())
