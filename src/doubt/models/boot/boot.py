@@ -258,7 +258,7 @@ def predict(
     if n_boots is None:
         n_boots = int(np.sqrt(n_train).astype(int))
 
-    # Compute the m_i's and the validation residuals
+    # Sample the bootstrap indices
     train_idxs = rng.choice(n_train, size=(n_boots, n_train), replace=True)
 
     # Run the worker function in parallel
@@ -315,7 +315,7 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None):
 
     # Set default value of `n_boots` if it is not set
     if n_boots is None:
-        n_boots = np.sqrt(n).astype(int)
+        n_boots = int(np.sqrt(n).astype(int))
 
     # Ensure that `X` and `y` are Numpy arrays
     X = np.asarray(X)
@@ -333,21 +333,27 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None):
     # comparison with the validation residuals
     train_residuals = np.quantile(y - preds, q=np.arange(0, 1, 0.01))
 
-    # Compute the m_i's and the validation residuals
-    val_residuals_list = []
-    for _ in range(n_boots):
-        train_idxs = rng.choice(range(n), size=n, replace=True)
-        val_idxs = [idx for idx in range(n) if idx not in train_idxs]
+    # Sample the bootstrap indices
+    train_idxs = rng.choice(n, size=(n_boots, n), replace=True)
 
-        X_train = X[train_idxs, :]
-        y_train = y[train_idxs]
-        X_val = X[val_idxs, :]
-        y_val = y[val_idxs]
-
-        boot_preds = _model_fit_predict(
-            model=self._model, X_train=X_train, y_train=y_train, X_test=X_val
+    # Run the worker function in parallel
+    with Parallel(n_jobs=mp.cpu_count() - 1) as parallel:
+        bootstrap_preds = parallel(
+            delayed(_model_fit_predict)(
+                model=self._model,
+                X_train=self.X_train[train_idxs[boot_idx], :],
+                y_train=self.y_train[train_idxs[boot_idx]],
+                X_test=X[[idx for idx in range(n) if idx not in train_idxs[boot_idx]]],
+            )
+            for boot_idx in range(n_boots)
         )
-        val_residuals_list.append(y_val - boot_preds)
+
+    # Compute the validation residuals
+    val_residuals_list = [
+        y[[idx for idx in range(n) if idx not in train_idxs[boot_idx]]]
+        - bootstrap_preds[boot_idx]
+        for boot_idx in range(n_boots)
+    ]
 
     # Aggregate the validation residuals into quantiles, to enable comparison with the
     # training residuals
