@@ -20,6 +20,7 @@ joblib = "^1.1.0"
 scikit-learn = "^1.1.1"
 tables = "^3.7.0"
 xlrd = "^2.0.1"
+openpyxl = "^3.0.10"
 
 [tool.poetry.dev-dependencies]
 pdoc = "^7.1.1"
