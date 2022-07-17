@@ -6,8 +6,6 @@ import subprocess
 from pathlib import Path
 from typing import Tuple
 
-import pkg_resources
-
 
 def bump_major():
     """Add one to the major version."""
@@ -79,10 +77,26 @@ def get_current_version() -> Tuple[int, int, int]:
     Returns:
         triple of ints:
             The current version, separated into major, minor and patch versions.
+
+    Raises:
+        RuntimeError:
+            If the version could not be determined.
     """
-    version_str = pkg_resources.get_distribution("doubt").version
-    major, minor, patch = map(int, version_str.split("."))
-    return major, minor, patch
+    # Get all the version candidates from pyproject.toml
+    version_candidates = re.search(
+        r'(?<=version = ")[^"]+(?=")', Path("pyproject.toml").read_text()
+    )
+
+    # If no version candidates were found, raise an error
+    if version_candidates is None:
+        raise RuntimeError("No version found in pyproject.toml.")
+
+    # Otherwise, extract the version, split it into major, minor and patch parts and
+    # return these
+    else:
+        version_str = version_candidates.group(0)
+        major, minor, patch = map(int, version_str.split("."))
+        return major, minor, patch
 
 
 if __name__ == "__main__":
