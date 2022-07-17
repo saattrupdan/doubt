@@ -42,11 +42,13 @@ class QuantileRegressor:
             >>> model.fit(X, y).predict(X)[0].shape
             (1030,)
             >>> x = [500, 0, 0, 100, 2, 1000, 500, 20]
-            >>> preds, interval = model.predict(x)
+            >>> preds, (start, end) = model.predict(x)
             >>> round(preds, 2)
             78.5
-            >>> np.around(interval, 0)
-            array([ 23., 109.])
+            >>> round(start, 2)
+            22.64
+            >>> round(end, 2)
+            109.46
 
     Sources:
         [1]: Songfeng Zheng (2011). Gradient Descent Algorithms for
