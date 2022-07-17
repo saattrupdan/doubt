@@ -11,7 +11,7 @@ and this project adheres to
 ## [v4.2.0] - 2022-07-17
 ### Changed
 - `Boot.fit` and `Boot.predict` methods are now parallelised, speeding up both training
-  and prediction time.
+  and prediction time a bit.
 - Updated `README` to include generalised linear models, rather than only
   mentioning linear regression.
 
