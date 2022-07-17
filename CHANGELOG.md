@@ -10,6 +10,8 @@ and this project adheres to
 
 ## [Unreleased]
 ### Changed
+- `Boot.fit` and `Boot.predict` methods are now parallelised, speeding up both training
+  and prediction time.
 - Updated `README` to include generalised linear models, rather than only
   mentioning linear regression.
 
