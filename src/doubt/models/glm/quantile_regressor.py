@@ -35,15 +35,18 @@ class QuantileRegressor:
 
             >>> from doubt.datasets import Concrete
             >>> from sklearn.linear_model import PoissonRegressor
+            >>> import numpy as np
             >>> X, y = Concrete().split(random_seed=42)
             >>> model = QuantileRegressor(PoissonRegressor(max_iter=10_000),
             ...                           uncertainty=0.05)
             >>> model.fit(X, y).predict(X)[0].shape
             (1030,)
             >>> x = [500, 0, 0, 100, 2, 1000, 500, 20]
-            >>> pred, interval = model.predict(x)
-            >>> pred, interval
-            (78.50224243713622, array([ 22.64200192, 109.46377377]))
+            >>> preds, interval = model.predict(x)
+            >>> round(preds, 2)
+            78.5
+            >>> np.around(interval, 2)
+            array([ 22.64, 109.46])
 
     Sources:
         [1]: Songfeng Zheng (2011). Gradient Descent Algorithms for

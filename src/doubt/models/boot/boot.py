@@ -35,26 +35,39 @@ class Boot:
         Compute the bootstrap distribution of the mean, with a 95% confidence
         interval::
 
-            >>> from doubt.datasets import FishToxicity
+            >>> from doubt.datasets import FishToxicity, PowerPlant
+            >>> import numpy as np
             >>> X, y = FishToxicity().split()
             >>> boot = Boot(y, random_seed=42)
-            >>> boot.compute_statistic(np.mean)
-            (4.064430616740088, array([3.97621225, 4.16582087]))
+            >>> preds, intervals = boot.compute_statistic(np.mean)
+            >>> round(preds, 2)
+            4.06
+            >>> np.around(intervals, 2)
+            array([3.98, 4.17])
 
         Alternatively, we can output the whole bootstrap distribution::
 
-            >>> boot.compute_statistic(np.mean, n_boots=3, return_all=True)
-            (4.064430616740088, array([4.05705947, 4.06197577, 4.05728414]))
+            >>> preds, intervals = boot.compute_statistic(
+            ...     np.mean,
+            ...     n_boots=3,
+            ...     return_all=True
+            ... )
+            >>> round(preds, 2)
+            4.06
+            >>> np.around(intervals, 2)
+            array([4.06, 4.06, 4.06])
 
         Wrap a scikit-learn model and get prediction intervals::
 
             >>> from sklearn.linear_model import LinearRegression
-            >>> from doubt.datasets import PowerPlant
             >>> X, y = PowerPlant().split()
             >>> linreg = Boot(LinearRegression(), random_seed=42)
             >>> linreg = linreg.fit(X, y)
-            >>> linreg.predict([10, 30, 1000, 50], uncertainty=0.05)
-            (481.9968892065167, array([473.50425407, 490.14061895]))
+            >>> preds, intervals = linreg.predict([10, 30, 1000, 50], uncertainty=0.05)
+            >>> round(preds, 2)
+            482.0
+            >>> np.around(intervals, 2)
+            array([473.5, 490.14])
 
     Sources:
         [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements of
