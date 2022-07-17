@@ -69,6 +69,8 @@ def set_new_version(major: int, minor: int, patch: int):
     subprocess.run(["git", "add", "pyproject.toml"])
     subprocess.run(["git", "commit", "-m", f"feat: v{version}"])
     subprocess.run(["git", "tag", f"v{version}"])
+    subprocess.run(["git", "push"])
+    subprocess.run(["git", "push", "--tags"])
 
 
 def get_current_version() -> Tuple[int, int, int]:
