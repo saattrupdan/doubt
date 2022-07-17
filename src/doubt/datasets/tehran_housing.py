@@ -1,8 +1,8 @@
 """Tehran housing data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -14,9 +14,9 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class TehranHousing(BaseDataset):
     __doc__ = f"""
-    Data set includes construction cost, sale prices, project variables, and
-    economic variables corresponding to real estate single-family residential
-    apartments in Tehran, Iran.
+    Data set includes construction cost, sale prices, project variables, and economic
+    variables corresponding to real estate single-family residential apartments in
+    Tehran, Iran.
 
     {BASE_DATASET_DESCRIPTION}
 

@@ -10,26 +10,24 @@ import numpy as np
 class Boot:
     """Bootstrap wrapper for datasets and models.
 
-    Datasets can be any sequence of numeric input, from which bootstrapped
-    statistics can be calculated, with confidence intervals included.
+    Datasets can be any sequence of numeric input, from which bootstrapped statistics
+    can be calculated, with confidence intervals included.
 
-    The models can be any model that is either callable or equipped with
-    a `predict` method, such as all the models in `scikit-learn`, `pytorch`
-    and `tensorflow`, and the bootstrapped model can then produce predictions
-    with prediction intervals.
+    The models can be any model that is either callable or equipped with a `predict`
+    method, such as all the models in `scikit-learn`, `pytorch` and `tensorflow`, and
+    the bootstrapped model can then produce predictions with prediction intervals.
 
-    The bootstrapped prediction intervals are computed using the an extension
-    of method from [2] which also takes validation error into account. To
-    remedy this, the .632+ bootstrap estimate from [1] has been used. Read
-    more in [3].
+    The bootstrapped prediction intervals are computed using the an extension of method
+    from [2] which also takes validation error into account. To remedy this, the .632+
+    bootstrap estimate from [1] has been used. Read more in [3].
 
     Args:
         input (float array or model):
-            Either a dataset to calculate bootstrapped statistics on, or an
-            model for which bootstrapped predictions will be computed.
+            Either a dataset to calculate bootstrapped statistics on, or an model for
+            which bootstrapped predictions will be computed.
         random_seed (float or None):
-            The random seed used for bootstrapping. If set to None then no
-            seed will be set. Defaults to None.
+            The random seed used for bootstrapping. If set to None then no seed will be
+            set. Defaults to None.
 
     Examples:
         Compute the bootstrap distribution of the mean, with a 95% confidence
@@ -57,13 +55,12 @@ class Boot:
             (481.9968892065167, array([473.50425407, 490.14061895]))
 
     Sources:
-        [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements
-             of statistical learning (Vol. 1, No. 10). New York: Springer
-             series in statistics.
-        [2]: Kumar, S., & Srivistava, A. N. (2012). Bootstrap prediction
-             intervals in non-parametric regression with applications to
-             anomaly detection.
-        [3]: https://saattrupdan.github.io/2020-03-01-bootstrap-prediction/
+        [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements of
+             statistical learning (Vol. 1, No. 10). New York: Springer series in
+             statistics.
+        [2]: Kumar, S., & Srivistava, A. N. (2012). Bootstrap prediction intervals in
+             non-parametric regression with applications to anomaly detection.
+        [3]: https://saattrupdan.github.io/2020-03-01-bootstrap-prediction
     """
 
     def __init__(self, input: object, random_seed: Optional[float] = None):
@@ -92,8 +89,8 @@ def _model_fit_predict(
 ) -> np.ndarray:
     """Fit the underlying model and perform predictions with it.
 
-    This requires `self._model` to be set and that it is either callable or
-    have a `predict` method.
+    This requires `self._model` to be set and that it is either callable or have a
+    `predict` method.
 
     Args:
         X_train (float matrix):
@@ -137,29 +134,28 @@ def compute_statistic(
     """Compute bootstrapped statistic.
 
     Args:
-        statistic (numeric array -> float):
+        statistic (callable):
             The statistic to be computed on bootstrapped samples.
-        n_boots (int or None):
-            The number of resamples to bootstrap. If None then it is set
-            to the square root of the data set. Defaults to None
-        uncertainty (float):
-            The uncertainty used to compute the confidence interval
-            of the bootstrapped statistic. Not used if `return_all` is
-            set to True or if `quantiles` is not None. Defaults to 0.05.
-        quantiles (sequence of floats or None, optional):
-            List of quantiles to output, as an alternative to the
-            `uncertainty` argument, and will not be used if that argument
-            is set. If None then `uncertainty` is used. Defaults to None.
-        return_all (bool):
-            Whether all bootstrapped statistics should be returned instead
-            of the confidence interval. Defaults to False.
+        n_boots (int or None, optional):
+            The number of resamples to bootstrap. If None then it is set to the square
+            root of the data set. Defaults to None
+        uncertainty (float, optional):
+            The uncertainty used to compute the confidence interval of the bootstrapped
+            statistic. Not used if `return_all` is set to True or if `quantiles` is not
+            None. Defaults to 0.05.
+        quantiles (Numpy array or None, optional):
+            List of quantiles to output, as an alternative to the `uncertainty`
+            argument, and will not be used if that argument is set. If None then
+            `uncertainty` is used. Defaults to None.
+        return_all (bool, optional):
+            Whether all bootstrapped statistics should be returned instead of the
+            confidence interval. Defaults to False.
 
     Returns:
         a float or a pair of a float and an array of floats:
-            The statistic, and if `uncertainty` is set then also
-            the confidence interval, or if `quantiles` is set then also the
-            specified quantiles, or if `return_all` is set then also all of the
-            bootstrapped statistics.
+            The statistic, and if `uncertainty` is set then also the confidence
+            interval, or if `quantiles` is set then also the specified quantiles, or if
+            `return_all` is set then also all of the bootstrapped statistics.
     """
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
@@ -170,8 +166,7 @@ def compute_statistic(
     # Get the number of data points
     n = self.data.shape[0]
 
-    # Set default value of the number of bootstrap samples if `n_boots` is not
-    # set
+    # Set default value of the number of bootstrap samples if `n_boots` is not set
     if n_boots is None:
         n_boots = np.sqrt(n).astype(int)
 
@@ -207,26 +202,24 @@ def predict(
 
     Args:
         X (float array):
-            The array containing the data set, either of shape (f,)
-            or (n, f), with n being the number of samples and f being
-            the number of features.
+            The array containing the data set, either of shape (f,) or (n, f), with n
+            being the number of samples and f being the number of features.
         n_boots (int or None, optional):
-            The number of resamples to bootstrap. If None then it is set
-            to the square root of the data set. Defaults to None
+            The number of resamples to bootstrap. If None then it is set to the square
+            root of the data set. Defaults to None
         uncertainty (float or None, optional):
-            The uncertainty used to compute the prediction interval
-            of the bootstrapped prediction. If None then no prediction
-            intervals are returned. Defaults to None.
+            The uncertainty used to compute the prediction interval of the bootstrapped
+            prediction. If None then no prediction intervals are returned. Defaults to
+            None.
         quantiles (sequence of floats or None, optional):
-            List of quantiles to output, as an alternative to the
-            `uncertainty` argument, and will not be used if that argument
-            is set. If None then `uncertainty` is used. Defaults to None.
+            List of quantiles to output, as an alternative to the `uncertainty`
+            argument, and will not be used if that argument is set. If None then
+            `uncertainty` is used. Defaults to None.
 
     Returns:
         float array or pair of float arrays:
-            The bootstrapped predictions, and the confidence intervals if
-            `uncertainty` is not None, or the specified quantiles if
-            `quantiles` is not None.
+            The bootstrapped predictions, and the confidence intervals if `uncertainty`
+            is not None, or the specified quantiles if `quantiles` is not None.
     """
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
@@ -243,14 +236,13 @@ def predict(
     # Get the full non-bootstrapped predictions of `X`
     preds = self._model(X) if callable(self._model) else self._model.predict(X)
 
-    # If no quantiles should be outputted then simply return the predictions
-    # of the underlying model
+    # If no quantiles should be outputted then simply return the predictions of the
+    # underlying model
     if uncertainty is None and quantiles is None:
         return preds
 
-    # Ensure that the underlying model has been fitted before predicting. This
-    # is only a requirement if `uncertainty` is set, as we need access to
-    # `self.X_train`
+    # Ensure that the underlying model has been fitted before predicting. This is only
+    # a requirement if `uncertainty` is set, as we need access to `self.X_train`
     if not hasattr(self, "X_train") or self.X_train is None:
         raise RuntimeError(
             "This model has not been fitted yet! Call fit() "
@@ -261,8 +253,8 @@ def predict(
     n_train = self.X_train.shape[0]
     n_test = X.shape[0]
 
-    # The authors chose the number of bootstrap samples as the square root of
-    # the number of samples in the training dataset
+    # The authors chose the number of bootstrap samples as the square root of the
+    # number of samples in the training dataset
     if n_boots is None:
         n_boots = np.sqrt(n_train).astype(int)
 
@@ -299,14 +291,13 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None):
 
     Args:
         X (float array):
-            The array containing the data set, either of shape (f,)
-            or (n, f), with n being the number of samples and f being
-            the number of features.
+            The array containing the data set, either of shape (f,) or (n, f), with n
+            being the number of samples and f being the number of features.
         y (float array):
             The array containing the target values, of shape (n,)
         n_boots (int or None):
-            The number of resamples to bootstrap. If None then it is set
-            to the square root of the data set. Defaults to None
+            The number of resamples to bootstrap. If None then it is set to the square
+            root of the data set. Defaults to None
     """
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
@@ -330,8 +321,8 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None):
     self._model.fit(X, y)
     preds = self._model(X) if callable(self._model) else self._model.predict(X)
 
-    # Calculate the training residuals and aggregate them into quantiles, to
-    # enable comparison with the validation residuals
+    # Calculate the training residuals and aggregate them into quantiles, to enable
+    # comparison with the validation residuals
     train_residuals = np.quantile(y - preds, q=np.arange(0, 1, 0.01))
 
     # Compute the m_i's and the validation residuals
@@ -348,8 +339,8 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None):
         boot_preds = self._model_fit_predict(X_train, y_train, X_val)
         val_residuals_list.append(y_val - boot_preds)
 
-    # Aggregate the validation residuals into quantiles, to enable comparison
-    # with the training residuals
+    # Aggregate the validation residuals into quantiles, to enable comparison with the
+    # training residuals
     val_residuals = np.concatenate(val_residuals_list)
     val_residuals = np.quantile(val_residuals, q=np.arange(0, 1, 0.01))
 

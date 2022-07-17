@@ -1,8 +1,8 @@
 """Protein data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -14,9 +14,9 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class Protein(BaseDataset):
     __doc__ = f"""
-    This is a data set of Physicochemical Properties of Protein Tertiary
-    Structure. The data set is taken from CASP 5-9. There are 45730 decoys
-    and size varying from 0 to 21 armstrong.
+    This is a data set of Physicochemical Properties of Protein Tertiary Structure. The
+    data set is taken from CASP 5-9. There are 45730 decoys and size varying from 0 to
+    21 armstrong.
 
     {BASE_DATASET_DESCRIPTION}
 

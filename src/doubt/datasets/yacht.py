@@ -1,8 +1,8 @@
 """Yacht data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -14,16 +14,16 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class Yacht(BaseDataset):
     __doc__ = f"""
-    Prediction of residuary resistance of sailing yachts at the initial design
-    stage is of a great value for evaluating the ship's performance and for
-    estimating the required propulsive power. Essential inputs include the
-    basic hull dimensions and the boat velocity.
+    Prediction of residuary resistance of sailing yachts at the initial design stage is
+    of a great value for evaluating the ship's performance and for estimating the
+    required propulsive power. Essential inputs include the basic hull dimensions and
+    the boat velocity.
 
-    The Delft data set comprises 251 full-scale experiments, which were
-    performed at the Delft Ship Hydromechanics Laboratory for that purpose.
+    The Delft data set comprises 251 full-scale experiments, which were performed at
+    the Delft Ship Hydromechanics Laboratory for that purpose.
 
-    These experiments include 22 different hull forms, derived from a parent
-    form closely related to the "Standfast 43" designed by Frans Maas.
+    These experiments include 22 different hull forms, derived from a parent form
+    closely related to the "Standfast 43" designed by Frans Maas.
 
     {BASE_DATASET_DESCRIPTION}
 

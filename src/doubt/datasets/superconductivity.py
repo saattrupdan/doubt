@@ -1,8 +1,8 @@
 """Superconductivity data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -15,9 +15,9 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class Superconductivity(BaseDataset):
     __doc__ = f"""
-    This dataset contains data on 21,263 superconductors and their relevant
-    features. The goal here is to predict the critical temperature based on
-    the features extracted.
+    This dataset contains data on 21,263 superconductors and their relevant features.
+    The goal here is to predict the critical temperature based on the features
+    extracted.
 
     {BASE_DATASET_DESCRIPTION}
 

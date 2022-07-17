@@ -58,9 +58,9 @@ def smooth_quantile_loss(
         float: The smooth quantile loss.
 
     Sources:
-        [1]: Songfeng Zheng (2011). Gradient Descent Algorithms for
-             Quantile Regression With Smooth Approximation. International
-             Journal of Machine Learning and Cybernetics.
+        [1]: Songfeng Zheng (2011). Gradient Descent Algorithms for Quantile Regression
+             With Smooth Approximation. International Journal of Machine Learning and
+             Cybernetics.
     """
     # Convert inputs to NumPy arrays
     target_arr = np.asarray(targets)

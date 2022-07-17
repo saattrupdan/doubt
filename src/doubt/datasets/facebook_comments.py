@@ -1,8 +1,8 @@
 """Facebook comments data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -15,9 +15,8 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class FacebookComments(BaseDataset):
     __doc__ = f"""
-    Instances in this dataset contain features extracted from Facebook posts.
-    The task associated with the data is to predict how many comments the
-    post will receive.
+    Instances in this dataset contain features extracted from Facebook posts. The task
+    associated with the data is to predict how many comments the post will receive.
 
     {BASE_DATASET_DESCRIPTION}
 
@@ -25,57 +24,55 @@ class FacebookComments(BaseDataset):
         page_popularity (int):
             Defines the popularity of support for the source of the document
         page_checkins (int):
-            Describes how many individuals so far visited this place. This
-            feature is only associated with places; e.g., some institution,
-            place, theater, etc.
+            Describes how many individuals so far visited this place. This feature is
+            only associated with places; e.g., some institution, place, theater, etc.
         page_talking_about (int):
             Defines the daily interest of individuals towards source of the
-            document/post. The people who actually come back to the page,
-            after liking the page. This include activities such as comments,
-            likes to a post, shares etc., by visitors to the page
+            document/post. The people who actually come back to the page, after liking
+            the page. This include activities such as comments, likes to a post, shares
+            etc., by visitors to the page
         page_category (int):
             Defines the category of the source of the document; e.g., place,
             institution, branch etc.
         agg[n] for n=0..24 (float):
-            These features are aggreagted by page, by calculating min, max,
-            average, median and standard deviation of essential features
+            These features are aggreagted by page, by calculating min, max, average,
+            median and standard deviation of essential features
         cc1 (int):
             The total number of comments before selected base date/time
         cc2 (int):
-            The number of comments in the last 24 hours, relative to base
-            date/time
+            The number of comments in the last 24 hours, relative to base date/time
         cc3 (int):
-            The number of comments in the last 48 to last 24 hours relative
-            to base date/time
+            The number of comments in the last 48 to last 24 hours relative to base
+            date/time
         cc4 (int):
-            The number of comments in the first 24 hours after the publication
-            of post but before base date/time
+            The number of comments in the first 24 hours after the publication of post
+            but before base date/time
         cc5 (int):
             The difference between cc2 and cc3
         base_time (int):
-            Selected time in order to simulate the scenario, ranges from 0
-            to 71
+            Selected time in order to simulate the scenario, ranges from 0 to 71
         post_length (int):
             Character count in the post
         post_share_count (int):
-            This feature counts the number of shares of the post, how many
-            people had shared this post onto their timeline
+            This feature counts the number of shares of the post, how many people had
+            shared this post onto their timeline
         post_promotion_status (int):
-            Binary feature. To reach more people with posts in News Feed,
-            individuals can promote their post and this feature indicates
-            whether the post is promoted or not
+            Binary feature. To reach more people with posts in News Feed, individuals
+            can promote their post and this feature indicates whether the post is
+            promoted or not
         h_local (int):
             This describes the hours for which we have received the target
             variable/comments. Ranges from 0 to 23
         day_published[n] for n=0..6 (int):
-            Binary feature. This represents the day (Sunday-Saturday) on
-            which the post was published
+            Binary feature. This represents the day (Sunday-Saturday) on which the post
+            was published
         day[n] for n=0..6 (int):
-            Binary feature. This represents the day (Sunday-Saturday) on
-            selected base date/time
+            Binary feature. This represents the day (Sunday-Saturday) on selected base
+            date/time
 
     Targets:
-        ncomments (int): The number of comments in the next `h_local` hours
+        ncomments (int):
+            The number of comments in the next `h_local` hours
 
     Source:
         https://archive.ics.uci.edu/ml/datasets/Facebook+Comment+Volume+Dataset

@@ -1,8 +1,8 @@
 """Concrete data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -15,8 +15,7 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 class Concrete(BaseDataset):
     __doc__ = f"""
     Concrete is the most important material in civil engineering. The concrete
-    compressive strength is a highly nonlinear function of age and
-    ingredients.
+    compressive strength is a highly nonlinear function of age and ingredients.
 
     {BASE_DATASET_DESCRIPTION}
 

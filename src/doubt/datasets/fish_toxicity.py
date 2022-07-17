@@ -1,8 +1,8 @@
 """Fish toxicity data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -14,11 +14,10 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class FishToxicity(BaseDataset):
     __doc__ = f"""
-    This dataset was used to develop quantitative regression QSAR models to
-    predict acute aquatic toxicity towards the fish Pimephales promelas
-    (fathead minnow) on a set of 908 chemicals. LC50 data, which is the
-    concentration that causes death in 50% of test fish over a test duration
-    of 96 hours, was used as model response
+    This dataset was used to develop quantitative regression QSAR models to predict
+    acute aquatic toxicity towards the fish Pimephales promelas (fathead minnow) on a
+    set of 908 chemicals. LC50 data, which is the concentration that causes death in
+    50% of test fish over a test duration of 96 hours, was used as model response
 
     {BASE_DATASET_DESCRIPTION}
 
@@ -38,8 +37,8 @@ class FishToxicity(BaseDataset):
 
     Targets:
         LC50 (float):
-            A concentration that causes death in 50% of test fish over a
-            test duration of 96 hours. In -log(mol/L) units.
+            A concentration that causes death in 50% of test fish over a test duration
+            of 96 hours. In -log(mol/L) units.
 
     Source:
         https://archive.ics.uci.edu/ml/datasets/QSAR+fish+toxicity

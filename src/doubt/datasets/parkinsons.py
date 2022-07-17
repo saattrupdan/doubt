@@ -1,8 +1,8 @@
 """Parkinsons data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -14,18 +14,16 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class Parkinsons(BaseDataset):
     __doc__ = f"""
-    This dataset is composed of a range of biomedical voice measurements from
-    42 people with early-stage Parkinson's disease recruited to a six-month
-    trial of a telemonitoring device for remote symptom progression
-    monitoring. The recordings were automatically captured in the patient's
-    homes.
+    This dataset is composed of a range of biomedical voice measurements from 42 people
+    with early-stage Parkinson's disease recruited to a six-month trial of a
+    telemonitoring device for remote symptom progression monitoring. The recordings
+    were automatically captured in the patient's homes.
 
-    Columns in the table contain subject number, subject age, subject gender,
-    time interval from baseline recruitment date, motor UPDRS, total UPDRS,
-    and 16 biomedical voice measures. Each row corresponds to one of 5,875
-    voice recording from these individuals. The main aim of the data is to
-    predict the motor and total UPDRS scores ('motor_UPDRS' and 'total_UPDRS')
-    from the 16 voice measures.
+    Columns in the table contain subject number, subject age, subject gender, time
+    interval from baseline recruitment date, motor UPDRS, total UPDRS, and 16
+    biomedical voice measures. Each row corresponds to one of 5,875 voice recording
+    from these individuals. The main aim of the data is to predict the motor and total
+    UPDRS scores ('motor_UPDRS' and 'total_UPDRS') from the 16 voice measures.
 
     {BASE_DATASET_DESCRIPTION}
 

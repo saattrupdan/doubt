@@ -17,20 +17,18 @@ def weighted_percentile(
 
     Args:
         arr (array-like):
-            Samples at which the quantile should be computed, of
-            shape [n_samples,].
+            Samples at which the quantile should be computed, of shape [n_samples,].
         quantile (float):
             Quantile, between 0.0 and 1.0.
         weights (array-like, optional):
-            The weights, of shape = (n_samples,). Here weights[i] is the
-            weight given to point a[i] while computing the quantile. If
-            weights[i] is zero, a[i] is simply ignored during the percentile
-            computation. If None then uniform weights will be used. Defaults to
-            None.
+            The weights, of shape = (n_samples,). Here weights[i] is the weight given
+            to point a[i] while computing the quantile. If weights[i] is zero, a[i] is
+            simply ignored during the percentile computation. If None then uniform
+            weights will be used. Defaults to None.
         sorter (array-like, optional):
-            Array of shape [n_samples,], indicating the indices sorting `arr`.
-            Thus, if provided, we assume that arr[sorter] is sorted. If None
-            then `arr` will be sorted. Defaults to None.
+            Array of shape [n_samples,], indicating the indices sorting `arr`. Thus, if
+            provided, we assume that arr[sorter] is sorted. If None then `arr` will be
+            sorted. Defaults to None.
 
     Returns:
         percentile: float
@@ -38,12 +36,11 @@ def weighted_percentile(
 
     Raises:
         ValueError:
-            If `quantile` is not between 0.0 and 1.0, or if `arr` and `weights`
-            are of different lengths.
+            If `quantile` is not between 0.0 and 1.0, or if `arr` and `weights` are of
+            different lengths.
 
     Sources:
-        [1]: https://en.wikipedia.org/wiki/Percentile\
-#The_weighted_percentile_method
+        [1]: https://en.wikipedia.org/wiki/Percentile#The_weighted_percentile_method
     """
     # Ensure that quantile is set properly
     if quantile > 1 or quantile < 0:
@@ -96,9 +93,8 @@ def weighted_percentile(
     if start == -1:
         return sorted_arr[0]
 
-    # Find the proportion of which the distance from `partial_sum[start]` to
-    # `quantile` is compared to the distance from `partial_sum[start]` to
-    # `partial_sum[start + 1]`
+    # Find the proportion of which the distance from `partial_sum[start]` to `quantile`
+    # is compared to the distance from `partial_sum[start]` to `partial_sum[start + 1]`
     fraction = quantile - partial_sum[start]
     fraction /= partial_sum[start + 1] - partial_sum[start]
 

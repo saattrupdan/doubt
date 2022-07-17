@@ -1,8 +1,8 @@
 """Servo data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -18,22 +18,21 @@ class Servo(BaseDataset):
 
     Ross Quinlan:
 
-    This data was given to me by Karl Ulrich at MIT in 1986. I didn't record
-    his description at the time, but here's his subsequent (1992) recollection:
+    This data was given to me by Karl Ulrich at MIT in 1986. I didn't record his
+    description at the time, but here's his subsequent (1992) recollection:
 
-    "I seem to remember that the data was from a simulation of a servo system
-    involving a servo amplifier, a motor, a lead screw/nut, and a sliding
-    carriage of some sort. It may have been on of the translational axes of a
-    robot on the 9th floor of the AI lab. In any case, the output value is
-    almost certainly a rise time, or the time required for the system to
-    respond to a step change in a position set point."
+    "I seem to remember that the data was from a simulation of a servo system involving
+    a servo amplifier, a motor, a lead screw/nut, and a sliding carriage of some sort.
+    It may have been on of the translational axes of a robot on the 9th floor of the AI
+    lab. In any case, the output value is almost certainly a rise time, or the time
+    required for the system to respond to a step change in a position set point."
 
     (Quinlan, ML'93)
 
-    "This is an interesting collection of data provided by Karl Ulrich. It
-    covers an extremely non-linear phenomenon - predicting the rise time of a
-    servomechanism in terms of two (continuous) gain settings and two
-    (discrete) choices of mechanical linkages."
+    "This is an interesting collection of data provided by Karl Ulrich. It covers an
+    extremely non-linear phenomenon - predicting the rise time of a servomechanism in
+    terms of two (continuous) gain settings and two (discrete) choices of mechanical
+    linkages."
 
     {BASE_DATASET_DESCRIPTION}
 

@@ -1,8 +1,8 @@
 """CPU data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -14,8 +14,8 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class CPU(BaseDataset):
     __doc__ = f"""
-    Relative CPU Performance Data, described in terms of its cycle time,
-    memory size, etc.
+    Relative CPU Performance Data, described in terms of its cycle time, memory size,
+    etc.
 
     {BASE_DATASET_DESCRIPTION}
 

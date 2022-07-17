@@ -1,8 +1,8 @@
 """New Taipei Housing data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -14,16 +14,15 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class NewTaipeiHousing(BaseDataset):
     __doc__ = f"""
-    The "real estate valuation" is a regression problem. The market historical
-    data set of real estate valuation are collected from Sindian Dist., New
-    Taipei City, Taiwan.
+    The "real estate valuation" is a regression problem. The market historical data set
+    of real estate valuation are collected from Sindian Dist., New Taipei City, Taiwan.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
         transaction_date (float):
-            The transaction date encoded as a floating point value. For
-            instance, 2013.250 is March 2013 and 2013.500 is June March
+            The transaction date encoded as a floating point value. For instance,
+            2013.250 is March 2013 and 2013.500 is June March
         house_age (float):
             The age of the house
         mrt_distance (float):

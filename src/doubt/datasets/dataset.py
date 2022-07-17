@@ -12,9 +12,9 @@ import requests
 BASE_DATASET_DESCRIPTION = """
     Parameters:
         cache (str or None, optional):
-            The name of the cache. It will be saved to `cache` in the
-            current working directory. If None then no cache will be saved.
-            Defaults to '.dataset_cache'.
+            The name of the cache. It will be saved to `cache` in the current working
+            directory. If None then no cache will be saved. Defaults to
+            '.dataset_cache'.
 
     Attributes:
         cache (str or None):
@@ -100,12 +100,11 @@ class BaseDataset(ABC):
 
         Args:
             test_size (float or None):
-                The fraction of the dataset that will constitute the test
-                set. If None then no train/test split will happen. Defaults
-                to None.
+                The fraction of the dataset that will constitute the test set. If None
+                then no train/test split will happen. Defaults to None.
             random_seed (float or None):
-                The random seed used for the train/test split. If None then
-                a random number will be chosen. Defaults to None.
+                The random seed used for the train/test split. If None then a random
+                number will be chosen. Defaults to None.
 
         Returns:
             If `test_size` is not `None` then a tuple of numpy arrays

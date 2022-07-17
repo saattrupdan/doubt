@@ -1,8 +1,8 @@
 """Forest fire data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -14,19 +14,19 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class ForestFire(BaseDataset):
     __doc__ = f"""
-    This is a difficult regression task, where the aim is to predict the
-    burned area of forest fires, in the northeast region of Portugal, by
-    using meteorological and other data.
+    This is a difficult regression task, where the aim is to predict the burned area of
+    forest fires, in the northeast region of Portugal, by using meteorological and
+    other data.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
         X (float):
-            The x-axis spatial coordinate within the Montesinho park map.
-            Ranges from 1 to 9.
+            The x-axis spatial coordinate within the Montesinho park map. Ranges from 1
+            to 9.
         Y (float):
-            The y-axis spatial coordinate within the Montesinho park map
-            Ranges from 2 to 9.
+            The y-axis spatial coordinate within the Montesinho park map Ranges from 2
+            to 9.
         month (int):
             Month of the year. Ranges from 0 to 11
         day (int):
@@ -53,8 +53,8 @@ class ForestFire(BaseDataset):
             The burned area of the forest (in ha). Ranges from 0.00 to 1090.84
 
     Notes:
-        The target variable is very skewed towards 0.0, thus it may make
-        sense to model with the logarithm transform.
+        The target variable is very skewed towards 0.0, thus it may make sense to model
+        with the logarithm transform.
 
     Source:
         https://archive.ics.uci.edu/ml/datasets/Forest+Fires

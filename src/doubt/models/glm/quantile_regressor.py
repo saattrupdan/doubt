@@ -18,18 +18,17 @@ class QuantileRegressor:
 
     Args:
         max_iter (int):
-            The maximal number of iterations to train the model for. Defaults
-            to 10,000.
+            The maximal number of iterations to train the model for. Defaults to
+            10,000.
         uncertainty (float):
-            The uncertainty in the prediction intervals. Must be between 0
-            and 1. Defaults to 0.05.
+            The uncertainty in the prediction intervals. Must be between 0 and 1.
+            Defaults to 0.05.
         quantiles (sequence of floats or None, optional):
-            List of quantiles to output, as an alternative to the
-            `uncertainty` argument, and will not be used if that argument
-            is set. If None then `uncertainty` is used. Defaults to None.
+            List of quantiles to output, as an alternative to the `uncertainty`
+            argument, and will not be used if that argument is set. If None then
+            `uncertainty` is used. Defaults to None.
         alpha (float, optional):
             Smoothing parameter. Defaults to 0.4.
-
 
     Examples:
         Fitting and predicting follows scikit-learn syntax::
@@ -67,8 +66,8 @@ class QuantileRegressor:
         self._model = model
         self._scaler = StandardScaler()
 
-        # Set `max_iter` to be the model's `max_iter` attribute if it exists,
-        # and otherwise default to 10,000
+        # Set `max_iter` to be the model's `max_iter` attribute if it exists, and
+        # otherwise default to 10,000
         if max_iter is None:
             if hasattr(model, "max_iter"):
                 self.max_iter = model.max_iter
@@ -107,9 +106,8 @@ class QuantileRegressor:
 
         Args:
             X (float matrix):
-                The array containing the data set, either of shape (n,) or
-                (n, f), with n being the number of samples and f being the
-                number of features.
+                The array containing the data set, either of shape (n,) or (n, f), with
+                n being the number of samples and f being the number of features.
             y (float array):
                 The target array, of shape (n,).
         """
@@ -127,18 +125,17 @@ class QuantileRegressor:
         # Add constant feature
         X_arr = np.concatenate((X_arr, np.ones((X_arr.shape[0], 1))), axis=1)
 
-        # When a Scikit-Learn GLM is fitted then its link function is set to
-        # the attribute _link_instance. As the LinearRegression class does not
-        # subclass the GeneralizedLinearRegressor class then we deal with this
-        # case separately
+        # When a Scikit-Learn GLM is fitted then its link function is set to the
+        # attribute _link_instance. As the LinearRegression class does not subclass the
+        # GeneralizedLinearRegressor class then we deal with this case separately
         try:
             link = self._model._link_instance
             self._inverse_link_function = link.inverse
         except AttributeError:
             self._inverse_link_function = lambda x: x
 
-        # Use the underlying GLM's parameters for the initial guess of the
-        # quantile weights
+        # Use the underlying GLM's parameters for the initial guess of the quantile
+        # weights
         model_weights = self._model.coef_
         model_intercept = self._model.intercept_
         beta_init = np.concatenate((model_weights, [model_intercept]))
@@ -165,14 +162,13 @@ class QuantileRegressor:
 
         Args:
             X (float matrix):
-                The array containing the data set, either of shape (n,) or
-                (n, f), with n being the number of samples and f being the
-                number of features.
+                The array containing the data set, either of shape (n,) or (n, f), with
+                n being the number of samples and f being the number of features.
 
         Returns:
             pair of float arrays:
-                The predictions, of shape (n,), and the prediction intervals,
-                of shape (n, 2).
+                The predictions, of shape (n,), and the prediction intervals, of shape
+                (n, 2).
         """
         # Convert inputs to Numpy array
         X_arr = np.asarray(X)
@@ -200,8 +196,8 @@ class QuantileRegressor:
         # Concatenate the quantiles to get the intervals
         quantile_vals = np.stack(quantile_vals, axis=1).squeeze()
 
-        # If we started with a one-dimensional input, ensure that the output is
-        # also one-dimensional
+        # If we started with a one-dimensional input, ensure that the output is also
+        # one-dimensional
         if onedim:
             preds = preds.item()
 
@@ -210,19 +206,17 @@ class QuantileRegressor:
     def score(self, X: np.ndarray, y: np.ndarray) -> float:
         """Compute either the R^2 value or the negative pinball loss.
 
-        If `uncertainty` is not set in the constructor then the R^2 value will
-        be returned, and otherwise the mean of the two negative pinball losses
+        If `uncertainty` is not set in the constructor then the R^2 value will be
+        returned, and otherwise the mean of the two negative pinball losses
         corresponding to the two quantiles will be returned.
 
-        The pinball loss is computed as quantile * (target - prediction) if
-        target >= prediction, and (1 - quantile)(prediction - target)
-        otherwise.
+        The pinball loss is computed as quantile * (target - prediction) if target >=
+        prediction, and (1 - quantile)(prediction - target) otherwise.
 
         Args:
             X (float array):
-                The array containing the data set, either of shape (n,) or
-                (n, f), with n being the number of samples and f being the
-                number of features.
+                The array containing the data set, either of shape (n,) or (n, f), with
+                n being the number of samples and f being the number of features.
             y (float array):
                 The target array, of shape (n,).
 
@@ -233,9 +227,8 @@ class QuantileRegressor:
         X_arr = np.asarray(X)
         y_arr = np.asarray(y)
 
-        # If `uncertainty` has not been specified then simply use the `score`
-        # method from the underlying LinearRegression model, which returns the
-        # R^2 value
+        # If `uncertainty` has not been specified then simply use the `score` method
+        # from the underlying LinearRegression model, which returns the R^2 value
         if self.uncertainty is None:
             return self._linreg.score(X_arr, y_arr)
 

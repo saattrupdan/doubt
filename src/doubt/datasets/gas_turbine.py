@@ -1,8 +1,8 @@
 """Gas turbine data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -15,21 +15,20 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class GasTurbine(BaseDataset):
     __doc__ = f"""
-    Data have been generated from a sophisticated simulator of a Gas Turbines
-    (GT), mounted on a Frigate characterized by a COmbined Diesel eLectric
-    And Gas (CODLAG) propulsion plant type.
+    Data have been generated from a sophisticated simulator of a Gas Turbines (GT),
+    mounted on a Frigate characterized by a COmbined Diesel eLectric And Gas (CODLAG)
+    propulsion plant type.
 
-    The experiments have been carried out by means of a numerical simulator of
-    a naval vessel (Frigate) characterized by a Gas Turbine (GT) propulsion
-    plant. The different blocks forming the complete simulator (Propeller,
-    Hull, GT, Gear Box and Controller) have been developed and fine tuned over
-    the year on several similar real propulsion plants. In view of these
-    observations the available data are in agreement with a possible real
-    vessel.
+    The experiments have been carried out by means of a numerical simulator of a naval
+    vessel (Frigate) characterized by a Gas Turbine (GT) propulsion plant. The
+    different blocks forming the complete simulator (Propeller, Hull, GT, Gear Box and
+    Controller) have been developed and fine tuned over the year on several similar
+    real propulsion plants. In view of these observations the available data are in
+    agreement with a possible real vessel.
 
-    In this release of the simulator it is also possible to take into account
-    the performance decay over time of the GT components such as GT compressor
-    and turbines.
+    In this release of the simulator it is also possible to take into account the
+    performance decay over time of the GT components such as GT compressor and
+    turbines.
 
     The propulsion system behaviour has been described with this parameters:
 
@@ -37,24 +36,22 @@ class GasTurbine(BaseDataset):
         - Compressor degradation coefficient kMc.
         - Turbine degradation coefficient kMt.
 
-    so that each possible degradation state can be described by a combination
-    of this triple (lp,kMt,kMc).
+    so that each possible degradation state can be described by a combination of this
+    triple (lp,kMt,kMc).
 
-    The range of decay of compressor and turbine has been sampled with an
-    uniform grid of precision 0.001 so to have a good granularity of
-    representation.
+    The range of decay of compressor and turbine has been sampled with an uniform grid
+    of precision 0.001 so to have a good granularity of representation.
 
-    In particular for the compressor decay state discretization the kMc
-    coefficient has been investigated in the domain [1; 0.95], and the turbine
-    coefficient in the domain [1; 0.975].
+    In particular for the compressor decay state discretization the kMc coefficient has
+    been investigated in the domain [1; 0.95], and the turbine coefficient in the
+    domain [1; 0.975].
 
-    Ship speed has been investigated sampling the range of feasible speed from
-    3 knots to 27 knots with a granularity of representation equal to tree
-    knots.
+    Ship speed has been investigated sampling the range of feasible speed from 3 knots
+    to 27 knots with a granularity of representation equal to tree knots.
 
-    A series of measures (16 features) which indirectly represents of the
-    state of the system subject to performance decay has been acquired and
-    stored in the dataset over the parameter's space.
+    A series of measures (16 features) which indirectly represents of the state of the
+    system subject to performance decay has been acquired and stored in the dataset
+    over the parameter's space.
 
     {BASE_DATASET_DESCRIPTION}
 
@@ -155,8 +152,8 @@ class GasTurbine(BaseDataset):
         # Decode text and replace initial space on each line
         txt = txt_bytes[3:].decode("utf-8").replace("\n   ", "\n")
 
-        # Convert the remaining triple spaces into commas, to make loading
-        # it as a csv file easier
+        # Convert the remaining triple spaces into commas, to make loading it as a csv
+        # file easier
         txt = txt.replace("   ", ",")
 
         # Convert the string into a file-like object

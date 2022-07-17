@@ -1,8 +1,8 @@
 """Fish bioconcentration data set.
 
-This data set is from the UCI data set archive, with the description being
-the original description verbatim. Some feature names may have been altered,
-based on the description.
+This data set is from the UCI data set archive, with the description being the original
+description verbatim. Some feature names may have been altered, based on the
+description.
 """
 
 import io
@@ -15,27 +15,26 @@ from .dataset import BASE_DATASET_DESCRIPTION, BaseDataset
 
 class FishBioconcentration(BaseDataset):
     __doc__ = f"""
-    This dataset contains manually-curated experimental bioconcentration
-    factor (BCF) for 1058 molecules (continuous values). Each row contains a
-    molecule, identified by a CAS number, a name (if available), and a SMILES
-    string. Additionally, the KOW (experimental or predicted) is reported. In
-    this database, you will also find Extended Connectivity Fingerprints
-    (binary vectors of 1024 bits), to be used as independent variables to
-    predict the BCF.
+    This dataset contains manually-curated experimental bioconcentration factor (BCF)
+    for 1058 molecules (continuous values). Each row contains a molecule, identified by
+    a CAS number, a name (if available), and a SMILES string. Additionally, the KOW
+    (experimental or predicted) is reported. In this database, you will also find
+    Extended Connectivity Fingerprints (binary vectors of 1024 bits), to be used as
+    independent variables to predict the BCF.
 
     {BASE_DATASET_DESCRIPTION}
 
     Features:
         logkow (float):
-            Octanol water paritioning coefficient (experimental or predicted,
-            as indicated by ``KOW type``
+            Octanol water paritioning coefficient (experimental or predicted, as
+            indicated by ``KOW type``
         kow_exp (int):
-            Indicates whether ``logKOW`` is experimental or predicted, with 1
-            denoting experimental and 0 denoting predicted
+            Indicates whether ``logKOW`` is experimental or predicted, with 1 denoting
+            experimental and 0 denoting predicted
         smiles_[idx] for idx = 0..125 (int):
-            Encoding of SMILES string to identify the 2D molecular structure.
-            The encoding is as follows, where 'x' is a padding string to
-            ensure that all the SMILES strings are of the same length:
+            Encoding of SMILES string to identify the 2D molecular structure. The
+            encoding is as follows, where 'x' is a padding string to ensure that all
+            the SMILES strings are of the same length:
 
                 - 0  = 'x'
                 - 1  = '#'
