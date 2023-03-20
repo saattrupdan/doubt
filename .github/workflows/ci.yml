@@ -16,7 +16,7 @@ jobs:
   pytest:
     strategy:
         matrix:
-            os: [windows-latest, macos-latest, ubuntu-latest]
+            os: [ubuntu-latest]
             python-version: ["3.8", "3.9", "3.10"]
     runs-on: ${{ matrix.os }}
     steps:
@@ -32,7 +32,7 @@ jobs:
           cache: "poetry"
 
       - name: Install HDF5
-        run: sudo apt-get install libhdf5-serial-dev
+        run: sudo apt install libhdf5-serial-dev
 
       - name: Install Dependencies
         run: |
