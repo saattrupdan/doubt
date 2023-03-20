@@ -69,7 +69,7 @@ class QuantileRegressionForest:
         n_jobs (int, optional):
             The number of CPU cores used in fitting and predicting. If -1 then all
             available CPU cores will be used. Defaults to -1.
-        random_seed (int, RandomState instance or None, optional):
+        random_state (int, RandomState instance or None, optional):
             If int, random_state is the seed used by the random number generator; If
             RandomState instance, random_state is the random number generator; If None,
             the random number generator is the RandomState instance used by
@@ -84,7 +84,7 @@ class QuantileRegressionForest:
             >>> from doubt.datasets import Concrete
             >>> import numpy as np
             >>> X, y = Concrete().split()
-            >>> forest = QuantileRegressionForest(random_seed=42, max_leaf_nodes=8)
+            >>> forest = QuantileRegressionForest(random_state=42, max_leaf_nodes=8)
             >>> forest.fit(X, y).predict(X).shape
             (1030,)
             >>> preds = forest.predict(np.ones(8))
@@ -116,7 +116,7 @@ class QuantileRegressionForest:
         min_weight_fraction_leaf: float = 0.0,
         max_leaf_nodes: Optional[int] = None,
         n_jobs: int = -1,
-        random_seed: Optional[int] = None,
+        random_state: Optional[int] = None,
         verbose: bool = False,
     ):
         self.n_estimators = n_estimators
@@ -130,7 +130,7 @@ class QuantileRegressionForest:
         self.max_features = max_features
         self.max_leaf_nodes = max_leaf_nodes
         self.n_jobs = n_jobs
-        self.random_seed = random_seed
+        self.random_state = random_state
         self.verbose = verbose
 
         self.estimators_ = [
@@ -143,7 +143,7 @@ class QuantileRegressionForest:
                 min_weight_fraction_leaf=min_weight_fraction_leaf,
                 max_features=max_features,
                 max_leaf_nodes=max_leaf_nodes,
-                random_seed=random_seed,
+                random_state=random_state,
             )
             for _ in range(n_estimators)
         ]
@@ -185,7 +185,7 @@ class QuantileRegressionForest:
             "min_weight_fraction_leaf",
             "max_leaf_nodes",
             "n_jobs",
-            "random_seed",
+            "random_state",
         ]
         for idx, attr in enumerate(attributes):
             if idx > 0:
@@ -218,7 +218,7 @@ class QuantileRegressionForest:
             verbose = kwargs.get("verbose")
 
         # Initialise random number generator
-        rng = np.random.default_rng(self.random_seed)
+        rng = np.random.default_rng(self.random_state)
 
         # Store the number of training samples
         n = X.shape[0]

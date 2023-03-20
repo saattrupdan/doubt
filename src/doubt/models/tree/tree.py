@@ -48,7 +48,6 @@ class BaseTreeQuantileRegressor(BaseDecisionTree):
         preds = super().predict(X, check_input=check_input)
 
         if uncertainty is not None or quantiles is not None:
-
             # Define list of quantiles that we want to output
             if uncertainty is not None:
                 quantiles = [uncertainty / 2, 1 - (uncertainty / 2)]
@@ -172,7 +171,7 @@ class QuantileRegressionTree(DecisionTreeRegressor, BaseTreeQuantileRegressor):
             Grow a tree with `max_leaf_nodes` in best-first fashion. Best nodes are
             defined as relative reduction in impurity. If None then unlimited number of
             leaf nodes. Defaults to None.
-        random_seed (int, RandomState instance or None, optional):
+        random_state (int, RandomState instance or None, optional):
             If int, random_state is the seed used by the random number generator; If
             RandomState instance, random_state is the random number generator; If None,
             the random number generator is the RandomState instance used by
@@ -209,7 +208,7 @@ class QuantileRegressionTree(DecisionTreeRegressor, BaseTreeQuantileRegressor):
         min_samples_leaf: Union[int, float] = 1,
         min_weight_fraction_leaf: float = 0.0,
         max_leaf_nodes: Optional[int] = None,
-        random_seed: Union[int, np.random.RandomState, None] = None,
+        random_state: Union[int, np.random.RandomState, None] = None,
     ):
         super().__init__(
             criterion=criterion,
@@ -220,5 +219,5 @@ class QuantileRegressionTree(DecisionTreeRegressor, BaseTreeQuantileRegressor):
             min_weight_fraction_leaf=min_weight_fraction_leaf,
             max_features=max_features,
             max_leaf_nodes=max_leaf_nodes,
-            random_state=random_seed,
+            random_state=random_state,
         )

@@ -12,6 +12,10 @@ and this project adheres to
 ### Fixed
 - Previously, all the trees in `QuantileRegressionForest` were the same. This has now
   been fixed. Thanks to @gugerlir for noticing this!
+- The `random_seed` argument in `QuantileRegressionTree` and `QuantileRegressionForest`
+  has been changed to `random_state` to be consistent with `DecisionTreeRegressor`, and
+  to avoid an `AttributeError` when accessing the estimators of a
+  `QuantileRegressionForest`.
 
 
 ## [v4.3.0] - 2022-07-17
