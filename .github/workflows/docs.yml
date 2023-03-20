@@ -32,7 +32,7 @@ jobs:
       - name: Build documentation
         run: |
           poetry env use "3.10"
-          poetry run pdoc --docformat google src/{{ cookiecutter.package_name }} -o docs
+          poetry run pdoc --docformat google src/doubt -o docs
 
       - name: Compress documentation
         run: tar --directory docs/ -hcf artifact.tar .
