@@ -3,9 +3,8 @@ name: website
 # Build the documentation whenever there are new commits on main
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 # Security: restrict permissions for CI jobs.
 permissions:
@@ -16,39 +15,24 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
+      - uses: actions/checkout@v3
 
       - name: Install Poetry
-        uses: abatilo/actions-poetry@v2.0.0
-        with:
-          poetry-version: 1.1.10
+        run: pipx install poetry
 
-      - name: Set Poetry config
-        run: |
-          poetry config virtualenvs.create true
-          poetry config virtualenvs.in-project false
-          poetry config virtualenvs.path ~/.virtualenvs
-
-      - name: Cache Poetry virtualenv
-        uses: actions/cache@v1
-        id: cache
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          path: ~/.virtualenvs
-          key: poetry-${{ matrix.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            poetry-${{ matrix.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          python-version: "3.10"
+          cache: "poetry"
 
       - name: Install Dependencies
         run: poetry install
-        if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Build documentation
-        run: poetry run pdoc --docformat google src/doubt -o docs
+        run: |
+          poetry env use "3.10"
+          poetry run pdoc --docformat google src/{{ cookiecutter.package_name }} -o docs
 
       - name: Compress documentation
         run: tar --directory docs/ -hcf artifact.tar .
@@ -69,7 +53,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: {% raw %}${{ steps.deployment.outputs.page_url }}{% endraw %}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v1
