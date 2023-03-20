@@ -64,7 +64,6 @@ class QuantileRegressor:
         quantiles: Optional[np.ndarray] = None,
         alpha: float = 0.4,
     ):
-
         self.uncertainty = uncertainty
         self.alpha = alpha
 
@@ -147,7 +146,6 @@ class QuantileRegressor:
 
         # Fit all quantile estimates
         for q in self.quantiles:
-
             args = (X_arr, y_arr, q, self._inverse_link_function)
             result = minimize(
                 self._objective_function,

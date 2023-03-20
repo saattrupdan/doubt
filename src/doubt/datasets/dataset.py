@@ -27,7 +27,6 @@ BASE_DATASET_DESCRIPTION = """
 
 
 class BaseDataset(ABC):
-
     _url: str
     _features: Iterable
     _targets: Iterable
