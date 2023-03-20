@@ -2,7 +2,7 @@
 .. include:: ../../README.md
 """
 
-import pkg_resources
+import importlib.metadata
 
 from .models import Boot  # noqa
 from .models import QuantileRegressionForest  # noqa
@@ -10,4 +10,4 @@ from .models import QuantileRegressionTree  # noqa
 from .models import QuantileRegressor  # noqa
 
 # Fetches the version of the package as defined in pyproject.toml
-__version__ = pkg_resources.get_distribution("doubt").version
+__version__ = importlib.metadata.version(__package__)
