@@ -119,7 +119,6 @@ class QuantileRegressionForest:
         random_seed: Optional[int] = None,
         verbose: bool = False,
     ):
-
         self.n_estimators = n_estimators
         self.min_samples_leaf = min_samples_leaf
         self.criterion = criterion
@@ -134,7 +133,7 @@ class QuantileRegressionForest:
         self.random_seed = random_seed
         self.verbose = verbose
 
-        self.estimators_ = n_estimators * [
+        self.estimators_ = [
             QuantileRegressionTree(
                 criterion=criterion,
                 splitter=splitter,
@@ -146,6 +145,7 @@ class QuantileRegressionForest:
                 max_leaf_nodes=max_leaf_nodes,
                 random_seed=random_seed,
             )
+            for _ in range(n_estimators)
         ]
 
     @property

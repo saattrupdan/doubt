@@ -8,6 +8,12 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Fixed
+- Previously, all the trees in `QuantileRegressionForest` were the same. This has now
+  been fixed. Thanks to @gugerlir for noticing this!
+
+
 ## [v4.3.0] - 2022-07-17
 ### Added
 - The `QuantileRegressionForest` now has a `feature_importances_` attribute.
