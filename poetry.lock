@@ -953,7 +953,7 @@ test = ["pytest", "pytest-cov"]
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.11"
-content-hash = "5f0728db27342bf4f717f420f3e39516c2ca5a0c40b98868050117524b5e7bed"
+content-hash = "03996543a253a76c7f150ce4f5ba361408b3a9489ccade49f2cea3109f89ed37"
 
 [metadata.files]
 appnope = [
