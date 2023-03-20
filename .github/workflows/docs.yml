@@ -53,7 +53,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: {% raw %}${{ steps.deployment.outputs.page_url }}{% endraw %}
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v1
