@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v4.4.1] - 2023-04-23
 ### Fixed
 - When `return_all` is specified in `Boot.predict` and multiple samples have been
   inputted, then it now returns an array of shape `(num_samples, num_boots)` rather
