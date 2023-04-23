@@ -329,7 +329,7 @@ def predict(
         if onedim:
             return preds, C[:, 0]
         else:
-            return preds, C
+            return preds, C.T
 
     # If the uncertainty has been specified and not the quantiles, then we compute
     # the quantiles from the uncertainty
