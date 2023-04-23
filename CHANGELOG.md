@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v4.4.0] - 2023-04-23
 ### Added
 - Added a `return_all` argument to the `Boot.predict` method, which will override the
   `uncertainty` and `quantiles` arguments and return the raw bootstrap distribution
