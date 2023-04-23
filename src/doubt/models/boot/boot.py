@@ -3,10 +3,11 @@
 import copy
 import multiprocessing as mp
 from types import MethodType
-from typing import Callable, Optional, Tuple, Union
+from typing import Callable, List, Optional, Tuple, Union
 
 import numpy as np
 from joblib import Parallel, delayed
+from numpy.typing import NDArray
 
 
 class Boot:
@@ -48,9 +49,7 @@ class Boot:
         Alternatively, we can output the whole bootstrap distribution::
 
             >>> preds, intervals = boot.compute_statistic(
-            ...     np.mean,
-            ...     n_boots=3,
-            ...     return_all=True
+            ...     np.mean, n_boots=3, return_all=True
             ... )
             >>> round(preds, 2)
             4.06
@@ -68,6 +67,24 @@ class Boot:
             482.0
             >>> np.around(intervals, 2)
             array([473.5 , 490.14])
+
+        Instead of specifying the uncertainty, we can also specify the precise
+        quantiles that we are interested in::
+
+            >>> preds, intervals = linreg.predict(
+            ...     [10, 30, 1000, 50], quantiles=[0.1, 0.5]
+            ... )
+            >>> np.around(intervals, 2)
+            array([476.45, 481.82])
+
+        Lastly, as with the `compute_statistic` method, we can also output the whole
+        bootstrap distribution with the `return_all` argument::
+
+            >>> preds, bootstrap_samples = linreg.predict(
+            ...     [10, 30, 1000, 50], return_all=True
+            ... )
+            >>> np.around(bootstrap_samples, 2)
+            array([-43.7 , -10.02,  -8.63, ...,   8.28,   9.06,  10.19])
 
     Sources:
         [1]: Friedman, J., Hastie, T., & Tibshirani, R. (2001). The elements of
@@ -144,7 +161,7 @@ def compute_statistic(
     statistic: Callable[[np.ndarray], float],
     n_boots: Optional[int] = None,
     uncertainty: float = 0.05,
-    quantiles: Optional[np.ndarray] = None,
+    quantiles: Optional[Union[np.ndarray, List[float]]] = None,
     return_all: bool = False,
 ) -> Union[float, Tuple[float, np.ndarray]]:
     """Compute bootstrapped statistic.
@@ -210,8 +227,9 @@ def predict(
     X: np.ndarray,
     n_boots: Optional[int] = None,
     uncertainty: Optional[float] = None,
-    quantiles: Optional[np.ndarray] = None,
-) -> Tuple[Union[float, np.ndarray], np.ndarray]:
+    quantiles: Optional[Union[np.ndarray, List[float]]] = None,
+    return_all: bool = False,
+) -> Union[Union[float, NDArray], Tuple[Union[float, NDArray], NDArray]]:
     """Compute bootstrapped predictions.
 
     Args:
@@ -223,17 +241,21 @@ def predict(
             root of the data set. Defaults to None
         uncertainty (float or None, optional):
             The uncertainty used to compute the prediction interval of the bootstrapped
-            prediction. If None then no prediction intervals are returned. Defaults to
-            None.
+            prediction. For instance, an uncertainty of 0.05 will yield a 95%
+            prediction interval. Will not be used if `quantiles` or `return_all` is
+            used. Defaults to None.
         quantiles (sequence of floats or None, optional):
-            List of quantiles to output, as an alternative to the `uncertainty`
-            argument, and will not be used if that argument is set. If None then
-            `uncertainty` is used. Defaults to None.
+            List of quantiles to output. Will override the value of `uncertainty` if
+            specified. Will not be used if `return_all` is True. Defaults to None.
+        return_all (bool, optional):
+            Whether the raw bootstrapped predictions should be returned. Will override
+            the values of both `quantiles` and `uncertainty`. Defaults to False.
 
     Returns:
         float array or pair of float arrays:
             The bootstrapped predictions, and the confidence intervals if `uncertainty`
-            is not None, or the specified quantiles if `quantiles` is not None.
+            is not None, the specified quantiles if `quantiles` is not None, or the raw
+            bootstrapped values if `return_all` is True.
     """
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
@@ -252,15 +274,15 @@ def predict(
 
     # If no quantiles should be outputted then simply return the predictions of the
     # underlying model
-    if uncertainty is None and quantiles is None:
+    if uncertainty is None and quantiles is None and not return_all:
         return preds
 
     # Ensure that the underlying model has been fitted before predicting. This is only
     # a requirement if `uncertainty` is set, as we need access to `self.X_train`
     if not hasattr(self, "X_train") or self.X_train is None:
         raise RuntimeError(
-            "This model has not been fitted yet! Call fit() "
-            "before predicting new samples."
+            "This model has not been fitted yet! Call fit() before predicting new "
+            "samples."
         )
 
     # Store the number of data points in the training and test datasets
@@ -295,16 +317,37 @@ def predict(
     # Add up the bootstrap predictions and the hybrid train/val residuals
     C = np.array([m + o for m in bootstrap_preds for o in self.residuals])
 
-    # Calculate the desired quantiles
+    # If we are dealing with a single sample then we replace the predictions with the
+    # first sample
+    if onedim:
+        preds = preds[0]
+
+    # Next, we compute the associated uncertainty data, if requested. Firstly, if
+    # `return_all` is set then we return the raw bootstrapped predictions, being the
+    # `C` array
+    if return_all:
+        if onedim:
+            return preds, C[:, 0]
+        else:
+            return preds, C
+
+    # If the uncertainty has been specified and not the quantiles, then we compute
+    # the quantiles from the uncertainty
     if quantiles is None and uncertainty is not None:
         quantiles = [uncertainty / 2, 1 - uncertainty / 2]
+
+    # Compute the quantiles of the `C` array
     quantile_vals = np.transpose(np.quantile(C, q=quantiles or [], axis=0))
 
-    # Return the predictions and the desired quantiles
+    # Add the quantiles to the predictions to get the final prediction intervals
+    # as the uncertainty data
     if onedim:
-        return preds[0], (preds + quantile_vals)[0]
+        intervals = preds + quantile_vals[0]
     else:
-        return preds, np.expand_dims(preds, axis=1) + quantile_vals
+        intervals = np.expand_dims(preds, axis=1) + quantile_vals
+
+    # Return the predictions and the prediction intervals
+    return preds, intervals
 
 
 def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None):

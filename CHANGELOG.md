@@ -8,6 +8,14 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Added
+- Added a `return_all` argument to the `Boot.predict` method, which will override the
+  `uncertainty` and `quantiles` arguments and return the raw bootstrap distribution
+  over which the quantiles would normally be calculated. This allows other uses of the
+  bootstrap distribution than for computing prediction intervals.
+
+
 ## [v4.3.1] - 2023-03-20
 ### Fixed
 - Previously, all the trees in `QuantileRegressionForest` were the same. This has now
