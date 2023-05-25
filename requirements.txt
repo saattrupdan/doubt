@@ -110,7 +110,7 @@ terminado==0.9.4
 testpath==0.4.4
 threadpoolctl==2.1.0
 toml==0.10.2
-tornado==6.1
+tornado==6.3.2
 tqdm==4.59.0
 traitlets==5.0.5
 twine==3.4.1
