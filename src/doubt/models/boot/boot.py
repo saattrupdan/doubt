@@ -161,8 +161,7 @@ def _model_fit(
             Target array, of shape (n_train_samples,).
 
     Returns:
-        model (object with `fit` and `predict` methods):
-            The model to fit
+        The fitted model.
     """
     model = copy.deepcopy(model)
     model.fit(X_train, y_train)
