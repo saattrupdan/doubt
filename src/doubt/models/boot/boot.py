@@ -151,9 +151,6 @@ def _model_fit(
 ):
     """Fit the underlying model.
 
-    This requires `self._model` to be set and that it is either callable or have a
-    `predict` method.
-
     Args:
         model (object with `fit` and `predict` methods):
             The model to fit and predict with.
