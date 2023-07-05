@@ -14,7 +14,10 @@ and this project adheres to
   speeding up inference. Thanks to @andrepugni for this contribution!
 
 ### Fixed
-- Downgraded `tables` to 3.7.0 to fix an installation bug.
+- Downgraded `tables` to 3.7.x to fix an installation bug.
+- Downgraded `scikit-learn` to >=1.1,<1.3, as the decision tree API in v1.3 is
+  incompatible with the previous ones. This will be dealt with separately in the
+  future.
 
 
 ## [v4.4.1] - 2023-04-23
