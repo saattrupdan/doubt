@@ -419,7 +419,7 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None, n_job
             root of the data set. Defaults to None
         n_jobs: (int or None):
             The number of jobs to use for parallelization. If None then it is equal to the
-            number of available cpus. Defaults to None
+            number of available cpus minus one. Defaults to None
     """
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
