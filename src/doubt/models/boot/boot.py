@@ -175,7 +175,7 @@ def _model_predict(
     This requires that the model is either callable or have a `predict` method.
 
     Args:
-        model (object with `fit` and `predict` methods):
+        model (object with a `predict` method):
             The model to predict with.
         X (float matrix):
             Feature matrix for predicting, of shape
