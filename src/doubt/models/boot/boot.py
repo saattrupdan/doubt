@@ -297,7 +297,7 @@ def predict(
             the values of both `quantiles` and `uncertainty`. Defaults to False.
         n_jobs: (int or None):
             The number of jobs to use for parallelization. If None then it is equal to the
-            number of available cpus. Defaults to None
+            number of available cpus minus one. Defaults to None
 
     Returns:
         float array or pair of float arrays:
