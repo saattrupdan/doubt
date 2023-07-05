@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v4.5.0] - 2023-07-05
 ### Added
 - Now saves the models during training with a `Boot` and reuses those during inference,
   speeding up inference. Thanks to @andrepugni for this contribution!
