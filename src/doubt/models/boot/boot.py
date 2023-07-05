@@ -152,8 +152,8 @@ def _model_fit(
     """Fit the underlying model.
 
     Args:
-        model (object with `fit` and `predict` methods):
-            The model to fit and predict with.
+        model (object with `fit` method):
+            The model to fit with.
         X_train (float matrix):
             Feature matrix for training, of shape
             (n_train_samples, n_features).
