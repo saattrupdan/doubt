@@ -173,8 +173,7 @@ def _model_predict(
 ) -> np.ndarray:
     """Perform predictions with the underlying model.
 
-    This requires `self._models` to be set and that it is either callable or have a
-    `predict` method.
+    This requires that the model is either callable or have a `predict` method.
 
     Args:
         model (object with `fit` and `predict` methods):
