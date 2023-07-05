@@ -8,6 +8,15 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Added
+- Now saves the models during training with a `Boot` and reuses those during inference,
+  speeding up inference. Thanks to @andrepugni for this contribution!
+
+### Fixed
+- Downgraded `tables` to 3.7.0 to fix an installation bug.
+
+
 ## [v4.4.1] - 2023-04-23
 ### Fixed
 - When `return_all` is specified in `Boot.predict` and multiple samples have been
