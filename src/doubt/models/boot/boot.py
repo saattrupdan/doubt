@@ -295,7 +295,7 @@ def predict(
         return_all (bool, optional):
             Whether the raw bootstrapped predictions should be returned. Will override
             the values of both `quantiles` and `uncertainty`. Defaults to False.
-        n_jobs: (int or None):
+        n_jobs: (int or None, optional):
             The number of jobs to use for parallelization. If None then it is equal to the
             number of available cpus minus one. Defaults to None
 
