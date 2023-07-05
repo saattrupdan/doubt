@@ -272,7 +272,7 @@ def predict(
     uncertainty: Optional[float] = None,
     quantiles: Optional[Union[np.ndarray, List[float]]] = None,
     return_all: bool = False,
-    n_jobs: int = None
+    n_jobs: Optional[int] = None
 ) -> Union[Union[float, NDArray], Tuple[Union[float, NDArray], NDArray]]:
     """Compute bootstrapped predictions.
 
