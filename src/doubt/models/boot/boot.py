@@ -146,6 +146,54 @@ def _model_fit_predict(
     else:
         return model.predict(X_test)
 
+def _model_fit(
+    model, X_train: np.ndarray, y_train: np.ndarray
+):
+    """Fit the underlying model.
+
+    This requires `self._model` to be set and that it is either callable or have a
+    `predict` method.
+
+    Args:
+        model (object with `fit` and `predict` methods):
+            The model to fit and predict with.
+        X_train (float matrix):
+            Feature matrix for training, of shape
+            (n_train_samples, n_features).
+        y_train (float array):
+            Target array, of shape (n_train_samples,).
+
+    Returns:
+        model (object with `fit` and `predict` methods):
+            The model to fit
+    """
+    model = copy.deepcopy(model)
+    model.fit(X_train, y_train)
+    return model
+
+def _model_predict(
+    model, X: np.ndarray
+) -> np.ndarray:
+    """Perform predictions with the underlying model.
+
+    This requires `self._models` to be set and that it is either callable or have a
+    `predict` method.
+
+    Args:
+        model (object with `fit` and `predict` methods):
+            The model to predict with.
+        X (float matrix):
+            Feature matrix for predicting, of shape
+            (n_test_samples, n_features).
+
+    Returns:
+        Numpy array:
+            Predictions, of shape (n_test_samples,)
+    """
+    if callable(model):
+        return model(X)
+    else:
+        return model.predict(X)
 
 def _dataset_repr(self) -> str:
     return f"Boot(dataset_shape={self.data.shape}, " f"random_seed={self.random_seed})"
@@ -229,6 +277,7 @@ def predict(
     uncertainty: Optional[float] = None,
     quantiles: Optional[Union[np.ndarray, List[float]]] = None,
     return_all: bool = False,
+    n_jobs: int = None
 ) -> Union[Union[float, NDArray], Tuple[Union[float, NDArray], NDArray]]:
     """Compute bootstrapped predictions.
 
@@ -250,6 +299,9 @@ def predict(
         return_all (bool, optional):
             Whether the raw bootstrapped predictions should be returned. Will override
             the values of both `quantiles` and `uncertainty`. Defaults to False.
+        n_jobs: (int or None):
+            The number of jobs to use for parallelization. If None then it is equal to the
+            number of available cpus. Defaults to None
 
     Returns:
         float array or pair of float arrays:
@@ -296,14 +348,17 @@ def predict(
     # Sample the bootstrap indices
     train_idxs = rng.choice(n_train, size=(n_boots, n_train), replace=True)
 
+    #set the number of jobs to use
+    if n_jobs is None:
+        jobs = mp.cpu_count() - 1
+    else:
+        jobs = n_jobs
     # Run the worker function in parallel
-    with Parallel(n_jobs=mp.cpu_count() - 1) as parallel:
+    with Parallel(n_jobs=jobs) as parallel:
         bootstrap_preds_list = parallel(
-            delayed(_model_fit_predict)(
-                model=self._model,
-                X_train=self.X_train[train_idxs[boot_idx], :],
-                y_train=self.y_train[train_idxs[boot_idx]],
-                X_test=X,
+            delayed(_model_predict)(
+                model=self._models[boot_idx],
+                X=X,
             )
             for boot_idx in range(n_boots)
         )
@@ -350,7 +405,7 @@ def predict(
     return preds, intervals
 
 
-def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None):
+def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None, n_jobs: Optional[int] = None):
     """Fits the model to the data.
 
     Args:
@@ -362,6 +417,9 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None):
         n_boots (int or None):
             The number of resamples to bootstrap. If None then it is set to the square
             root of the data set. Defaults to None
+        n_jobs: (int or None):
+            The number of jobs to use for parallelization. If None then it is equal to the
+            number of available cpus. Defaults to None
     """
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
@@ -392,14 +450,27 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None):
     # Sample the bootstrap indices
     train_idxs = rng.choice(n, size=(n_boots, n), replace=True)
 
+    # Set the number of jobs
+    if n_jobs is None:
+        jobs = mp.cpu_count() - 1
+    else:
+        jobs = n_jobs
     # Run the worker function in parallel
-    with Parallel(n_jobs=mp.cpu_count() - 1) as parallel:
-        bootstrap_preds = parallel(
-            delayed(_model_fit_predict)(
+    with Parallel(n_jobs=jobs) as parallel:
+        self._models = parallel(
+            delayed(_model_fit)(
                 model=self._model,
                 X_train=self.X_train[train_idxs[boot_idx], :],
                 y_train=self.y_train[train_idxs[boot_idx]],
-                X_test=X[[idx for idx in range(n) if idx not in train_idxs[boot_idx]]],
+
+            )
+            for boot_idx in range(n_boots)
+        )
+    with Parallel(n_jobs=jobs) as parallel:
+        bootstrap_preds = parallel(
+            delayed(_model_predict)(
+                model=self._models[boot_idx],
+                X=X[[idx for idx in range(n) if idx not in train_idxs[boot_idx]]]
             )
             for boot_idx in range(n_boots)
         )
