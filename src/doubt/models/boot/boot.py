@@ -449,6 +449,7 @@ def fit(
         jobs = mp.cpu_count() - 1
     else:
         jobs = n_jobs
+
     # Run the worker function in parallel
     with Parallel(n_jobs=jobs) as parallel:
         self._models = parallel(
