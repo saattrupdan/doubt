@@ -146,9 +146,8 @@ def _model_fit_predict(
     else:
         return model.predict(X_test)
 
-def _model_fit(
-    model, X_train: np.ndarray, y_train: np.ndarray
-):
+
+def _model_fit(model, X_train: np.ndarray, y_train: np.ndarray):
     """Fit the underlying model.
 
     Args:
@@ -167,9 +166,8 @@ def _model_fit(
     model.fit(X_train, y_train)
     return model
 
-def _model_predict(
-    model, X: np.ndarray
-) -> np.ndarray:
+
+def _model_predict(model, X: np.ndarray) -> np.ndarray:
     """Perform predictions with the underlying model.
 
     This requires that the model is either callable or have a `predict` method.
@@ -189,6 +187,7 @@ def _model_predict(
         return model(X)
     else:
         return model.predict(X)
+
 
 def _dataset_repr(self) -> str:
     return f"Boot(dataset_shape={self.data.shape}, " f"random_seed={self.random_seed})"
@@ -240,14 +239,14 @@ def compute_statistic(
     stat = statistic(self.data)
 
     # Get the number of data points
-    n = int(self.data.shape[0])
+    n_train = int(self.data.shape[0])
 
     # Set default value of the number of bootstrap samples if `n_boots` is not set
     if n_boots is None:
-        n_boots = int(np.sqrt(n).astype(int))
+        n_boots = int(np.sqrt(n_train).astype(int))
 
     # Compute the bootstrapped statistics
-    boot_idxs = rng.choice(n, size=(n_boots, n), replace=True)
+    boot_idxs = rng.choice(n_train, size=(n_boots, n_train), replace=True)
     statistics = np.apply_along_axis(statistic, 1, self.data[boot_idxs])
 
     if return_all:
@@ -272,7 +271,7 @@ def predict(
     uncertainty: Optional[float] = None,
     quantiles: Optional[Union[np.ndarray, List[float]]] = None,
     return_all: bool = False,
-    n_jobs: Optional[int] = None
+    n_jobs: Optional[int] = None,
 ) -> Union[Union[float, NDArray], Tuple[Union[float, NDArray], NDArray]]:
     """Compute bootstrapped predictions.
 
@@ -304,9 +303,6 @@ def predict(
             is not None, the specified quantiles if `quantiles` is not None, or the raw
             bootstrapped values if `return_all` is True.
     """
-    # Initialise random number generator
-    rng = np.random.default_rng(self.random_seed)
-
     # Ensure that input feature matrix is a Numpy array
     X = np.asarray(X)
 
@@ -340,10 +336,7 @@ def predict(
     if n_boots is None:
         n_boots = int(np.sqrt(n_train).astype(int))
 
-    # Sample the bootstrap indices
-    train_idxs = rng.choice(n_train, size=(n_boots, n_train), replace=True)
-
-    #set the number of jobs to use
+    # set the number of jobs to use
     if n_jobs is None:
         jobs = mp.cpu_count() - 1
     else:
@@ -400,7 +393,13 @@ def predict(
     return preds, intervals
 
 
-def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None, n_jobs: Optional[int] = None):
+def fit(
+    self,
+    X: np.ndarray,
+    y: np.ndarray,
+    n_boots: Optional[int] = None,
+    n_jobs: Optional[int] = None,
+):
     """Fits the model to the data.
 
     Args:
@@ -420,11 +419,11 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None, n_job
     rng = np.random.default_rng(self.random_seed)
 
     # Set the number of data points in the dataset
-    n = X.shape[0]
+    n_train = X.shape[0]
 
     # Set default value of `n_boots` if it is not set
     if n_boots is None:
-        n_boots = int(np.sqrt(n).astype(int))
+        n_boots = int(np.sqrt(n_train).astype(int))
 
     # Ensure that `X` and `y` are Numpy arrays
     X = np.asarray(X)
@@ -443,7 +442,7 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None, n_job
     train_residuals = np.quantile(y - preds, q=np.arange(0, 1, 0.01))
 
     # Sample the bootstrap indices
-    train_idxs = rng.choice(n, size=(n_boots, n), replace=True)
+    train_idxs = rng.choice(n_train, size=(n_boots, n_train), replace=True)
 
     # Set the number of jobs
     if n_jobs is None:
@@ -457,7 +456,6 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None, n_job
                 model=self._model,
                 X_train=self.X_train[train_idxs[boot_idx], :],
                 y_train=self.y_train[train_idxs[boot_idx]],
-
             )
             for boot_idx in range(n_boots)
         )
@@ -465,14 +463,14 @@ def fit(self, X: np.ndarray, y: np.ndarray, n_boots: Optional[int] = None, n_job
         bootstrap_preds = parallel(
             delayed(_model_predict)(
                 model=self._models[boot_idx],
-                X=X[[idx for idx in range(n) if idx not in train_idxs[boot_idx]]]
+                X=X[[idx for idx in range(n_train) if idx not in train_idxs[boot_idx]]],
             )
             for boot_idx in range(n_boots)
         )
 
     # Compute the validation residuals
     val_residuals_list = [
-        y[[idx for idx in range(n) if idx not in train_idxs[boot_idx]]]
+        y[[idx for idx in range(n_train) if idx not in train_idxs[boot_idx]]]
         - bootstrap_preds[boot_idx]
         for boot_idx in range(n_boots)
     ]
