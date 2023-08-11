@@ -67,3 +67,13 @@ outputs. For instance, a `QuantileRegressionForest`:
 >>> clf.predict(np.ones(8), uncertainty=0.25)
 (16.933590347847982, array([ 8.93456428, 26.0664534 ]))
 ```
+
+## Citation
+```
+@inproceedings{mougannielsen2023monitoring,
+  title={Monitoring Model Deterioration with Explainable Uncertainty Estimation via Non-parametric Bootstrap},
+  author={Mougan, Carlos and Nielsen, Dan Saattrup},
+  booktitle={AAAI Conference on Artificial Intelligence},
+  year={2023}
+}
+```
