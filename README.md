@@ -68,7 +68,7 @@ outputs. For instance, a `QuantileRegressionForest`:
 (16.933590347847982, array([ 8.93456428, 26.0664534 ]))
 ```
 
-## Citation
+## Citation
 ```
 @inproceedings{mougannielsen2023monitoring,
   title={Monitoring Model Deterioration with Explainable Uncertainty Estimation via Non-parametric Bootstrap},
