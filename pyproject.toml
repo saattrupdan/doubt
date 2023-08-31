@@ -12,7 +12,7 @@ license = "MIT"
 repository = "https://github.com/saattrupdan/doubt"
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.11"
+python = ">=3.8,<3.12"
 tqdm = "^4.62.0"
 numpy = "^1.23.0"
 pandas = "^1.4.0"
