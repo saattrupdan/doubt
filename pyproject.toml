@@ -22,6 +22,7 @@ xlrd = "^2.0.1"
 openpyxl = "^3.0.10"
 scipy = "^1.10.0"
 tables = "^3.8.0"
+urllib3 = "^2.0.7"
 
 [tool.poetry.group.dev.dependencies]
 pdoc = "^7.1.1"
