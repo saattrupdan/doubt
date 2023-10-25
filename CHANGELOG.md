@@ -8,6 +8,11 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Security
+- Updated `urllib3` to 2.0.7 due to a security update.
+
+
 ## [v4.5.0] - 2023-07-05
 ### Added
 - Now saves the models during training with a `Boot` and reuses those during inference,
