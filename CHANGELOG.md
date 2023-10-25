@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v4.5.1] - 2023-10-25
 ### Security
 - Updated `urllib3` to 2.0.7 due to a security update.
 
