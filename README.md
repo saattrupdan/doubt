@@ -16,14 +16,17 @@ learning models, to quantify their uncertainty.
 
 ## Installation
 
-If you do not already have HDF5 installed, then start by installing that. On MacOS this
-can be done using `sudo port install hdf5` after
-[MacPorts](https://www.macports.org/install.php) have been installed. On Ubuntu you can
-get HDF5 with `sudo apt-get install python-dev python3-dev libhdf5-serial-dev`. After
-that, you can install `doubt` with `pip`:
+You can install `doubt` with `pip`:
 
 ```shell
 pip install doubt
+```
+
+If you want to be able to use the preprocessed regression datasets as well, you install
+it with the `datasets` extra:
+
+```shell
+pip install doubt[datasets]
 ```
 
 

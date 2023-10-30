@@ -8,6 +8,13 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Changed
+- The dataset-specific dependencies are now put in a separate `datasets` extra, to make
+  the core package more lean. You can install the package with all the dependencies
+  using `pip install doubt[datasets]`.
+
+
 ## [v4.5.2] - 2023-10-30
 ### Changed
 - Now also allows `pandas` 2.x.x versions.
