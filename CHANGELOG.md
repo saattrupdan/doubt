@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v4.5.2] - 2023-10-30
 ### Changed
 - Now also allows `pandas` 2.x.x versions.
 
