@@ -507,7 +507,7 @@ def save_model(self, path: Path | str):
             The path to save the model to.
     """
     obj = dict(
-        boot_kwargs=dict(self.random_seed),
+        boot_kwargs=dict(random_seed=self.random_seed),
         n_boots=self.n_boots,
         residuals=self.residuals,
         models=self._models,
