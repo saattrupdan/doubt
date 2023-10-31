@@ -8,6 +8,12 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Added
+- The `Boot` class now has `save` and `load` methods, which uses `joblib` under the
+  hood.
+
+
 ## [v5.0.0] - 2023-10-30
 ### Changed
 - The dataset-specific dependencies are now put in a separate `datasets` extra, to make
