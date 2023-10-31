@@ -12,6 +12,41 @@ from joblib import Parallel, delayed
 from numpy.typing import NDArray
 
 
+def save_model(self, path: Path | str):
+    """Save a model to disk.
+
+    Args:
+        path (Path or str):
+            The path to save the model to.
+    """
+    obj = dict(
+        boot_kwargs=dict(random_seed=self.random_seed),
+        n_boots=self.n_boots,
+        residuals=self.residuals,
+        models=self._models,
+    )
+    joblib.dump(obj, filename=path)
+
+
+def load_model(cls, path: Path | str) -> "Boot":
+    """Load a model from disk.
+
+    Args:
+        path (Path or str):
+            The path to load the model from.
+
+    Returns:
+        Boot:
+            The loaded model.
+    """
+    obj = joblib.load(filename=path)
+    model = cls(obj["models"][0], **obj["boot_kwargs"])
+    model.n_boots = obj["n_boots"]
+    model._models = obj["models"]
+    model.residuals = obj["residuals"]
+    return model
+
+
 class Boot:
     """Bootstrap wrapper for datasets and models.
 
@@ -97,6 +132,8 @@ class Boot:
         [3]: https://saattrupdan.github.io/2020-03-01-bootstrap-prediction
     """
 
+    load = classmethod(load_model)
+
     def __init__(self, input: object, random_seed: Optional[float] = None, **kwargs):
         self.random_seed = random_seed
 
@@ -106,7 +143,6 @@ class Boot:
             self.fit = MethodType(fit, self)
             self.predict = MethodType(predict, self)
             self.save = MethodType(save_model, self)
-            self.load = classmethod(load_model)
             type(self).__repr__ = MethodType(_model_repr, self)  # type: ignore
 
         # Input is a dataset
@@ -497,38 +533,3 @@ def fit(
     self.residuals = (1 - weight) * train_residuals + weight * val_residuals
 
     return self
-
-
-def save_model(self, path: Path | str):
-    """Save a model to disk.
-
-    Args:
-        path (Path or str):
-            The path to save the model to.
-    """
-    obj = dict(
-        boot_kwargs=dict(random_seed=self.random_seed),
-        n_boots=self.n_boots,
-        residuals=self.residuals,
-        models=self._models,
-    )
-    joblib.dump(obj, filename=path)
-
-
-def load_model(cls, path: Path | str) -> Boot:
-    """Load a model from disk.
-
-    Args:
-        path (Path or str):
-            The path to load the model from.
-
-    Returns:
-        Boot:
-            The loaded model.
-    """
-    obj = joblib.load(filename=path)
-    model = cls(obj["models"][0], **obj["boot_kwargs"])
-    model.n_boots = obj["n_boots"]
-    model._models = obj["models"]
-    model.residuals = obj["residuals"]
-    return model
