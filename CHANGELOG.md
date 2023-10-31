@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v5.1.0] - 2023-10-31
 ### Added
 - The `Boot` class now has `save` and `load` methods, which uses `joblib` under the
   hood.
