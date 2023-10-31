@@ -20,7 +20,7 @@ def save_model(self, path: Path | str):
             The path to save the model to.
     """
     obj = dict(
-        boot_kwargs=dict(random_seed=self.random_seed),
+        boot_kwargs=self.all_kwargs,
         n_boots=self.n_boots,
         residuals=self.residuals,
         models=self._models,
@@ -136,6 +136,7 @@ class Boot:
 
     def __init__(self, input: object, random_seed: Optional[float] = None, **kwargs):
         self.random_seed = random_seed
+        self.all_kwargs = {**dict(random_seed=self.random_seed), **kwargs}
 
         # Input is a model
         if callable(input) or hasattr(input, "predict"):
