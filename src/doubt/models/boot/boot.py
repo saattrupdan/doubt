@@ -307,6 +307,14 @@ def predict(
             is not None, the specified quantiles if `quantiles` is not None, or the raw
             bootstrapped values if `return_all` is True.
     """
+    # Ensure that the underlying model has been fitted before predicting. This is only
+    # a requirement if `uncertainty` is set, as we need access to `self.X_train`
+    if not hasattr(self, "n_boots"):
+        raise RuntimeError(
+            "This model has not been fitted yet! Call fit() before predicting new "
+            "samples."
+        )
+
     # Ensure that input feature matrix is a Numpy array
     X = np.asarray(X)
 
@@ -409,14 +417,6 @@ def fit(
             The number of jobs to use for parallelization. If None then it is equal to the
             number of available cpus minus one. Defaults to None
     """
-    # Ensure that the underlying model has been fitted before predicting. This is only
-    # a requirement if `uncertainty` is set, as we need access to `self.X_train`
-    if not hasattr(self, "n_boots"):
-        raise RuntimeError(
-            "This model has not been fitted yet! Call fit() before predicting new "
-            "samples."
-        )
-
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
 
