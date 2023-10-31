@@ -2,9 +2,11 @@
 
 import copy
 import multiprocessing as mp
+from pathlib import Path
 from types import MethodType
 from typing import Callable, List, Optional, Tuple, Union
 
+import joblib
 import numpy as np
 from joblib import Parallel, delayed
 from numpy.typing import NDArray
@@ -95,7 +97,7 @@ class Boot:
         [3]: https://saattrupdan.github.io/2020-03-01-bootstrap-prediction
     """
 
-    def __init__(self, input: object, random_seed: Optional[float] = None):
+    def __init__(self, input: object, random_seed: Optional[float] = None, **kwargs):
         self.random_seed = random_seed
 
         # Input is a model
@@ -103,6 +105,8 @@ class Boot:
             self._model = input
             self.fit = MethodType(fit, self)
             self.predict = MethodType(predict, self)
+            self.save = MethodType(save_model, self)
+            self.load = MethodType(load_model, self)
             type(self).__repr__ = MethodType(_model_repr, self)  # type: ignore
 
         # Input is a dataset
@@ -320,27 +324,17 @@ def predict(
     if uncertainty is None and quantiles is None and not return_all:
         return preds
 
-    # Ensure that the underlying model has been fitted before predicting. This is only
-    # a requirement if `uncertainty` is set, as we need access to `self.X_train`
-    if not hasattr(self, "X_train") or self.X_train is None:
-        raise RuntimeError(
-            "This model has not been fitted yet! Call fit() before predicting new "
-            "samples."
-        )
-
-    # Store the number of data points in the training and test datasets
-    n_train = self.X_train.shape[0]
-
     # The authors chose the number of bootstrap samples as the square root of the
     # number of samples in the training dataset
     if n_boots is None:
-        n_boots = int(np.sqrt(n_train).astype(int))
+        n_boots = self.n_boots
 
     # set the number of jobs to use
     if n_jobs is None:
         jobs = mp.cpu_count() - 1
     else:
         jobs = n_jobs
+
     # Run the worker function in parallel
     with Parallel(n_jobs=jobs) as parallel:
         bootstrap_preds_list = parallel(
@@ -415,6 +409,14 @@ def fit(
             The number of jobs to use for parallelization. If None then it is equal to the
             number of available cpus minus one. Defaults to None
     """
+    # Ensure that the underlying model has been fitted before predicting. This is only
+    # a requirement if `uncertainty` is set, as we need access to `self.X_train`
+    if not hasattr(self, "n_boots"):
+        raise RuntimeError(
+            "This model has not been fitted yet! Call fit() before predicting new "
+            "samples."
+        )
+
     # Initialise random number generator
     rng = np.random.default_rng(self.random_seed)
 
@@ -423,7 +425,9 @@ def fit(
 
     # Set default value of `n_boots` if it is not set
     if n_boots is None:
-        n_boots = int(np.sqrt(n_train).astype(int))
+        self.n_boots = int(np.sqrt(n_train).astype(int))
+    else:
+        self.n_boots = n_boots
 
     # Ensure that `X` and `y` are Numpy arrays
     X = np.asarray(X)
@@ -442,7 +446,7 @@ def fit(
     train_residuals = np.quantile(y - preds, q=np.arange(0, 1, 0.01))
 
     # Sample the bootstrap indices
-    train_idxs = rng.choice(n_train, size=(n_boots, n_train), replace=True)
+    train_idxs = rng.choice(n_train, size=(self.n_boots, n_train), replace=True)
 
     # Set the number of jobs
     if n_jobs is None:
@@ -458,7 +462,7 @@ def fit(
                 X_train=self.X_train[train_idxs[boot_idx], :],
                 y_train=self.y_train[train_idxs[boot_idx]],
             )
-            for boot_idx in range(n_boots)
+            for boot_idx in range(self.n_boots)
         )
     with Parallel(n_jobs=jobs) as parallel:
         bootstrap_preds = parallel(
@@ -466,14 +470,14 @@ def fit(
                 model=self._models[boot_idx],
                 X=X[[idx for idx in range(n_train) if idx not in train_idxs[boot_idx]]],
             )
-            for boot_idx in range(n_boots)
+            for boot_idx in range(self.n_boots)
         )
 
     # Compute the validation residuals
     val_residuals_list = [
         y[[idx for idx in range(n_train) if idx not in train_idxs[boot_idx]]]
         - bootstrap_preds[boot_idx]
-        for boot_idx in range(n_boots)
+        for boot_idx in range(self.n_boots)
     ]
 
     # Aggregate the validation residuals into quantiles, to enable comparison with the
@@ -493,3 +497,38 @@ def fit(
     self.residuals = (1 - weight) * train_residuals + weight * val_residuals
 
     return self
+
+
+def save_model(self, path: Path | str):
+    """Save a model to disk.
+
+    Args:
+        path (Path or str):
+            The path to save the model to.
+    """
+    obj = dict(
+        boot_kwargs=dict(self.random_seed),
+        n_boots=self.n_boots,
+        residuals=self.residuals,
+        models=self._models,
+    )
+    joblib.dump(obj, filename=path)
+
+
+def load_model(cls, path: Path | str) -> Boot:
+    """Load a model from disk.
+
+    Args:
+        path (Path or str):
+            The path to load the model from.
+
+    Returns:
+        Boot:
+            The loaded model.
+    """
+    obj = joblib.load(filename=path)
+    model = cls(obj["models"][0], **obj["boot_kwargs"])
+    model.n_boots = obj["n_boots"]
+    model._models = obj["models"]
+    model.residuals = obj["residuals"]
+    return model
