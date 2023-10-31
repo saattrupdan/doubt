@@ -106,7 +106,7 @@ class Boot:
             self.fit = MethodType(fit, self)
             self.predict = MethodType(predict, self)
             self.save = MethodType(save_model, self)
-            self.load = MethodType(load_model, self)
+            self.load = classmethod(load_model)
             type(self).__repr__ = MethodType(_model_repr, self)  # type: ignore
 
         # Input is a dataset
