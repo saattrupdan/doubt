@@ -8,7 +8,7 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [v6.0.0] - 2024-03-26
 ### Changed
 - Updated `tables` dependency to v3.9.x, which fixes issues with installation of the
   package. This requires Python 3.9 or above, however, so we require that here as well.
