@@ -28,7 +28,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          poetry env use "${{ matrix.python-version }}"
+          poetry env use "3.11"
           poetry install --extras all
 
       - name: Build documentation
