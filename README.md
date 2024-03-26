@@ -7,7 +7,7 @@ ______________________________________________________________________
 [![Documentation](https://img.shields.io/badge/docs-passing-green)](https://saattrupdan.github.io/doubt/doubt.html)
 [![License](https://img.shields.io/github/license/saattrupdan/doubt)](https://github.com/saattrupdan/doubt/blob/main/LICENSE)
 [![LastCommit](https://img.shields.io/github/last-commit/saattrupdan/doubt)](https://github.com/saattrupdan/doubt/commits/main)
-[![Code Coverage](https://img.shields.io/badge/Coverage-67%25-yellow.svg)](https://github.com/saattrupdan/doubt/tree/dev/tests)
+[![Code Coverage](https://img.shields.io/badge/Coverage-66%25-yellow.svg)](https://github.com/saattrupdan/doubt/tree/dev/tests)
 [![Conference](https://img.shields.io/badge/Conference-AAAI23-blue)](https://doi.org/10.1609/aaai.v37i12.26755)
 
 A Python package to include prediction intervals in the predictions of machine

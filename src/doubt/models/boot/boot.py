@@ -12,7 +12,7 @@ from joblib import Parallel, delayed
 from numpy.typing import NDArray
 
 
-def save_model(self, path: Path | str):
+def save_model(self, path: Union[Path, str]):
     """Save a model to disk.
 
     Args:
@@ -28,7 +28,7 @@ def save_model(self, path: Path | str):
     joblib.dump(obj, filename=path)
 
 
-def load_model(cls, path: Path | str) -> "Boot":
+def load_model(cls, path: Union[Path, str]) -> "Boot":
     """Load a model from disk.
 
     Args:
@@ -383,10 +383,7 @@ def predict(
     # Run the worker function in parallel
     with Parallel(n_jobs=jobs) as parallel:
         bootstrap_preds_list = parallel(
-            delayed(_model_predict)(
-                model=self._models[boot_idx],
-                X=X,
-            )
+            delayed(_model_predict)(model=self._models[boot_idx], X=X)
             for boot_idx in range(n_boots)
         )
 

@@ -44,7 +44,7 @@ install: ## Install dependencies
 	@$(MAKE) setup-git
 
 setup-poetry:
-	@poetry env use python3.10 && poetry install
+	@poetry env use python3.10 && poetry install --extras all
 
 setup-environment-variables:
 	@poetry run python3.10 -m src.scripts.fix_dot_env_file
@@ -109,7 +109,7 @@ publish-minor: bump-minor publish  ## Publish a minor version
 publish-patch: bump-patch publish  ## Publish a patch version
 
 test:  ## Run tests
-	@poetry run pytest && readme-cov
+	@poetry run pytest && readme-cov && rm .coverage*
 
 tree:  ## Print directory tree
 	@tree -a \
