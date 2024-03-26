@@ -8,6 +8,12 @@ and this project adheres to
 [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+### Changed
+- Updated `tables` dependency to v3.9.x, which fixes issues with installation of the
+  package. This requires Python 3.9 or above, however, so we require that here as well.
+
+
 ## [v5.1.0] - 2023-10-31
 ### Added
 - The `Boot` class now has `save` and `load` methods, which uses `joblib` under the
