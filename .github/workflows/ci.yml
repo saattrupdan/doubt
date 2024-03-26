@@ -2,25 +2,31 @@ name: CI
 
 on:
   pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
     branches:
       - main
 
 jobs:
-
   lint:
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: jpetrucciani/black-check@master
+      - uses: jpetrucciani/ruff-check@main
 
-  pytest:
+  pytest-linux:
+    if: github.event.pull_request.draft == false
     strategy:
         matrix:
-            os: [ubuntu-latest]
             python-version: ["3.9", "3.10", "3.11", "3.12"]
-    runs-on: ${{ matrix.os }}
+
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Poetry
         run: pipx install poetry
@@ -31,13 +37,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: "poetry"
 
-      - name: Install HDF5
-        run: sudo apt install --fix-missing libhdf5-serial-dev
-
       - name: Install Dependencies
         run: |
           poetry env use "${{ matrix.python-version }}"
-          poetry install
+          poetry install --extras all
 
       - name: Test with pytest
-        run: poetry run pytest --dist no -n 0
+        run: poetry run pytest
