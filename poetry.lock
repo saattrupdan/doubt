@@ -1677,5 +1677,5 @@ datasets = ["openpyxl", "tables", "xlrd"]
 
 [metadata]
 lock-version = "2.0"
-python-versions = ">=3.9,<3.13"
-content-hash = "f16e436148239aa86180f670b205c5c51af978fc3976059d8552da267cfca05d"
+python-versions = ">=3.9,<3.12"
+content-hash = "54d353f94889187ab612e50764a437454a48821b32e0adff8fc08cc575eeb128"
