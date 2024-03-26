@@ -129,7 +129,10 @@ class Boot:
              statistics.
         [2]: Kumar, S., & Srivistava, A. N. (2012). Bootstrap prediction intervals in
              non-parametric regression with applications to anomaly detection.
-        [3]: https://saattrupdan.github.io/2020-03-01-bootstrap-prediction
+        [3]: Mougan, Carlos, and Dan Saattrup Nielsen. "Monitoring model deterioration
+             with explainable uncertainty estimation via non-parametric bootstrap."
+             Proceedings of the AAAI Conference on Artificial Intelligence. Vol. 37.
+             No. 12. 2023. https://doi.org/10.1609/aaai.v37i12.26755
     """
 
     load = classmethod(load_model)
