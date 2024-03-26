@@ -109,7 +109,7 @@ publish-minor: bump-minor publish  ## Publish a minor version
 publish-patch: bump-patch publish  ## Publish a patch version
 
 test:  ## Run tests
-	@poetry run pytest && readme-cov
+	@poetry run pytest && readme-cov && rm .coverage*
 
 tree:  ## Print directory tree
 	@tree -a \
